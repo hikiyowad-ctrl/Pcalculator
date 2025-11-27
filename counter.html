@@ -274,6 +274,76 @@ body {
         max-width: 100%;
     }
 }
+
+/* 確認ダイアログ用のオーバーレイ */
+.confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.confirm-dialog {
+    background: #1a1a1a;
+    border: 2px solid #00ff00;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    max-width: 300px;
+    width: 90%;
+}
+
+.confirm-message {
+    color: #00ff00;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.confirm-btn {
+    padding: 10px 20px;
+    border: 2px solid #00ff00;
+    background: #000000;
+    color: #00ff00;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    flex: 1;
+}
+
+.confirm-btn.yes {
+    background: #004400;
+    border-color: #00ff00;
+}
+
+.confirm-btn.yes:active {
+    background: #00ff00;
+    color: #000000;
+}
+
+.confirm-btn.no {
+    background: #440000;
+    border-color: #ff0000;
+}
+
+.confirm-btn.no:active {
+    background: #ff0000;
+    color: #000000;
+}
 </style>
 </head>
 <body>
@@ -284,9 +354,6 @@ body {
         <button class="mode-btn" data-mode="A">MODE A</button>
         <button class="mode-btn" data-mode="B">MODE B</button>
         <button class="mode-btn" data-mode="C">MODE C</button>
-        <button class="mode-btn" data-mode="D">MODE D</button>
-        <button class="mode-btn" data-mode="E">MODE E</button>
-        <button class="mode-btn" data-mode="F">MODE F</button>
     </div>
 
     <!-- 丸いカウントボタン -->
@@ -337,10 +404,7 @@ class CounterApp {
         this.counts = {
             'A': [0, 0, 0, 0],
             'B': [0, 0, 0, 0],
-            'C': [0, 0, 0, 0],
-            'D': [0, 0, 0, 0],
-            'E': [0, 0, 0, 0],
-            'F': [0, 0, 0, 0]
+            'C': [0, 0, 0, 0]
         };
         
         this.totalGames = 0;
@@ -410,7 +474,7 @@ class CounterApp {
 
         // リセットボタン
         this.resetBtn.addEventListener('click', () => {
-            this.resetCurrentMode();
+            this.showResetConfirmation();
         });
 
         // 総G数入力の変更を監視
@@ -460,6 +524,45 @@ class CounterApp {
         }
         
         this.updateDisplay();
+    }
+
+    showResetConfirmation() {
+        const overlay = document.createElement('div');
+        overlay.className = 'confirm-overlay';
+        
+        const dialog = document.createElement('div');
+        dialog.className = 'confirm-dialog';
+        
+        const message = document.createElement('div');
+        message.className = 'confirm-message';
+        message.textContent = '全て消去しますがよろしいですか？';
+        
+        const buttons = document.createElement('div');
+        buttons.className = 'confirm-buttons';
+        
+        const yesBtn = document.createElement('button');
+        yesBtn.className = 'confirm-btn yes';
+        yesBtn.textContent = 'はい';
+        yesBtn.onclick = () => {
+            this.resetCurrentMode();
+            document.body.removeChild(overlay);
+        };
+        
+        const noBtn = document.createElement('button');
+        noBtn.className = 'confirm-btn no';
+        noBtn.textContent = 'いいえ';
+        noBtn.onclick = () => {
+            document.body.removeChild(overlay);
+        };
+        
+        buttons.appendChild(yesBtn);
+        buttons.appendChild(noBtn);
+        
+        dialog.appendChild(message);
+        dialog.appendChild(buttons);
+        overlay.appendChild(dialog);
+        
+        document.body.appendChild(overlay);
     }
 
     resetCurrentMode() {
