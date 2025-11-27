@@ -94,12 +94,30 @@ body {
     flex: 1;
 }
 
+/* カウントと分数の表示（ボタンの上） */
+.count-display {
+    font-size: 14px;
+    color: #00ff00;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.rate-display {
+    font-size: 12px;
+    color: #00ff00;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    opacity: 0.8;
+    margin-bottom: 8px;
+}
+
 .circle-btn {
     width: 50px;
     height: 50px;
     border: 2px solid;
     border-radius: 50%;
-    background: #000000;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -108,72 +126,59 @@ body {
     font-weight: 700;
     font-family: 'Orbitron', sans-serif;
     transition: all 0.3s ease;
-    margin-bottom: 5px;
 }
 
 .circle-btn:active {
     transform: scale(0.9);
 }
 
-/* 各ボタンの色 */
+/* 各ボタンの色 - 内側も同じ色で塗りつぶし */
 .circle-btn-1 {
     border-color: #ff0000;
-    color: #ff0000;
+    background: #ff0000;
+    color: #000000;
 }
 
 .circle-btn-1:active {
-    background: #ff0000;
-    color: #000000;
+    background: #cc0000;
+    border-color: #cc0000;
     box-shadow: 0 0 15px #ff0000;
 }
 
 .circle-btn-2 {
     border-color: #00ff00;
-    color: #00ff00;
+    background: #00ff00;
+    color: #000000;
 }
 
 .circle-btn-2:active {
-    background: #00ff00;
-    color: #000000;
+    background: #00cc00;
+    border-color: #00cc00;
     box-shadow: 0 0 15px #00ff00;
 }
 
 .circle-btn-3 {
     border-color: #0000ff;
-    color: #0000ff;
+    background: #0000ff;
+    color: #ffffff;
 }
 
 .circle-btn-3:active {
-    background: #0000ff;
-    color: #ffffff;
+    background: #0000cc;
+    border-color: #0000cc;
     box-shadow: 0 0 15px #0000ff;
 }
 
 .circle-btn-4 {
     border-color: #ffff00;
-    color: #ffff00;
+    background: #ffff00;
+    color: #000000;
 }
 
 .circle-btn-4:active {
-    background: #ffff00;
-    color: #000000;
+    background: #cccc00;
+    border-color: #cccc00;
     box-shadow: 0 0 15px #ffff00;
-}
-
-.count-display {
-    font-size: 12px;
-    color: #00ff00;
-    text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    margin-bottom: 3px;
-}
-
-.rate-display {
-    font-size: 10px;
-    color: #00ff00;
-    text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    opacity: 0.8;
 }
 
 /* 制御ボタン */
@@ -287,24 +292,24 @@ body {
     <!-- 丸いカウントボタン -->
     <div class="circle-buttons">
         <div class="circle-btn-container">
-            <button class="circle-btn circle-btn-1" data-index="0">1</button>
             <div class="count-display" id="countDisplay1">0</div>
             <div class="rate-display" id="rateDisplay1">1/0.00</div>
+            <button class="circle-btn circle-btn-1" data-index="0"></button>
         </div>
         <div class="circle-btn-container">
-            <button class="circle-btn circle-btn-2" data-index="1">2</button>
             <div class="count-display" id="countDisplay2">0</div>
             <div class="rate-display" id="rateDisplay2">1/0.00</div>
+            <button class="circle-btn circle-btn-2" data-index="1"></button>
         </div>
         <div class="circle-btn-container">
-            <button class="circle-btn circle-btn-3" data-index="2">3</button>
             <div class="count-display" id="countDisplay3">0</div>
             <div class="rate-display" id="rateDisplay3">1/0.00</div>
+            <button class="circle-btn circle-btn-3" data-index="2"></button>
         </div>
         <div class="circle-btn-container">
-            <button class="circle-btn circle-btn-4" data-index="3">4</button>
             <div class="count-display" id="countDisplay4">0</div>
             <div class="rate-display" id="rateDisplay4">1/0.00</div>
+            <button class="circle-btn circle-btn-4" data-index="3"></button>
         </div>
     </div>
 
