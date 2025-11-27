@@ -112,14 +112,27 @@ body {
 .stat-item {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 5px;
+    align-items: center;
+    margin-bottom: 15px;
 }
 
-.long-press-info {
+.stat-label {
+    font-weight: bold;
+    color: #333;
+}
+
+.input-field {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
     text-align: center;
-    color: #666;
-    font-size: 12px;
-    margin-top: 20px;
+    font-size: 16px;
+}
+
+.input-field:focus {
+    outline: none;
+    border-color: #007bff;
 }
 </style>
 </head>
@@ -136,7 +149,7 @@ body {
 
     <div class="counter-display">
         <div class="counter-value" id="currentCount">0</div>
-        <div class="counter-label">現在のカウント</div>
+        <div class="counter-label" id="currentModeLabel">小役A のカウント</div>
     </div>
 
     <div class="control-buttons">
@@ -147,17 +160,13 @@ body {
 
     <div class="stats">
         <div class="stat-item">
-            <span>総合G数 ▶</span>
-            <span id="totalCount">0</span>
+            <span class="stat-label">総合G数 ▶</span>
+            <input type="number" class="input-field" id="totalCount" value="0" min="0">
         </div>
         <div class="stat-item">
-            <span>打ち始め総G数 ▶</span>
-            <span id="startTotalCount">0</span>
+            <span class="stat-label">打ち始め総G数 ▶</span>
+            <input type="number" class="input-field" id="startTotalCount" value="0" min="0">
         </div>
-    </div>
-
-    <div class="long-press-info">
-        LongPress 100/s
     </div>
 </div>
 
@@ -165,11 +174,16 @@ body {
 class CounterApp {
     constructor() {
         this.currentMode = 'A';
-        this.currentCount = 0;
-        this.totalCount = 0;
-        this.startTotalCount = 0;
-        this.longPressInterval = null;
-
+        // 各小役ごとに独立したカウントを保持
+        this.counts = {
+            'A': 0,
+            'B': 0,
+            'C': 0,
+            'D': 0,
+            'E': 0,
+            'F': 0
+        };
+        
         this.initializeElements();
         this.setupEventListeners();
         this.setMode('A');
@@ -177,6 +191,7 @@ class CounterApp {
 
     initializeElements() {
         this.currentCountElement = document.getElementById('currentCount');
+        this.currentModeLabel = document.getElementById('currentModeLabel');
         this.totalCountElement = document.getElementById('totalCount');
         this.startTotalCountElement = document.getElementById('startTotalCount');
         this.incrementBtn = document.getElementById('incrementBtn');
@@ -198,53 +213,9 @@ class CounterApp {
             this.increment();
         });
 
-        this.incrementBtn.addEventListener('mousedown', () => {
-            this.startLongPress('increment');
-        });
-
-        this.incrementBtn.addEventListener('mouseup', () => {
-            this.stopLongPress();
-        });
-
-        this.incrementBtn.addEventListener('mouseleave', () => {
-            this.stopLongPress();
-        });
-
-        // タッチイベント（スマホ対応）
-        this.incrementBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            this.startLongPress('increment');
-        });
-
-        this.incrementBtn.addEventListener('touchend', () => {
-            this.stopLongPress();
-        });
-
         // デクリメントボタン
         this.decrementBtn.addEventListener('click', () => {
             this.decrement();
-        });
-
-        this.decrementBtn.addEventListener('mousedown', () => {
-            this.startLongPress('decrement');
-        });
-
-        this.decrementBtn.addEventListener('mouseup', () => {
-            this.stopLongPress();
-        });
-
-        this.decrementBtn.addEventListener('mouseleave', () => {
-            this.stopLongPress();
-        });
-
-        // タッチイベント（スマホ対応）
-        this.decrementBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            this.startLongPress('decrement');
-        });
-
-        this.decrementBtn.addEventListener('touchend', () => {
-            this.stopLongPress();
         });
 
         // リセットボタン
@@ -252,10 +223,13 @@ class CounterApp {
             this.resetCurrent();
         });
 
-        // タッチイベント（スマホ対応）
-        this.resetBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            this.resetCurrent();
+        // 入力フィールドの変更を監視
+        this.totalCountElement.addEventListener('change', () => {
+            this.updateTotalCount();
+        });
+
+        this.startTotalCountElement.addEventListener('change', () => {
+            this.updateStartTotalCount();
         });
     }
 
@@ -271,52 +245,48 @@ class CounterApp {
             }
         });
 
-        console.log(`Mode changed to: ${mode}`);
+        // 現在のモードのカウントを表示
+        this.updateDisplay();
+        this.currentModeLabel.textContent = `小役${mode} のカウント`;
     }
 
     increment() {
-        this.currentCount++;
-        this.totalCount++;
+        this.counts[this.currentMode]++;
         this.updateDisplay();
     }
 
     decrement() {
-        if (this.currentCount > 0) {
-            this.currentCount--;
-            this.totalCount++;
+        if (this.counts[this.currentMode] > 0) {
+            this.counts[this.currentMode]--;
             this.updateDisplay();
         }
     }
 
     resetCurrent() {
-        this.startTotalCount += this.currentCount;
-        this.currentCount = 0;
+        this.counts[this.currentMode] = 0;
         this.updateDisplay();
     }
 
-    startLongPress(operation) {
-        this.stopLongPress(); // 既存のインターバルをクリア
-
-        this.longPressInterval = setInterval(() => {
-            if (operation === 'increment') {
-                this.increment();
-            } else if (operation === 'decrement' && this.currentCount > 0) {
-                this.decrement();
-            }
-        }, 10); // 100/s = 10ms間隔
-    }
-
-    stopLongPress() {
-        if (this.longPressInterval) {
-            clearInterval(this.longPressInterval);
-            this.longPressInterval = null;
-        }
-    }
-
     updateDisplay() {
-        this.currentCountElement.textContent = this.currentCount;
-        this.totalCountElement.textContent = this.totalCount;
-        this.startTotalCountElement.textContent = this.startTotalCount;
+        this.currentCountElement.textContent = this.counts[this.currentMode];
+    }
+
+    updateTotalCount() {
+        // 入力値のバリデーション
+        let value = parseInt(this.totalCountElement.value);
+        if (isNaN(value) || value < 0) {
+            value = 0;
+        }
+        this.totalCountElement.value = value;
+    }
+
+    updateStartTotalCount() {
+        // 入力値のバリデーション
+        let value = parseInt(this.startTotalCountElement.value);
+        if (isNaN(value) || value < 0) {
+            value = 0;
+        }
+        this.startTotalCountElement.value = value;
     }
 }
 
