@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="screen-orientation" content="landscape">
 <title>カウンターアプリ</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -27,13 +26,22 @@ body {
     color: #00ff00;
     height: 100vh;
     overflow: hidden;
+    /* 常に横向き表示 */
+    transform: rotate(-90deg);
+    transform-origin: center center;
+    width: 100vh;
+    height: 100vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50vw;
+    margin-left: -50vh;
 }
 
 .container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
-    max-height: 100vh;
+    height: 100%;
     background: #1a1a1a;
     border-radius: 10px;
     padding: 15px;
@@ -232,41 +240,6 @@ body {
     box-shadow: 0 0 10px #00ff00;
 }
 
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    flex: 1;
-    overflow-y: auto;
-}
-
-.stat-box {
-    background: #111111;
-    border: 1px solid #00ff00;
-    border-radius: 5px;
-    padding: 12px;
-    text-align: center;
-    min-height: 70px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.stat-mode {
-    font-size: 14px;
-    color: #00ff00;
-    margin-bottom: 5px;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 600;
-}
-
-.stat-value {
-    font-size: 16px;
-    font-weight: 700;
-    color: #00ff00;
-    font-family: 'Orbitron', sans-serif;
-}
-
 /* 数字入力時のスピンボタンを非表示 */
 .input-field::-webkit-outer-spin-button,
 .input-field::-webkit-inner-spin-button {
@@ -278,23 +251,18 @@ body {
     -moz-appearance: textfield;
 }
 
-/* 横向き固定用のスタイル */
-@media (orientation: portrait) {
-    body::before {
-        content: "画面を横向きに回転してください";
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #0a0a0a;
-        color: #00ff00;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 24px;
-        z-index: 9999;
-        font-family: 'Orbitron', sans-serif;
+/* スマホの横向き/縦向きに関係なく横向き表示 */
+@media (max-width: 768px) {
+    body {
+        transform: rotate(-90deg);
+        transform-origin: center center;
+        width: 100vh;
+        height: 100vw;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-top: -50vw;
+        margin-left: -50vh;
     }
 }
 </style>
@@ -332,32 +300,7 @@ body {
                 <input type="number" class="input-field" id="totalCount" value="0" min="0">
             </div>
             
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-mode">MODE A</div>
-                    <div class="stat-value" id="statA">0/0.00%</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-mode">MODE B</div>
-                    <div class="stat-value" id="statB">0/0.00%</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-mode">MODE C</div>
-                    <div class="stat-value" id="statC">0/0.00%</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-mode">MODE D</div>
-                    <div class="stat-value" id="statD">0/0.00%</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-mode">MODE E</div>
-                    <div class="stat-value" id="statE">0/0.00%</div>
-                </div>
-                <div class="stat-box">
-                    <div class="stat-mode">MODE F</div>
-                    <div class="stat-value" id="statF">0/0.00%</div>
-                </div>
-            </div>
+            <!-- 統計表示は削除 -->
         </div>
     </div>
 </div>
@@ -381,10 +324,6 @@ class CounterApp {
         this.initializeElements();
         this.setupEventListeners();
         this.setMode('A');
-        this.updateAllStats();
-        
-        // 画面の向きを横向きに固定
-        this.lockOrientation();
     }
 
     initializeElements() {
@@ -395,16 +334,6 @@ class CounterApp {
         this.decrementBtn = document.getElementById('decrementBtn');
         this.resetBtn = document.getElementById('resetBtn');
         this.modeButtons = document.querySelectorAll('.mode-btn');
-        
-        // 統計表示要素
-        this.statElements = {
-            'A': document.getElementById('statA'),
-            'B': document.getElementById('statB'),
-            'C': document.getElementById('statC'),
-            'D': document.getElementById('statD'),
-            'E': document.getElementById('statE'),
-            'F': document.getElementById('statF')
-        };
     }
 
     setupEventListeners() {
@@ -433,7 +362,6 @@ class CounterApp {
         // 総G数入力の変更を監視
         this.totalCountElement.addEventListener('change', () => {
             this.updateTotalGames();
-            this.updateAllStats();
         });
 
         // タッチイベント（スマホ対応）
@@ -473,21 +401,18 @@ class CounterApp {
     increment() {
         this.counts[this.currentMode]++;
         this.updateDisplay();
-        this.updateAllStats();
     }
 
     decrement() {
         if (this.counts[this.currentMode] > 0) {
             this.counts[this.currentMode]--;
             this.updateDisplay();
-            this.updateAllStats();
         }
     }
 
     resetCurrent() {
         this.counts[this.currentMode] = 0;
         this.updateDisplay();
-        this.updateAllStats();
     }
 
     updateDisplay() {
@@ -502,33 +427,6 @@ class CounterApp {
         }
         this.totalGames = value;
         this.totalCountElement.value = value;
-    }
-
-    updateAllStats() {
-        // 各モードの統計を更新
-        for (let mode of ['A', 'B', 'C', 'D', 'E', 'F']) {
-            this.updateStat(mode);
-        }
-    }
-
-    updateStat(mode) {
-        const count = this.counts[mode];
-        let percentage = "0.00%";
-        
-        if (this.totalGames > 0) {
-            percentage = (count / this.totalGames * 100).toFixed(2) + "%";
-        }
-        
-        this.statElements[mode].textContent = `${count}/${percentage}`;
-    }
-
-    lockOrientation() {
-        // 画面の向きを横向きに固定（対応ブラウザのみ）
-        if (screen.orientation && screen.orientation.lock) {
-            screen.orientation.lock('landscape').catch(() => {
-                console.log('画面の向きの固定に失敗しました');
-            });
-        }
     }
 }
 
