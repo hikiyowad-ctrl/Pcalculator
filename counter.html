@@ -20,10 +20,10 @@
 
 body {
     margin: 0;
-    padding: 10px;
+    padding: 5px;
     background-color: #0a0a0a;
     color: #00ff00;
-    height: 100vh;
+    min-height: 100vh;
     overflow: hidden;
 }
 
@@ -32,32 +32,33 @@ body {
     flex-direction: column;
     height: 100%;
     background: #1a1a1a;
-    padding: 15px;
+    padding: 10px;
     border: 1px solid #00ff00;
     border-radius: 10px;
+    max-height: 100vh;
 }
 
 .mode-buttons {
     display: flex;
-    gap: 8px;
-    margin-bottom: 20px;
+    gap: 5px;
+    margin-bottom: 15px;
     flex-shrink: 0;
 }
 
 .mode-btn {
     flex: 1;
-    padding: 10px 5px;
+    padding: 8px 3px;
     border: 2px solid #00ff00;
     background: #000000;
     color: #00ff00;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    min-height: 35px;
+    min-height: 30px;
 }
 
 .mode-btn.active {
@@ -71,8 +72,8 @@ body {
 .game-section {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 15px;
     flex-shrink: 0;
 }
 
@@ -86,8 +87,8 @@ body {
 }
 
 .game-input {
-    width: 80px;
-    padding: 8px;
+    width: 70px;
+    padding: 6px;
     border: 1px solid #00ff00;
     border-radius: 5px;
     text-align: center;
@@ -108,8 +109,8 @@ body {
 .circle-buttons {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 15px;
     flex-shrink: 0;
 }
 
@@ -120,28 +121,29 @@ body {
     flex: 1;
 }
 
-/* カウントと分数の表示（ボタンの上） */
+/* カウントと分数の表示（ボタンの上） - フォントサイズ大きく */
 .count-display {
+    font-size: 18px;
+    color: #00ff00;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    margin-bottom: 6px;
+    font-weight: 700;
+}
+
+.rate-display {
     font-size: 14px;
     color: #00ff00;
     text-align: center;
     font-family: 'Orbitron', sans-serif;
-    margin-bottom: 8px;
+    opacity: 0.9;
+    margin-bottom: 6px;
     font-weight: 600;
 }
 
-.rate-display {
-    font-size: 12px;
-    color: #00ff00;
-    text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    opacity: 0.8;
-    margin-bottom: 8px;
-}
-
 .circle-btn {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
     border: 2px solid;
     border-radius: 50%;
     cursor: pointer;
@@ -151,12 +153,12 @@ body {
     font-size: 16px;
     font-weight: 700;
     font-family: 'Orbitron', sans-serif;
-    transition: all 0.1s ease;
+    transition: all 0.15s ease;
     position: relative;
     overflow: hidden;
 }
 
-/* ボタン押下時のアニメーション */
+/* ボタン押下時のアニメーション - 発光効果強化 */
 .circle-btn.pressed {
     transform: scale(0.85);
 }
@@ -164,21 +166,25 @@ body {
 .circle-btn::after {
     content: '';
     position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    border: 2px solid transparent;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border: 3px solid #ffffff;
     border-radius: 50%;
+    opacity: 0;
     transition: all 0.2s ease;
 }
 
 .circle-btn.pressed::after {
-    border-color: #ffffff;
-    box-shadow: 0 0 15px #ffffff;
+    opacity: 1;
+    box-shadow: 
+        0 0 20px #ffffff,
+        0 0 40px #ffffff,
+        inset 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
-/* 各ボタンの色 - 内側も同じ色で塗りつぶし */
+/* 各ボタンの色 - 発光色を個別に */
 .circle-btn-1 {
     border-color: #ff0000;
     background: #ff0000;
@@ -186,8 +192,11 @@ body {
 }
 
 .circle-btn-1.pressed::after {
-    border-color: #ffffff;
-    box-shadow: 0 0 20px #ffffff;
+    border-color: #ff4444;
+    box-shadow: 
+        0 0 25px #ff0000,
+        0 0 50px #ff0000,
+        inset 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
 .circle-btn-2 {
@@ -197,8 +206,11 @@ body {
 }
 
 .circle-btn-2.pressed::after {
-    border-color: #ffffff;
-    box-shadow: 0 0 20px #ffffff;
+    border-color: #44ff44;
+    box-shadow: 
+        0 0 25px #00ff00,
+        0 0 50px #00ff00,
+        inset 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
 .circle-btn-3 {
@@ -208,8 +220,11 @@ body {
 }
 
 .circle-btn-3.pressed::after {
-    border-color: #ffffff;
-    box-shadow: 0 0 20px #ffffff;
+    border-color: #4444ff;
+    box-shadow: 
+        0 0 25px #0000ff,
+        0 0 50px #0000ff,
+        inset 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
 .circle-btn-4 {
@@ -219,27 +234,30 @@ body {
 }
 
 .circle-btn-4.pressed::after {
-    border-color: #ffffff;
-    box-shadow: 0 0 20px #ffffff;
+    border-color: #ffff44;
+    box-shadow: 
+        0 0 25px #ffff00,
+        0 0 50px #ffff00,
+        inset 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
 /* 制御ボタン */
 .control-buttons {
     display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 8px;
+    margin-bottom: 15px;
     flex-shrink: 0;
 }
 
 .control-btn {
     flex: 1;
-    padding: 12px;
+    padding: 10px;
     border: 2px solid #00ff00;
     background: #000000;
     color: #00ff00;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 1px;
@@ -253,9 +271,10 @@ body {
 }
 
 .control-btn.pressed {
-    transform: scale(0.95);
+    transform: scale(0.92);
     background: #00ff00;
     color: #000000;
+    box-shadow: 0 0 20px #00ff00;
 }
 
 /* 数字入力時のスピンボタンを非表示 */
@@ -269,18 +288,60 @@ body {
     -moz-appearance: textfield;
 }
 
-/* 横向き用スタイル */
-@media (orientation: landscape) {
+/* スマホ用スタイル調整 */
+@media (max-height: 700px) {
     .container {
-        max-width: 600px;
-        margin: 0 auto;
+        padding: 8px;
+    }
+    
+    .mode-buttons {
+        margin-bottom: 10px;
+    }
+    
+    .circle-buttons {
+        margin-bottom: 10px;
+    }
+    
+    .control-buttons {
+        margin-bottom: 10px;
+    }
+    
+    .count-display {
+        font-size: 16px;
+        margin-bottom: 4px;
+    }
+    
+    .rate-display {
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+    
+    .circle-btn {
+        width: 40px;
+        height: 40px;
     }
 }
 
-/* 縦向き用スタイル */
-@media (orientation: portrait) {
+/* 横向き用スタイル */
+@media (orientation: landscape) and (max-height: 500px) {
     .container {
-        max-width: 100%;
+        padding: 5px;
+    }
+    
+    .mode-buttons {
+        margin-bottom: 8px;
+    }
+    
+    .game-section {
+        margin-bottom: 8px;
+    }
+    
+    .circle-buttons {
+        margin-bottom: 8px;
+    }
+    
+    .control-buttons {
+        margin-bottom: 8px;
     }
 }
 
@@ -291,7 +352,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -304,8 +365,9 @@ body {
     border-radius: 10px;
     padding: 20px;
     text-align: center;
-    max-width: 300px;
+    max-width: 280px;
     width: 90%;
+    box-shadow: 0 0 30px #00ff00;
 }
 
 .confirm-message {
@@ -313,6 +375,7 @@ body {
     font-family: 'Orbitron', sans-serif;
     margin-bottom: 20px;
     font-size: 16px;
+    font-weight: 600;
 }
 
 .confirm-buttons {
@@ -322,7 +385,7 @@ body {
 }
 
 .confirm-btn {
-    padding: 10px 20px;
+    padding: 12px 20px;
     border: 2px solid #00ff00;
     background: #000000;
     color: #00ff00;
@@ -332,6 +395,7 @@ body {
     font-weight: 600;
     transition: all 0.3s ease;
     flex: 1;
+    font-size: 14px;
 }
 
 .confirm-btn.yes {
@@ -342,6 +406,7 @@ body {
 .confirm-btn.yes:active {
     background: #00ff00;
     color: #000000;
+    transform: scale(0.95);
 }
 
 .confirm-btn.no {
@@ -352,6 +417,7 @@ body {
 .confirm-btn.no:active {
     background: #ff0000;
     color: #000000;
+    transform: scale(0.95);
 }
 </style>
 </head>
@@ -505,7 +571,7 @@ class CounterApp {
         button.classList.add('pressed');
         setTimeout(() => {
             button.classList.remove('pressed');
-        }, 150);
+        }, 200);
         
         // コールバック実行
         setTimeout(callback, 50);
