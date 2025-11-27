@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>カウンターアプリ</title>
+
+<style>
+
+body {
+
+font-family: Arial, sans-serif;
+
+max-width: 400px;
+
+margin: 0 auto;
+
+padding: 20px;
+
+background-color: #f5f5f5;
+
+}
+
+.container {
+
+background: white;
+
+border-radius: 10px;
+
+padding: 20px;
+
+box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
+}
+
+.mode-buttons {
+
+display: grid;
+
+grid-template-columns: 1fr 1fr;
+
+gap: 10px;
+
+margin-bottom: 20px;
+
+}
+
+.mode-btn {
+
+padding: 15px;
+
+border: 2px solid #007bff;
+
+background: white;
+
+color: #007bff;
+
+border-radius: 5px;
+
+cursor: pointer;
+
+font-size: 16px;
+
+font-weight: bold;
+
+}
+
+.mode-btn.active {
+
+background: #007bff;
+
+color: white;
+
+}
+
+.counter-display {
+
+text-align: center;
+
+margin: 20px 0;
+
+}
+
+.counter-value {
+
+font-size: 48px;
+
+font-weight: bold;
+
+color: #333;
+
+}
+
+.counter-label {
+
+font-size: 14px;
+
+color: #666;
+
+margin-top: 5px;
+
+}
+
+.control-buttons {
+
+display: flex;
+
+gap: 10px;
+
+margin-bottom: 20px;
+
+}
+
+.control-btn {
+
+flex: 1;
+
+padding: 15px;
+
+border: none;
+
+border-radius: 5px;
+
+font-size: 16px;
+
+cursor: pointer;
+
+}
+
+.increment-btn {
+
+background: #28a745;
+
+color: white;
+
+}
+
+.decrement-btn {
+
+background: #dc3545;
+
+color: white;
+
+}
+
+.reset-btn {
+
+background: #ffc107;
+
+color: black;
+
+}
+
+.stats {
+
+background: #f8f9fa;
+
+padding: 15px;
+
+border-radius: 5px;
+
+margin-bottom: 20px;
+
+}
+
+.stat-item {
+
+display: flex;
+
+justify-content: space-between;
+
+margin-bottom: 5px;
+
+}
+
+.long-press-info {
+
+text-align: center;
+
+color: #666;
+
+font-size: 12px;
+
+margin-top: 20px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="mode-buttons">
+
+<button class="mode-btn" data-mode="A">MODE A</button>
+
+<button class="mode-btn" data-mode="B">MODE B</button>
+
+<button class="mode-btn" data-mode="C">MODE C</button>
+
+<button class="mode-btn" data-mode="D">MODE D</button>
+
+<button class="mode-btn" data-mode="E">MODE E</button>
+
+<button class="mode-btn" data-mode="F">MODE F</button>
+
+</div>
+
+
+
+<div class="counter-display">
+
+<div class="counter-value" id="currentCount">0</div>
+
+<div class="counter-label">現在のカウント</div>
+
+</div>
+
+
+
+<div class="control-buttons">
+
+<button class="control-btn increment-btn" id="incrementBtn">+</button>
+
+<button class="control-btn decrement-btn" id="decrementBtn">-</button>
+
+<button class="control-btn reset-btn" id="resetBtn">リセット</button>
+
+</div>
+
+
+
+<div class="stats">
+
+<div class="stat-item">
+
+<span>総合G数 ▶</span>
+
+<span id="totalCount">0</span>
+
+</div>
+
+<div class="stat-item">
+
+<span>打ち始め総G数 ▶</span>
+
+<span id="startTotalCount">0</span>
+
+</div>
+
+</div>
+
+
+
+<div class="long-press-info">
+
+LongPress 100/s
+
+</div>
+
+</div>
+
+
+
+<script>
+
+class CounterApp {
+
+constructor() {
+
+this.currentMode = 'A';
+
+this.currentCount = 0;
+
+this.totalCount = 0;
+
+this.startTotalCount = 0;
+
+this.longPressInterval = null;
+
+
+this.initializeElements();
+
+this.setupEventListeners();
+
+this.setMode('A');
+
+}
+
+
+
+initializeElements() {
+
+this.currentCountElement = document.getElementById('currentCount');
+
+this.totalCountElement = document.getElementById('totalCount');
+
+this.startTotalCountElement = document.getElementById('startTotalCount');
+
+this.incrementBtn = document.getElementById('incrementBtn');
+
+this.decrementBtn = document.getElementById('decrementBtn');
+
+this.resetBtn = document.getElementById('resetBtn');
+
+this.modeButtons = document.querySelectorAll('.mode-btn');
+
+}
+
+
+
+setupEventListeners() {
+
+// モードボタン
+
+this.modeButtons.forEach(btn => {
+
+btn.addEventListener('click', () => {
+
+this.setMode(btn.dataset.mode);
+
+});
+
+});
+
+
+
+// インクリメントボタン
+
+this.incrementBtn.addEventListener('click', () => {
+
+this.increment();
+
+});
+
+
+
+this.incrementBtn.addEventListener('mousedown', () => {
+
+this.startLongPress('increment');
+
+});
+
+
+
+this.incrementBtn.addEventListener('mouseup', () => {
+
+this.stopLongPress();
+
+});
+
+
+
+this.incrementBtn.addEventListener('mouseleave', () => {
+
+this.stopLongPress();
+
+});
+
+
+
+// デクリメントボタン
+
+this.decrementBtn.addEventListener('click', () => {
+
+this.decrement();
+
+});
+
+
+
+this.decrementBtn.addEventListener('mousedown', () => {
+
+this.startLongPress('decrement');
+
+});
+
+
+
+this.decrementBtn.addEventListener('mouseup', () => {
+
+this.stopLongPress();
+
+});
+
+
+
+this.decrementBtn.addEventListener('mouseleave', () => {
+
+this.stopLongPress();
+
+});
+
+
+
+// リセットボタン
+
+this.resetBtn.addEventListener('click', () => {
+
+this.resetCurrent();
+
+});
+
+}
+
+
+
+setMode(mode) {
+
+this.currentMode = mode;
+
+
+// アクティブなモードボタンのスタイル更新
+
+this.modeButtons.forEach(btn => {
+
+if (btn.dataset.mode === mode) {
+
+btn.classList.add('active');
+
+} else {
+
+btn.classList.remove('active');
+
+}
+
+});
+
+
+
+// 必要に応じてモード固有の設定をここに追加
+
+console.log(`Mode changed to: ${mode}`);
+
+}
+
+
+
+increment() {
+
+this.currentCount++;
+
+this.totalCount++;
+
+this.updateDisplay();
+
+}
+
+
+
+decrement() {
+
+if (this.currentCount > 0) {
+
+this.currentCount--;
+
+this.totalCount++;
+
+this.updateDisplay();
+
+}
+
+}
+
+
+
+resetCurrent() {
+
+this.startTotalCount += this.currentCount;
+
+this.currentCount = 0;
+
+this.updateDisplay();
+
+}
+
+
+
+startLongPress(operation) {
+
+this.stopLongPress(); // 既存のインターバルをクリア
+
+
+this.longPressInterval = setInterval(() => {
+
+if (operation === 'increment') {
+
+this.increment();
+
+} else if (operation === 'decrement' && this.currentCount > 0) {
+
+this.decrement();
+
+}
+
+}, 10); // 100/s = 10ms間隔
+
+}
+
+
+
+stopLongPress() {
+
+if (this.longPressInterval) {
+
+clearInterval(this.longPressInterval);
+
+this.longPressInterval = null;
+
+}
+
+}
+
+
+
+updateDisplay() {
+
+this.currentCountElement.textContent = this.currentCount;
+
+this.totalCountElement.textContent = this.totalCount;
+
+this.startTotalCountElement.textContent = this.startTotalCount;
+
+}
+
+}
+
+
+
+// アプリケーションの初期化
+
+document.addEventListener('DOMContentLoaded', () => {
+
+new CounterApp();
+
+});
+
+</script>
+
+</body>
+
+</html>
