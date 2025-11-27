@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="screen-orientation" content="landscape">
 <title>カウンターアプリ</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -19,20 +18,13 @@
     box-sizing: border-box;
 }
 
-html, body {
+body {
     margin: 0;
-    padding: 0;
-    width: 100vh;
-    height: 100vw;
-    overflow: hidden;
+    padding: 10px;
     background-color: #0a0a0a;
-    transform: rotate(90deg);
-    transform-origin: center center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    margin-top: -50vw;
-    margin-left: -50vh;
+    color: #00ff00;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .container {
@@ -42,6 +34,7 @@ html, body {
     background: #1a1a1a;
     padding: 15px;
     border: 1px solid #00ff00;
+    border-radius: 10px;
 }
 
 .header {
@@ -206,7 +199,7 @@ html, body {
     transition: all 0.3s ease;
 }
 
-.control-btn:active {
+.control-btn.active {
     background: #00ff00;
     color: #000000;
     box-shadow: 0 0 15px #00ff00;
@@ -261,6 +254,21 @@ html, body {
 .game-input[type=number] {
     -moz-appearance: textfield;
 }
+
+/* 横向き用スタイル */
+@media (orientation: landscape) {
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+}
+
+/* 縦向き用スタイル */
+@media (orientation: portrait) {
+    .container {
+        max-width: 100%;
+    }
+}
 </style>
 </head>
 <body>
@@ -302,7 +310,7 @@ html, body {
 
     <!-- 制御ボタン -->
     <div class="control-buttons">
-        <button class="control-btn" id="incrementBtn">増加モード</button>
+        <button class="control-btn active" id="incrementBtn">増加モード</button>
         <button class="control-btn" id="decrementBtn">減少モード</button>
         <button class="control-btn" id="resetBtn">リセット</button>
     </div>
@@ -322,7 +330,7 @@ class CounterApp {
         
         // 各モードと各カウントボタンの値を保持
         this.counts = {
-            'A': [0, 0, 0, 0], // [count1, count2, count3, count4]
+            'A': [0, 0, 0, 0],
             'B': [0, 0, 0, 0],
             'C': [0, 0, 0, 0],
             'D': [0, 0, 0, 0],
@@ -377,6 +385,12 @@ class CounterApp {
                 const index = parseInt(btn.dataset.index);
                 this.handleCountButton(index);
             });
+            
+            btn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const index = parseInt(btn.dataset.index);
+                this.handleCountButton(index);
+            });
         });
 
         // 増加モードボタン
@@ -399,15 +413,6 @@ class CounterApp {
             this.updateTotalGames();
             this.updateDisplay();
         });
-
-        // タッチイベント（スマホ対応）
-        this.circleButtons.forEach(btn => {
-            btn.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                const index = parseInt(btn.dataset.index);
-                this.handleCountButton(index);
-            });
-        });
     }
 
     setMode(mode) {
@@ -422,7 +427,6 @@ class CounterApp {
             }
         });
 
-        // 現在のモードのカウントを表示
         this.updateDisplay();
     }
 
@@ -431,15 +435,11 @@ class CounterApp {
         
         // ボタンのスタイル更新
         if (isIncrement) {
-            this.incrementBtn.style.background = '#00ff00';
-            this.incrementBtn.style.color = '#000000';
-            this.decrementBtn.style.background = '#000000';
-            this.decrementBtn.style.color = '#00ff00';
+            this.incrementBtn.classList.add('active');
+            this.decrementBtn.classList.remove('active');
         } else {
-            this.incrementBtn.style.background = '#000000';
-            this.incrementBtn.style.color = '#00ff00';
-            this.decrementBtn.style.background = '#00ff00';
-            this.decrementBtn.style.color = '#000000';
+            this.incrementBtn.classList.remove('active');
+            this.decrementBtn.classList.add('active');
         }
     }
 
@@ -447,10 +447,8 @@ class CounterApp {
         const currentCounts = this.counts[this.currentMode];
         
         if (this.isIncrementMode) {
-            // 増加モード
             currentCounts[buttonIndex]++;
         } else {
-            // 減少モード
             if (currentCounts[buttonIndex] > 0) {
                 currentCounts[buttonIndex]--;
             }
@@ -472,7 +470,7 @@ class CounterApp {
             element.textContent = currentCounts[index];
         });
         
-        // レート表示を更新 (1/(総ゲーム数/それぞれのカウント))
+        // レート表示を更新
         this.rateDisplays.forEach((element, index) => {
             const count = currentCounts[index];
             let rate = "1/0.00";
@@ -489,7 +487,6 @@ class CounterApp {
     }
 
     updateTotalGames() {
-        // 入力値のバリデーション
         let value = parseInt(this.totalCountElement.value);
         if (isNaN(value) || value < 0) {
             value = 0;
@@ -501,8 +498,7 @@ class CounterApp {
 
 // アプリケーションの初期化
 document.addEventListener('DOMContentLoaded', () => {
-    const app = new CounterApp();
-    app.setIncrementMode(true); // 初期状態を増加モードに設定
+    new CounterApp();
 });
 </script>
 </body>
