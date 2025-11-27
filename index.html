@@ -3,49 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>パチスロ解析・統計ツール | pachislotstats.com</title>
+    <title>【仕事量計算】パチスロツール集 トップページ</title>
     <style>
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f0f0f0; }
-        .container { max-width: 900px; margin: 50px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #007bff; margin-bottom: 40px; }
-        .tool-list { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-        .tool-card { border: 1px solid #ddd; padding: 20px; border-radius: 6px; width: calc(50% - 20px); box-sizing: border-box; transition: box-shadow 0.3s; text-align: center; }
-        .tool-card:hover { box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
-        .tool-card h2 { margin-top: 0; color: #007bff; }
-        .tool-card a { text-decoration: none; color: inherit; display: block; }
-        .footer { margin-top: 50px; padding: 20px 0; border-top: 1px solid #eee; text-align: center; font-size: 0.9em; }
-        .footer a { color: #007bff; text-decoration: none; margin: 0 10px; }
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            text-align: center;
+        }
+        .main-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+        }
+        .tool-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        .tool-link {
+            padding: 15px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .tool-link:hover {
+            background-color: #0056b3;
+        }
+        /* フッターリンクのスタイル */
+        .footer-links {
+            text-align: center;
+            margin-top: 30px;
+            padding: 15px 0;
+            border-top: 1px solid #ccc;
+            font-size: 14px;
+        }
+        .footer-links a {
+            color: #007bff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>パチスロ解析・統計ツール 一覧</h1>
-        <p style="text-align: center; color: #555;">あなたの遊技データを強力にサポートします。</p>
-
-        <div class="tool-list">
+    <div class="main-container">
+        <h1>パチスロ 収支・仕事量計算ツール集</h1>
+        
+        <div class="tool-menu">
             
-            <div class="tool-card">
-                <a href="pachinko_calc.html">
-                    <h2>🎰 パチンコ収支計算ツール</h2>
-                    <p>交換率、持ち玉比率などを考慮した正確な仕事量・期待値計算をサポートします。</p>
-                </a>
-            </div>
-
-            <div class="tool-card">
-                <a href="pachislo_stats.html">
-                    <h2>🔥 パチスロ統計解析ツール (予定)</h2>
-                    <p>（今後追加予定）パチスロの遊技履歴やデータに基づき、機械割や期待値を詳細に分析します。</p>
-                </a>
-            </div>
+            <a href="counter-app.html" class="tool-link" style="background-color: #28a745;">
+                G数カウンター（ゲーム数記録）
+            </a>
             
+            <a href="workload-calc.html" class="tool-link">
+                仕事量・期待値計算ツール
+            </a>
+            
+            <a href="data-viewer.html" class="tool-link">
+                実戦データ一覧
+            </a>
         </div>
-
-        <div class="footer">
-            <p>&copy; 2025 pachislotstats.com All Rights Reserved.</p>
-            <a href="privacy.html">プライバシーポリシー</a> |
-            <a href="disclaimer.html">免責事項・利用規約</a> |
-            <a href="contact.html">お問い合わせ</a>
-        </div>
+        
+        <p>このサイトは、パチスロ遊技の効率と期待値を最大化するための補助ツールを提供しています。</p>
+        
     </div>
+    
+    <div class="footer-links">
+        <a href="index.html">トップページ</a> | 
+        <a href="privacy.html">プライバシーポリシー</a> | 
+        <a href="contact.html">お問い合わせ</a> | 
+        <a href="about.html">このサイトについて</a>
+    </div>
+
 </body>
 </html>
