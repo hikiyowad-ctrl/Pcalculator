@@ -37,17 +37,6 @@ body {
     border-radius: 10px;
 }
 
-.header {
-    text-align: center;
-    margin-bottom: 15px;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: #00ff00;
-    text-shadow: 0 0 10px #00ff00;
-    letter-spacing: 2px;
-}
-
 .mode-buttons {
     display: flex;
     gap: 8px;
@@ -210,15 +199,12 @@ body {
     box-shadow: 0 0 15px #00ff00;
 }
 
-/* ゲームカウンター */
+/* ゲームカウンター - 赤いボタンの左に配置 */
 .game-section {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: #000000;
-    padding: 15px;
-    border-radius: 5px;
-    border: 1px solid #00ff00;
+    gap: 10px;
+    margin-bottom: 20px;
     flex-shrink: 0;
 }
 
@@ -228,11 +214,12 @@ body {
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 1px;
     font-size: 16px;
+    white-space: nowrap;
 }
 
 .game-input {
-    width: 100px;
-    padding: 10px;
+    width: 80px;
+    padding: 8px;
     border: 1px solid #00ff00;
     border-radius: 5px;
     text-align: center;
@@ -348,12 +335,18 @@ body {
 </head>
 <body>
 <div class="container">
-    <div class="header">個人Gm</div>
+    <!-- 個人Gm削除 -->
     
     <div class="mode-buttons">
         <button class="mode-btn" data-mode="A">MODE A</button>
         <button class="mode-btn" data-mode="B">MODE B</button>
         <button class="mode-btn" data-mode="C">MODE C</button>
+    </div>
+
+    <!-- ゲームカウンターを赤いボタンの左に配置 -->
+    <div class="game-section">
+        <span class="game-label">GAME</span>
+        <input type="number" class="game-input" id="totalCount" value="0" min="0">
     </div>
 
     <!-- 丸いカウントボタン -->
@@ -385,12 +378,6 @@ body {
         <button class="control-btn active" id="incrementBtn">増加モード</button>
         <button class="control-btn" id="decrementBtn">減少モード</button>
         <button class="control-btn" id="resetBtn">リセット</button>
-    </div>
-
-    <!-- ゲームカウンター -->
-    <div class="game-section">
-        <span class="game-label">GAME</span>
-        <input type="number" class="game-input" id="totalCount" value="0" min="0">
     </div>
 </div>
 
