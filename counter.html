@@ -67,6 +67,43 @@ body {
     box-shadow: 0 0 10px #00ff00;
 }
 
+/* ゲームカウンター */
+.game-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+}
+
+.game-label {
+    font-weight: 600;
+    color: #00ff00;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+    font-size: 16px;
+    white-space: nowrap;
+}
+
+.game-input {
+    width: 80px;
+    padding: 8px;
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 16px;
+    background: #000000;
+    color: #00ff00;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 500;
+}
+
+.game-input:focus {
+    outline: none;
+    border-color: #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+}
+
 /* 丸いカウントボタン */
 .circle-buttons {
     display: flex;
@@ -114,11 +151,31 @@ body {
     font-size: 16px;
     font-weight: 700;
     font-family: 'Orbitron', sans-serif;
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.circle-btn:active {
-    transform: scale(0.9);
+/* ボタン押下時のアニメーション */
+.circle-btn.pressed {
+    transform: scale(0.85);
+}
+
+.circle-btn::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.circle-btn.pressed::after {
+    border-color: #ffffff;
+    box-shadow: 0 0 15px #ffffff;
 }
 
 /* 各ボタンの色 - 内側も同じ色で塗りつぶし */
@@ -128,10 +185,9 @@ body {
     color: #000000;
 }
 
-.circle-btn-1:active {
-    background: #cc0000;
-    border-color: #cc0000;
-    box-shadow: 0 0 15px #ff0000;
+.circle-btn-1.pressed::after {
+    border-color: #ffffff;
+    box-shadow: 0 0 20px #ffffff;
 }
 
 .circle-btn-2 {
@@ -140,10 +196,9 @@ body {
     color: #000000;
 }
 
-.circle-btn-2:active {
-    background: #00cc00;
-    border-color: #00cc00;
-    box-shadow: 0 0 15px #00ff00;
+.circle-btn-2.pressed::after {
+    border-color: #ffffff;
+    box-shadow: 0 0 20px #ffffff;
 }
 
 .circle-btn-3 {
@@ -152,10 +207,9 @@ body {
     color: #ffffff;
 }
 
-.circle-btn-3:active {
-    background: #0000cc;
-    border-color: #0000cc;
-    box-shadow: 0 0 15px #0000ff;
+.circle-btn-3.pressed::after {
+    border-color: #ffffff;
+    box-shadow: 0 0 20px #ffffff;
 }
 
 .circle-btn-4 {
@@ -164,10 +218,9 @@ body {
     color: #000000;
 }
 
-.circle-btn-4:active {
-    background: #cccc00;
-    border-color: #cccc00;
-    box-shadow: 0 0 15px #ffff00;
+.circle-btn-4.pressed::after {
+    border-color: #ffffff;
+    box-shadow: 0 0 20px #ffffff;
 }
 
 /* 制御ボタン */
@@ -199,41 +252,10 @@ body {
     box-shadow: 0 0 15px #00ff00;
 }
 
-/* ゲームカウンター - 赤いボタンの左に配置 */
-.game-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-shrink: 0;
-}
-
-.game-label {
-    font-weight: 600;
-    color: #00ff00;
-    font-family: 'Orbitron', sans-serif;
-    letter-spacing: 1px;
-    font-size: 16px;
-    white-space: nowrap;
-}
-
-.game-input {
-    width: 80px;
-    padding: 8px;
-    border: 1px solid #00ff00;
-    border-radius: 5px;
-    text-align: center;
-    font-size: 16px;
-    background: #000000;
-    color: #00ff00;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 500;
-}
-
-.game-input:focus {
-    outline: none;
-    border-color: #00ff00;
-    box-shadow: 0 0 10px #00ff00;
+.control-btn.pressed {
+    transform: scale(0.95);
+    background: #00ff00;
+    color: #000000;
 }
 
 /* 数字入力時のスピンボタンを非表示 */
@@ -335,15 +357,13 @@ body {
 </head>
 <body>
 <div class="container">
-    <!-- 個人Gm削除 -->
-    
     <div class="mode-buttons">
         <button class="mode-btn" data-mode="A">MODE A</button>
         <button class="mode-btn" data-mode="B">MODE B</button>
         <button class="mode-btn" data-mode="C">MODE C</button>
     </div>
 
-    <!-- ゲームカウンターを赤いボタンの左に配置 -->
+    <!-- ゲームカウンター -->
     <div class="game-section">
         <span class="game-label">GAME</span>
         <input type="number" class="game-input" id="totalCount" value="0" min="0">
@@ -394,7 +414,12 @@ class CounterApp {
             'C': [0, 0, 0, 0]
         };
         
-        this.totalGames = 0;
+        // 各モードごとのG数を保持
+        this.totalGames = {
+            'A': 0,
+            'B': 0,
+            'C': 0
+        };
         
         this.initializeElements();
         this.setupEventListeners();
@@ -438,30 +463,34 @@ class CounterApp {
         // 丸いカウントボタン
         this.circleButtons.forEach(btn => {
             btn.addEventListener('click', () => {
-                const index = parseInt(btn.dataset.index);
-                this.handleCountButton(index);
+                this.handleButtonPress(btn, () => {
+                    const index = parseInt(btn.dataset.index);
+                    this.handleCountButton(index);
+                });
             });
             
             btn.addEventListener('touchstart', (e) => {
                 e.preventDefault();
-                const index = parseInt(btn.dataset.index);
-                this.handleCountButton(index);
+                this.handleButtonPress(btn, () => {
+                    const index = parseInt(btn.dataset.index);
+                    this.handleCountButton(index);
+                });
             });
         });
 
-        // 増加モードボタン
-        this.incrementBtn.addEventListener('click', () => {
-            this.setIncrementMode(true);
-        });
-
-        // 減少モードボタン
-        this.decrementBtn.addEventListener('click', () => {
-            this.setIncrementMode(false);
-        });
-
-        // リセットボタン
-        this.resetBtn.addEventListener('click', () => {
-            this.showResetConfirmation();
+        // 制御ボタン
+        [this.incrementBtn, this.decrementBtn, this.resetBtn].forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.handleButtonPress(btn, () => {
+                    if (btn === this.incrementBtn) {
+                        this.setIncrementMode(true);
+                    } else if (btn === this.decrementBtn) {
+                        this.setIncrementMode(false);
+                    } else if (btn === this.resetBtn) {
+                        this.showResetConfirmation();
+                    }
+                });
+            });
         });
 
         // 総G数入力の変更を監視
@@ -469,6 +498,17 @@ class CounterApp {
             this.updateTotalGames();
             this.updateDisplay();
         });
+    }
+
+    handleButtonPress(button, callback) {
+        // ボタン押下時の視覚的フィードバック
+        button.classList.add('pressed');
+        setTimeout(() => {
+            button.classList.remove('pressed');
+        }, 150);
+        
+        // コールバック実行
+        setTimeout(callback, 50);
     }
 
     setMode(mode) {
@@ -483,6 +523,9 @@ class CounterApp {
             }
         });
 
+        // 現在のモードのG数を表示
+        this.totalCountElement.value = this.totalGames[this.currentMode];
+        
         this.updateDisplay();
     }
 
@@ -557,8 +600,19 @@ class CounterApp {
         this.updateDisplay();
     }
 
+    updateTotalGames() {
+        let value = parseInt(this.totalCountElement.value);
+        if (isNaN(value) || value < 0) {
+            value = 0;
+        }
+        this.totalGames[this.currentMode] = value;
+        this.totalCountElement.value = value;
+        this.updateDisplay();
+    }
+
     updateDisplay() {
         const currentCounts = this.counts[this.currentMode];
+        const currentTotalGames = this.totalGames[this.currentMode];
         
         // 各カウントボタンの表示を更新
         this.countDisplays.forEach((element, index) => {
@@ -570,8 +624,8 @@ class CounterApp {
             const count = currentCounts[index];
             let rate = "1/0.00";
             
-            if (count > 0 && this.totalGames > 0) {
-                const calculatedRate = this.totalGames / count;
+            if (count > 0 && currentTotalGames > 0) {
+                const calculatedRate = currentTotalGames / count;
                 rate = `1/${calculatedRate.toFixed(2)}`;
             } else if (count > 0) {
                 rate = "1/0.00";
@@ -579,15 +633,6 @@ class CounterApp {
             
             element.textContent = rate;
         });
-    }
-
-    updateTotalGames() {
-        let value = parseInt(this.totalCountElement.value);
-        if (isNaN(value) || value < 0) {
-            value = 0;
-        }
-        this.totalGames = value;
-        this.totalCountElement.value = value;
     }
 }
 
