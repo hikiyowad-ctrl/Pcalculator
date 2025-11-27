@@ -18,12 +18,13 @@
     box-sizing: border-box;
 }
 
-body {
+html, body {
     margin: 0;
-    padding: 5px;
+    padding: 0;
+    width: 100%;
+    height: 100%;
     background-color: #0a0a0a;
     color: #00ff00;
-    min-height: 100vh;
     overflow: hidden;
     transition: background-color 0.3s ease;
 }
@@ -42,7 +43,8 @@ body.yellow-bg { background-color: #666600; }
     padding: 10px;
     border: 1px solid #00ff00;
     border-radius: 10px;
-    max-height: 100vh;
+    /* max-heightを削除、代わりにmin-heightを使用 */
+    min-height: 0;
 }
 
 .mode-buttons {
@@ -82,6 +84,7 @@ body.yellow-bg { background-color: #666600; }
     margin-bottom: 15px;
     flex: 1;
     min-height: 0;
+    overflow: hidden;
 }
 
 /* 左側：GAMEカウンター - 囲い線なし、入力フィールドが上 */
@@ -91,7 +94,7 @@ body.yellow-bg { background-color: #666600; }
     align-items: center;
     justify-content: center;
     min-width: 100px;
-    /* 囲い線を削除 */
+    flex-shrink: 0;
 }
 
 .game-input {
@@ -105,7 +108,7 @@ body.yellow-bg { background-color: #666600; }
     color: #00ff00;
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
-    margin-bottom: 8px; /* 入力フィールドとラベルの間隔 */
+    margin-bottom: 8px;
 }
 
 .game-input:focus {
@@ -120,6 +123,7 @@ body.yellow-bg { background-color: #666600; }
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 1px;
     font-size: 20px;
+    white-space: nowrap;
 }
 
 /* 右側：丸いカウントボタン */
@@ -128,6 +132,7 @@ body.yellow-bg { background-color: #666600; }
     justify-content: space-between;
     gap: 10px;
     flex: 1;
+    min-width: 0;
 }
 
 .circle-btn-container {
@@ -136,6 +141,7 @@ body.yellow-bg { background-color: #666600; }
     align-items: center;
     justify-content: center;
     flex: 1;
+    min-width: 0;
 }
 
 /* カウントと分数の表示（ボタンの上） */
@@ -146,6 +152,7 @@ body.yellow-bg { background-color: #666600; }
     font-family: 'Orbitron', sans-serif;
     margin-bottom: 8px;
     font-weight: 700;
+    line-height: 1.2;
 }
 
 .rate-display {
@@ -156,6 +163,7 @@ body.yellow-bg { background-color: #666600; }
     opacity: 0.9;
     margin-bottom: 8px;
     font-weight: 600;
+    line-height: 1.2;
 }
 
 .circle-btn {
@@ -173,6 +181,7 @@ body.yellow-bg { background-color: #666600; }
     transition: all 0.15s ease;
     position: relative;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 /* ボタン押下時のアニメーション - 発光効果強化 */
@@ -314,7 +323,7 @@ body.yellow-bg { background-color: #666600; }
     -moz-appearance: textfield;
 }
 
-/* スマホ用スタイル調整 */
+/* スマホ用スタイル調整 - 高さの制限を緩和 */
 @media (max-height: 700px) {
     .container {
         padding: 8px;
@@ -362,36 +371,79 @@ body.yellow-bg { background-color: #666600; }
     }
 }
 
-/* 横向き用スタイル */
+/* 横向き用スタイル - さらにコンパクトに */
 @media (orientation: landscape) and (max-height: 500px) {
     .container {
         padding: 5px;
     }
     
     .mode-buttons {
-        margin-bottom: 8px;
+        margin-bottom: 5px;
+    }
+    
+    .mode-btn {
+        padding: 6px 2px;
+        font-size: 10px;
+        min-height: 25px;
     }
     
     .main-content {
-        margin-bottom: 8px;
+        margin-bottom: 5px;
         gap: 8px;
     }
     
     .control-buttons {
-        margin-bottom: 8px;
+        margin-bottom: 5px;
+    }
+    
+    .control-btn {
+        padding: 8px;
+        font-size: 12px;
     }
     
     .count-display {
-        font-size: 18px;
+        font-size: 16px;
+        margin-bottom: 4px;
     }
     
     .rate-display {
-        font-size: 14px;
+        font-size: 12px;
+        margin-bottom: 4px;
     }
     
     .circle-btn {
-        width: 45px;
-        height: 45px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .game-input {
+        font-size: 16px;
+        padding: 6px;
+        margin-bottom: 4px;
+    }
+    
+    .game-label {
+        font-size: 14px;
+    }
+}
+
+/* 超低画面用 */
+@media (max-height: 400px) {
+    .container {
+        padding: 3px;
+    }
+    
+    .mode-buttons {
+        margin-bottom: 3px;
+    }
+    
+    .main-content {
+        margin-bottom: 3px;
+        gap: 5px;
+    }
+    
+    .control-buttons {
+        margin-bottom: 3px;
     }
 }
 
@@ -418,6 +470,7 @@ body.yellow-bg { background-color: #666600; }
     max-width: 280px;
     width: 90%;
     box-shadow: 0 0 30px #00ff00;
+    margin: 10px;
 }
 
 .confirm-message {
@@ -544,6 +597,11 @@ class CounterApp {
         this.setupEventListeners();
         this.setMode('A');
         this.updateDisplay();
+        
+        // 画面回転時のリサイズ対応
+        this.handleResize();
+        window.addEventListener('resize', () => this.handleResize());
+        window.addEventListener('orientationchange', () => this.handleResize());
     }
 
     initializeElements() {
@@ -569,6 +627,17 @@ class CounterApp {
             document.getElementById('rateDisplay3'),
             document.getElementById('rateDisplay4')
         ];
+    }
+
+    handleResize() {
+        // リサイズ時に少し遅延して実行
+        setTimeout(() => {
+            // 必要に応じて要素のサイズ調整
+            const container = document.querySelector('.container');
+            if (container) {
+                container.style.minHeight = '0';
+            }
+        }, 100);
     }
 
     setupEventListeners() {
