@@ -28,11 +28,11 @@ body {
     transition: background-color 0.3s ease;
 }
 
-/* ボタン色に応じた背面色変化 */
-body.red-bg { background-color: #330000; }
-body.green-bg { background-color: #003300; }
-body.blue-bg { background-color: #000033; }
-body.yellow-bg { background-color: #333300; }
+/* ボタン色に応じた背面色変化 - 明るい色に */
+body.red-bg { background-color: #660000; }
+body.green-bg { background-color: #006600; }
+body.blue-bg { background-color: #000066; }
+body.yellow-bg { background-color: #666600; }
 
 .container {
     display: flex;
@@ -84,26 +84,14 @@ body.yellow-bg { background-color: #333300; }
     min-height: 0;
 }
 
-/* 左側：GAMEカウンター */
+/* 左側：GAMEカウンター - 囲い線なし、入力フィールドが上 */
 .game-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: #000000;
-    padding: 15px;
-    border: 1px solid #00ff00;
-    border-radius: 10px;
     min-width: 100px;
-}
-
-.game-label {
-    font-weight: 600;
-    color: #00ff00;
-    font-family: 'Orbitron', sans-serif;
-    letter-spacing: 1px;
-    font-size: 20px;
-    margin-bottom: 10px;
+    /* 囲い線を削除 */
 }
 
 .game-input {
@@ -117,12 +105,21 @@ body.yellow-bg { background-color: #333300; }
     color: #00ff00;
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
+    margin-bottom: 8px; /* 入力フィールドとラベルの間隔 */
 }
 
 .game-input:focus {
     outline: none;
     border-color: #00ff00;
     box-shadow: 0 0 15px #00ff00;
+}
+
+.game-label {
+    font-weight: 600;
+    color: #00ff00;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+    font-size: 20px;
 }
 
 /* 右側：丸いカウントボタン */
@@ -141,7 +138,7 @@ body.yellow-bg { background-color: #333300; }
     flex: 1;
 }
 
-/* カウントと分数の表示（ボタンの上） - フォントサイズさらに大きく */
+/* カウントと分数の表示（ボタンの上） */
 .count-display {
     font-size: 24px;
     color: #00ff00;
@@ -290,11 +287,20 @@ body.yellow-bg { background-color: #333300; }
     box-shadow: 0 0 15px #00ff00;
 }
 
+/* 減少ボタンの枠線を赤色に */
+#decrementBtn {
+    border-color: #ff0000;
+    color: #ff0000;
+}
+
+#decrementBtn.active {
+    background: #ff0000;
+    color: #000000;
+    box-shadow: 0 0 15px #ff0000;
+}
+
 .control-btn.pressed {
     transform: scale(0.92);
-    background: #00ff00;
-    color: #000000;
-    box-shadow: 0 0 20px #00ff00;
 }
 
 /* 数字入力時のスピンボタンを非表示 */
@@ -344,7 +350,6 @@ body.yellow-bg { background-color: #333300; }
     
     .game-section {
         min-width: 80px;
-        padding: 10px;
     }
     
     .game-label {
@@ -476,10 +481,10 @@ body.yellow-bg { background-color: #333300; }
 
     <!-- メインコンテンツ：GAMEカウンターとボタンを並列 -->
     <div class="main-content">
-        <!-- 左側：GAMEカウンター -->
+        <!-- 左側：GAMEカウンター - 入力フィールドが上 -->
         <div class="game-section">
-            <span class="game-label">GAME</span>
             <input type="number" class="game-input" id="totalCount" value="0" min="0">
+            <span class="game-label">GAME</span>
         </div>
 
         <!-- 右側：丸いカウントボタン -->
@@ -509,8 +514,8 @@ body.yellow-bg { background-color: #333300; }
 
     <!-- 制御ボタン -->
     <div class="control-buttons">
-        <button class="control-btn active" id="incrementBtn">増加モード</button>
-        <button class="control-btn" id="decrementBtn">減少モード</button>
+        <button class="control-btn active" id="incrementBtn">増加</button>
+        <button class="control-btn" id="decrementBtn">減少</button>
         <button class="control-btn" id="resetBtn">リセット</button>
     </div>
 </div>
