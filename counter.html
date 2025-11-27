@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>カウンターアプリ</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 * {
     touch-action: manipulation;
@@ -14,22 +15,25 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    font-family: 'Rajdhani', 'Orbitron', sans-serif;
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
-    background-color: #f5f5f5;
+    background-color: #0a0a0a;
     touch-action: pan-y;
+    color: #00ff00;
 }
 
 .container {
-    background: white;
+    background: #1a1a1a;
     border-radius: 10px;
     padding: 20px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+    border: 1px solid #00ff00;
 }
 
 .mode-buttons {
@@ -41,35 +45,54 @@ body {
 
 .mode-btn {
     padding: 15px;
-    border: 2px solid #007bff;
-    background: white;
-    color: #007bff;
+    border: 2px solid #00ff00;
+    background: #000000;
+    color: #00ff00;
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
-    font-weight: bold;
+    font-weight: 600;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+}
+
+.mode-btn:hover {
+    background: #003300;
 }
 
 .mode-btn.active {
-    background: #007bff;
-    color: white;
+    background: #00ff00;
+    color: #000000;
+    font-weight: 700;
+    box-shadow: 0 0 10px #00ff00;
 }
 
 .counter-display {
     text-align: center;
     margin: 20px 0;
+    background: #000000;
+    border-radius: 10px;
+    padding: 20px;
+    border: 2px solid #00ff00;
 }
 
 .counter-value {
     font-size: 48px;
-    font-weight: bold;
-    color: #333;
+    font-weight: 700;
+    color: #00ff00;
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 0 0 10px #00ff00;
+    letter-spacing: 2px;
 }
 
 .counter-label {
     font-size: 14px;
-    color: #666;
+    color: #00ff00;
     margin-top: 5px;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+    opacity: 0.8;
 }
 
 .control-buttons {
@@ -85,28 +108,54 @@ body {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
 }
 
 .increment-btn {
-    background: #28a745;
-    color: white;
+    background: #004400;
+    color: #00ff00;
+    border: 2px solid #00ff00;
+}
+
+.increment-btn:active {
+    background: #00ff00;
+    color: #000000;
+    box-shadow: 0 0 15px #00ff00;
 }
 
 .decrement-btn {
-    background: #dc3545;
-    color: white;
+    background: #440000;
+    color: #ff0000;
+    border: 2px solid #ff0000;
+}
+
+.decrement-btn:active {
+    background: #ff0000;
+    color: #000000;
+    box-shadow: 0 0 15px #ff0000;
 }
 
 .reset-btn {
-    background: #ffc107;
-    color: black;
+    background: #444400;
+    color: #ffff00;
+    border: 2px solid #ffff00;
+}
+
+.reset-btn:active {
+    background: #ffff00;
+    color: #000000;
+    box-shadow: 0 0 15px #ffff00;
 }
 
 .stats {
-    background: #f8f9fa;
+    background: #000000;
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
+    border: 1px solid #00ff00;
 }
 
 .stat-item {
@@ -117,22 +166,41 @@ body {
 }
 
 .stat-label {
-    font-weight: bold;
-    color: #333;
+    font-weight: 600;
+    color: #00ff00;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+    font-size: 14px;
 }
 
 .input-field {
     width: 100px;
     padding: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid #00ff00;
     border-radius: 5px;
     text-align: center;
     font-size: 16px;
+    background: #000000;
+    color: #00ff00;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 500;
 }
 
 .input-field:focus {
     outline: none;
-    border-color: #007bff;
+    border-color: #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+/* 数字入力時のスピンボタンを非表示 */
+.input-field::-webkit-outer-spin-button,
+.input-field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.input-field[type=number] {
+    -moz-appearance: textfield;
 }
 </style>
 </head>
@@ -230,6 +298,22 @@ class CounterApp {
 
         this.startTotalCountElement.addEventListener('change', () => {
             this.updateStartTotalCount();
+        });
+
+        // タッチイベント（スマホ対応）
+        this.incrementBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.increment();
+        });
+
+        this.decrementBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.decrement();
+        });
+
+        this.resetBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.resetCurrent();
         });
     }
 
