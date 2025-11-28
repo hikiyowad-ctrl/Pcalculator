@@ -35,11 +35,11 @@ body.green-bg { background: linear-gradient(135deg, #003300 0%, #006600 100%); }
 body.blue-bg { background: linear-gradient(135deg, #000033 0%, #000066 100%); }
 body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); }
 
-/* ハンバーガーメニュー */
+/* ハンバーガーメニュー - 右上に配置 */
 .hamburger-menu {
     position: fixed;
     top: 15px;
-    left: 15px;
+    right: 15px;
     z-index: 1000;
 }
 
@@ -128,7 +128,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     gap: 15px;
 }
 
-.menu-item {
+.menu-link {
     padding: 15px 20px;
     background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
     border: 2px solid #00ff00;
@@ -143,9 +143,11 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     box-shadow: 
         3px 3px 6px rgba(0, 0, 0, 0.5),
         -2px -2px 4px rgba(255, 255, 255, 0.05);
+    text-decoration: none;
+    display: block;
 }
 
-.menu-item:hover {
+.menu-link:hover {
     background: linear-gradient(145deg, #00ff00, #00cc00);
     color: #000000;
     box-shadow: 
@@ -154,7 +156,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
         0 0 15px #00ff00;
 }
 
-.menu-item.active {
+.menu-link.active {
     background: linear-gradient(145deg, #00ff00, #00cc00);
     color: #000000;
     box-shadow: 
@@ -869,7 +871,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
 </style>
 </head>
 <body>
-<!-- ハンバーガーメニュー -->
+<!-- ハンバーガーメニュー - 右上に配置 -->
 <div class="hamburger-menu">
     <button class="hamburger-btn" id="hamburgerBtn">
         <span></span>
@@ -883,14 +885,14 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     <div class="menu-content">
         <div class="menu-title">メニュー</div>
         <div class="menu-items">
-            <div class="menu-item active" data-page="counter">カウンターアプリ</div>
-            <div class="menu-item" data-page="pachinko">パチンコ情報</div>
+            <a href="index.html" class="menu-link active">カウンターアプリ</a>
+            <a href="pachinko_calc.html" class="menu-link">パチンコ計算機</a>
         </div>
     </div>
 </div>
 
 <!-- カウンターアプリのコンテンツ -->
-<div class="container" id="counterPage">
+<div class="container">
     <!-- モードボタンとリセットボタン -->
     <div class="mode-controls">
         <div class="mode-buttons">
@@ -937,18 +939,6 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
                 <div class="rate-display" id="rateDisplay4">1/0.00</div>
                 <button class="circle-btn circle-btn-4" data-index="3"></button>
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- パチンコ情報ページのコンテンツ（非表示） -->
-<div id="pachinkoPage" style="display: none;">
-    <!-- ここにパチンコ情報ページの内容を追加 -->
-    <div class="container">
-        <div style="text-align: center; padding: 20px;">
-            <h2 style="color: #00ff00; font-family: 'Orbitron', sans-serif;">パチンコ・スロット情報</h2>
-            <p style="color: #00ff00;">ここにパチンコ店の情報を表示します</p>
-            <!-- パチンコ情報の内容をここに追加 -->
         </div>
     </div>
 </div>
@@ -1042,6 +1032,7 @@ class CounterApp {
             };
         }
     }
+
     // ローカルストレージにデータを保存する
     saveToStorage() {
         try {
@@ -1085,9 +1076,6 @@ class CounterApp {
         // ハンバーガーメニュー要素
         this.hamburgerBtn = document.getElementById('hamburgerBtn');
         this.menuOverlay = document.getElementById('menuOverlay');
-        this.menuItems = document.querySelectorAll('.menu-item');
-        this.counterPage = document.getElementById('counterPage');
-        this.pachinkoPage = document.getElementById('pachinkoPage');
     }
 
     handleResize() {
@@ -1109,14 +1097,6 @@ class CounterApp {
             if (e.target === this.menuOverlay) {
                 this.closeMenu();
             }
-        });
-
-        this.menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const page = item.dataset.page;
-                this.switchPage(page);
-                this.closeMenu();
-            });
         });
 
         // 既存のカウンターイベント
@@ -1181,65 +1161,6 @@ class CounterApp {
     closeMenu() {
         this.hamburgerBtn.classList.remove('active');
         this.menuOverlay.classList.remove('active');
-    }
-
-    switchPage(page) {
-        // メニューアイテムのアクティブ状態を更新
-        this.menuItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.dataset.page === page) {
-                item.classList.add('active');
-            }
-        });
-
-        // ページ表示を切り替え
-        if (page === 'counter') {
-            this.counterPage.style.display = 'flex';
-            this.pachinkoPage.style.display = 'none';
-        } else if (page === 'pachinko') {
-            this.counterPage.style.display = 'none';
-            this.pachinkoPage.style.display = 'block';
-            this.loadPachinkoInfo();
-        }
-    }
-
-    loadPachinkoInfo() {
-        // ここにパチンコ情報を読み込む処理を追加
-        const pachinkoPage = document.getElementById('pachinkoPage');
-        pachinkoPage.innerHTML = `
-            <div class="container">
-                <div style="padding: 20px;">
-                    <h2 style="color: #00ff00; font-family: 'Orbitron', sans-serif; text-align: center; margin-bottom: 20px;">
-                        パチンコ・スロット情報
-                    </h2>
-                    
-                    <div style="display: grid; gap: 15px;">
-                        <div style="background: linear-gradient(145deg, #2a2a2a, #1a1a1a); padding: 15px; border-radius: 10px; border: 1px solid #00ff00;">
-                            <h3 style="color: #00ff00; margin: 0 0 10px 0;">店舗検索</h3>
-                            <input type="text" placeholder="店舗名を入力" style="width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #00ff00; border-radius: 5px; color: #00ff00;">
-                        </div>
-                        
-                        <div style="background: linear-gradient(145deg, #2a2a2a, #1a1a1a); padding: 15px; border-radius: 10px; border: 1px solid #00ff00;">
-                            <h3 style="color: #00ff00; margin: 0 0 10px 0;">人気店舗</h3>
-                            <div style="color: #00ff00;">
-                                <div>・〇〇パチンコ</div>
-                                <div>・△△スロット</div>
-                                <div>・□□アミューズメント</div>
-                            </div>
-                        </div>
-                        
-                        <div style="background: linear-gradient(145deg, #2a2a2a, #1a1a1a); padding: 15px; border-radius: 10px; border: 1px solid #00ff00;">
-                            <h3 style="color: #00ff00; margin: 0 0 10px 0;">最新情報</h3>
-                            <div style="color: #00ff00; font-size: 14px;">
-                                <div>新台導入情報</div>
-                                <div>キャンペーン情報</div>
-                                <div>営業時間変更</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
     }
 
     // 既存のカウンター機能（変更なし）
