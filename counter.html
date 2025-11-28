@@ -6,6 +6,7 @@
 <title>カウンターアプリ</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* CSSコードはそのまま */
 * {
     touch-action: manipulation;
     -webkit-touch-callout: none;
@@ -793,7 +794,6 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
 </div>
 
 <script>
-// JavaScriptコードは変更なし（ローカルストレージ機能付き）
 class CounterApp {
     constructor() {
         this.currentMode = 'A';
@@ -1095,60 +1095,56 @@ class CounterApp {
         buttons.appendChild(noBtn);
         
         dialog.appendChild(message);
-dialog.appendChild(buttons);
-overlay.appendChild(dialog);
-
-```
-    document.body.appendChild(overlay);
-}
-
-resetCurrentMode() {
-    this.counts[this.currentMode] = [0, 0, 0, 0];
-    this.updateDisplay();
-    this.saveToStorage();
-}
-
-updateTotalGames() {
-    let value = parseInt(this.totalCountElement.value);
-    if (isNaN(value) || value < 0) {
-        value = 0;
+        dialog.appendChild(buttons);
+        overlay.appendChild(dialog);
+        
+        document.body.appendChild(overlay);
     }
-    this.totalGames[this.currentMode] = value;
-    this.totalCountElement.value = value;
-    this.updateDisplay();
-    this.saveToStorage();
-}
 
-updateDisplay() {
-    const currentCounts = this.counts[this.currentMode];
-    const currentTotalGames = this.totalGames[this.currentMode];
-    
-    this.countDisplays.forEach((element, index) => {
-        element.textContent = currentCounts[index];
-    });
-    
-    this.rateDisplays.forEach((element, index) => {
-        const count = currentCounts[index];
-        let rate = "1/0.00";
-        
-        if (count > 0 && currentTotalGames > 0) {
-            const calculatedRate = currentTotalGames / count;
-            rate = `1/${calculatedRate.toFixed(2)}`;
-        } else if (count > 0) {
-            rate = "1/0.00";
+    resetCurrentMode() {
+        this.counts[this.currentMode] = [0, 0, 0, 0];
+        this.updateDisplay();
+        this.saveToStorage();
+    }
+
+    updateTotalGames() {
+        let value = parseInt(this.totalCountElement.value);
+        if (isNaN(value) || value < 0) {
+            value = 0;
         }
-        
-        element.textContent = rate;
-    });
-}
-```
+        this.totalGames[this.currentMode] = value;
+        this.totalCountElement.value = value;
+        this.updateDisplay();
+        this.saveToStorage();
+    }
 
+    updateDisplay() {
+        const currentCounts = this.counts[this.currentMode];
+        const currentTotalGames = this.totalGames[this.currentMode];
+        
+        this.countDisplays.forEach((element, index) => {
+            element.textContent = currentCounts[index];
+        });
+        
+        this.rateDisplays.forEach((element, index) => {
+            const count = currentCounts[index];
+            let rate = "1/0.00";
+            
+            if (count > 0 && currentTotalGames > 0) {
+                const calculatedRate = currentTotalGames / count;
+                rate = `1/${calculatedRate.toFixed(2)}`;
+            } else if (count > 0) {
+                rate = "1/0.00";
+            }
+            
+            element.textContent = rate;
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-new CounterApp();
+    new CounterApp();
 });
 </script>
-
 </body>
 </html>
