@@ -43,7 +43,6 @@ body.yellow-bg { background-color: #666600; }
     padding: 10px;
     border: 1px solid #00ff00;
     border-radius: 10px;
-    /* max-heightを削除、代わりにmin-heightを使用 */
     min-height: 0;
 }
 
@@ -267,15 +266,69 @@ body.yellow-bg { background-color: #666600; }
         inset 0 0 20px rgba(255, 255, 255, 0.4);
 }
 
-/* 制御ボタン */
+/* 制御ボタン - 画像に合わせて配置変更 */
 .control-buttons {
     display: flex;
     gap: 8px;
     margin-bottom: 15px;
     flex-shrink: 0;
+    align-items: center;
 }
 
-.control-btn {
+/* 増加ボタン - 黒い四角 */
+.increment-btn {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #00ff00;
+    background: #000000;
+    color: #00ff00;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.increment-btn.active {
+    background: #00ff00;
+    color: #000000;
+    box-shadow: 0 0 15px #00ff00;
+}
+
+/* 減少ボタン - 黒い三角 */
+.decrement-btn {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #ff0000;
+    background: #000000;
+    color: #ff0000;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: 'Orbitron', sans-serif;
+    transition: all 0.3s ease;
+    position: relative;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    transform: rotate(180deg); /* 上向きの三角 */
+}
+
+.decrement-btn.active {
+    background: #ff0000;
+    color: #000000;
+    box-shadow: 0 0 15px #ff0000;
+}
+
+/* リセットボタン - 位置調整 */
+.reset-btn {
     flex: 1;
     padding: 12px;
     border: 2px solid #00ff00;
@@ -288,24 +341,14 @@ body.yellow-bg { background-color: #666600; }
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 1px;
     transition: all 0.3s ease;
+    margin-left: auto;
+    max-width: 120px;
 }
 
-.control-btn.active {
+.reset-btn.active {
     background: #00ff00;
     color: #000000;
     box-shadow: 0 0 15px #00ff00;
-}
-
-/* 減少ボタンの枠線を赤色に */
-#decrementBtn {
-    border-color: #ff0000;
-    color: #ff0000;
-}
-
-#decrementBtn.active {
-    background: #ff0000;
-    color: #000000;
-    box-shadow: 0 0 15px #ff0000;
 }
 
 .control-btn.pressed {
@@ -369,6 +412,19 @@ body.yellow-bg { background-color: #666600; }
         font-size: 20px;
         padding: 8px;
     }
+    
+    /* 制御ボタンも小さく */
+    .increment-btn, .decrement-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+    }
+    
+    .reset-btn {
+        padding: 10px;
+        font-size: 12px;
+        max-width: 100px;
+    }
 }
 
 /* 横向き用スタイル - さらにコンパクトに */
@@ -396,11 +452,6 @@ body.yellow-bg { background-color: #666600; }
         margin-bottom: 5px;
     }
     
-    .control-btn {
-        padding: 8px;
-        font-size: 12px;
-    }
-    
     .count-display {
         font-size: 16px;
         margin-bottom: 4px;
@@ -424,6 +475,19 @@ body.yellow-bg { background-color: #666600; }
     
     .game-label {
         font-size: 14px;
+    }
+    
+    /* 制御ボタンもさらに小さく */
+    .increment-btn, .decrement-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .reset-btn {
+        padding: 8px;
+        font-size: 10px;
+        max-width: 80px;
     }
 }
 
@@ -565,11 +629,16 @@ body.yellow-bg { background-color: #666600; }
         </div>
     </div>
 
-    <!-- 制御ボタン -->
+    <!-- 制御ボタン - 画像に合わせて配置 -->
     <div class="control-buttons">
-        <button class="control-btn active" id="incrementBtn">増加</button>
-        <button class="control-btn" id="decrementBtn">減少</button>
-        <button class="control-btn" id="resetBtn">リセット</button>
+        <!-- 黒い四角 - 増加ボタン -->
+        <button class="increment-btn active" id="incrementBtn">+</button>
+        
+        <!-- 黒い三角 - 減少ボタン -->
+        <button class="decrement-btn" id="decrementBtn"></button>
+        
+        <!-- リセットボタン -->
+        <button class="reset-btn" id="resetBtn">リセット</button>
     </div>
 </div>
 
