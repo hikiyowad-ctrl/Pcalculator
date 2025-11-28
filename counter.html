@@ -203,6 +203,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     flex-direction: column;
     gap: 12px;
     flex-shrink: 0;
+    align-items: center; /* 中央揃えに変更 */
 }
 
 .input-section {
@@ -210,12 +211,13 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     flex-direction: column;
     align-items: center;
     gap: 8px;
+    width: 100%; /* 幅を100%に */
 }
 
-/* 立体的な入力フィールド */
+/* 入力フィールドの横幅を調整 - 増減ボタンと同じ幅に */
 .game-input {
     width: 100%;
-    max-width: 200px;
+    max-width: 200px; /* 最大幅を200pxに固定 */
     padding: 12px;
     border: none;
     border-radius: 10px;
@@ -245,7 +247,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     display: flex;
     gap: 10px;
     width: 100%;
-    max-width: 200px;
+    max-width: 200px; /* 入力フィールドと同じ幅に */
 }
 
 /* 立体的な増減ボタン */
@@ -521,7 +523,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     .game-input {
         font-size: 28px;
         padding: 15px;
-        max-width: none;
+        max-width: 200px; /* 横画面でも同じ幅を維持 */
     }
     
     .inc-dec-btn {
@@ -578,7 +580,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     .game-input {
         font-size: 20px;
         padding: 10px;
-        max-width: 180px;
+        max-width: 180px; /* 小さい画面では少し小さく */
     }
     
     .inc-dec-btn {
@@ -626,7 +628,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     .game-input {
         font-size: 28px;
         padding: 15px;
-        max-width: 220px;
+        max-width: 200px; /* 大きい画面でも同じ幅 */
     }
     
     .inc-dec-btn {
@@ -1093,56 +1095,60 @@ class CounterApp {
         buttons.appendChild(noBtn);
         
         dialog.appendChild(message);
-        dialog.appendChild(buttons);
-        overlay.appendChild(dialog);
+dialog.appendChild(buttons);
+overlay.appendChild(dialog);
+
+```
+    document.body.appendChild(overlay);
+}
+
+resetCurrentMode() {
+    this.counts[this.currentMode] = [0, 0, 0, 0];
+    this.updateDisplay();
+    this.saveToStorage();
+}
+
+updateTotalGames() {
+    let value = parseInt(this.totalCountElement.value);
+    if (isNaN(value) || value < 0) {
+        value = 0;
+    }
+    this.totalGames[this.currentMode] = value;
+    this.totalCountElement.value = value;
+    this.updateDisplay();
+    this.saveToStorage();
+}
+
+updateDisplay() {
+    const currentCounts = this.counts[this.currentMode];
+    const currentTotalGames = this.totalGames[this.currentMode];
+    
+    this.countDisplays.forEach((element, index) => {
+        element.textContent = currentCounts[index];
+    });
+    
+    this.rateDisplays.forEach((element, index) => {
+        const count = currentCounts[index];
+        let rate = "1/0.00";
         
-        document.body.appendChild(overlay);
-    }
-
-    resetCurrentMode() {
-        this.counts[this.currentMode] = [0, 0, 0, 0];
-        this.updateDisplay();
-        this.saveToStorage();
-    }
-
-    updateTotalGames() {
-        let value = parseInt(this.totalCountElement.value);
-        if (isNaN(value) || value < 0) {
-            value = 0;
+        if (count > 0 && currentTotalGames > 0) {
+            const calculatedRate = currentTotalGames / count;
+            rate = `1/${calculatedRate.toFixed(2)}`;
+        } else if (count > 0) {
+            rate = "1/0.00";
         }
-        this.totalGames[this.currentMode] = value;
-        this.totalCountElement.value = value;
-        this.updateDisplay();
-        this.saveToStorage();
-    }
+        
+        element.textContent = rate;
+    });
+}
+```
 
-    updateDisplay() {
-        const currentCounts = this.counts[this.currentMode];
-        const currentTotalGames = this.totalGames[this.currentMode];
-        
-        this.countDisplays.forEach((element, index) => {
-            element.textContent = currentCounts[index];
-        });
-        
-        this.rateDisplays.forEach((element, index) => {
-            const count = currentCounts[index];
-            let rate = "1/0.00";
-            
-            if (count > 0 && currentTotalGames > 0) {
-                const calculatedRate = currentTotalGames / count;
-                rate = `1/${calculatedRate.toFixed(2)}`;
-            } else if (count > 0) {
-                rate = "1/0.00";
-            }
-            
-            element.textContent = rate;
-        });
-    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    new CounterApp();
+new CounterApp();
 });
 </script>
+
 </body>
 </html>
