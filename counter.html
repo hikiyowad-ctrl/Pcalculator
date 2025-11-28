@@ -23,31 +23,61 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
-    background-color: #0a0a0a;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
     color: #00ff00;
     overflow: hidden;
     transition: background-color 0.3s ease;
 }
 
-/* ボタン色に応じた背面色変化 - 明るい色に */
-body.red-bg { background-color: #660000; }
-body.green-bg { background-color: #006600; }
-body.blue-bg { background-color: #000066; }
-body.yellow-bg { background-color: #666600; }
+/* ボタン色に応じた背面色変化 */
+body.red-bg { background: linear-gradient(135deg, #330000 0%, #660000 100%); }
+body.green-bg { background: linear-gradient(135deg, #003300 0%, #006600 100%); }
+body.blue-bg { background: linear-gradient(135deg, #000033 0%, #000066 100%); }
+body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); }
 
+/* 立体的な外枠 */
 .container {
     display: flex;
     flex-direction: column;
     height: 100%;
     background: #1a1a1a;
     padding: 10px;
-    border: 1px solid #00ff00;
-    border-radius: 10px;
+    border: 2px solid #00ff00;
+    border-radius: 15px;
     min-height: 0;
     gap: 15px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+        0 0 30px rgba(0, 255, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(0, 0, 0, 0.5);
 }
 
-/* モードボタンとリセットボタンを横並びに */
+/* ネオンフレーム効果 */
+.container::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border: 2px solid transparent;
+    border-radius: 17px;
+    background: linear-gradient(135deg, 
+        rgba(0, 255, 0, 0.8) 0%, 
+        rgba(0, 255, 0, 0.4) 50%, 
+        rgba(0, 255, 0, 0.8) 100%);
+    z-index: -1;
+    animation: neonPulse 3s ease-in-out infinite;
+}
+
+@keyframes neonPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* モードボタンとリセットボタン */
 .mode-controls {
     display: flex;
     gap: 8px;
@@ -60,11 +90,12 @@ body.yellow-bg { background-color: #666600; }
     flex: 1;
 }
 
+/* 立体的なモードボタン */
 .mode-btn {
     flex: 1;
     padding: 10px 5px;
-    border: 2px solid #00ff00;
-    background: #000000;
+    border: none;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
     color: #00ff00;
     border-radius: 8px;
     cursor: pointer;
@@ -74,20 +105,46 @@ body.yellow-bg { background-color: #666600; }
     letter-spacing: 1px;
     transition: all 0.3s ease;
     min-height: 35px;
+    box-shadow: 
+        3px 3px 6px rgba(0, 0, 0, 0.5),
+        -2px -2px 4px rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.mode-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(0, 255, 0, 0.2), 
+        transparent);
+    transition: left 0.5s ease;
+}
+
+.mode-btn:hover::before {
+    left: 100%;
 }
 
 .mode-btn.active {
-    background: #00ff00;
+    background: linear-gradient(145deg, #00ff00, #00cc00);
     color: #000000;
     font-weight: 700;
-    box-shadow: 0 0 10px #00ff00;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.2),
+        0 0 15px #00ff00;
 }
 
-/* リセットボタン - 目立つ色で */
+/* 立体的なリセットボタン */
 .reset-btn {
     padding: 10px 15px;
-    border: 2px solid #ff0000;
-    background: #ff0000;
+    border: none;
+    background: linear-gradient(145deg, #ff3333, #cc0000);
     color: #000000;
     border-radius: 8px;
     cursor: pointer;
@@ -98,15 +155,39 @@ body.yellow-bg { background-color: #666600; }
     transition: all 0.3s ease;
     min-height: 35px;
     white-space: nowrap;
+    box-shadow: 
+        3px 3px 6px rgba(0, 0, 0, 0.5),
+        -2px -2px 4px rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.reset-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent);
+    transition: left 0.5s ease;
+}
+
+.reset-btn:hover::before {
+    left: 100%;
 }
 
 .reset-btn:active {
-    background: #000000;
-    color: #ff0000;
     transform: scale(0.95);
+    box-shadow: 
+        inset 2px 2px 4px rgba(0, 0, 0, 0.3),
+        inset -2px -2px 4px rgba(255, 255, 255, 0.1);
 }
 
-/* メインコンテンツ - 縦画面用に縦並び */
+/* メインコンテンツ */
 .main-content {
     display: flex;
     flex-direction: column;
@@ -116,7 +197,7 @@ body.yellow-bg { background-color: #666600; }
     overflow: hidden;
 }
 
-/* 入力フィールドと増減ボタン - 縦画面では上に */
+/* 入力フィールドと増減ボタン */
 .input-controls {
     display: flex;
     flex-direction: column;
@@ -131,24 +212,32 @@ body.yellow-bg { background-color: #666600; }
     gap: 8px;
 }
 
+/* 立体的な入力フィールド */
 .game-input {
     width: 100%;
     max-width: 200px;
     padding: 12px;
-    border: 2px solid #00ff00;
-    border-radius: 8px;
+    border: none;
+    border-radius: 10px;
     text-align: center;
     font-size: 24px;
-    background: #000000;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
     color: #00ff00;
     font-family: 'Orbitron', sans-serif;
     font-weight: 700;
+    box-shadow: 
+        inset 3px 3px 6px rgba(0, 0, 0, 0.5),
+        inset -3px -3px 6px rgba(255, 255, 255, 0.05),
+        0 0 10px rgba(0, 255, 0, 0.3);
+    transition: all 0.3s ease;
 }
 
 .game-input:focus {
     outline: none;
-    border-color: #00ff00;
-    box-shadow: 0 0 15px #00ff00;
+    box-shadow: 
+        inset 3px 3px 6px rgba(0, 0, 0, 0.5),
+        inset -3px -3px 6px rgba(255, 255, 255, 0.05),
+        0 0 20px #00ff00;
 }
 
 /* 増加・減少ボタン */
@@ -159,11 +248,12 @@ body.yellow-bg { background-color: #666600; }
     max-width: 200px;
 }
 
+/* 立体的な増減ボタン */
 .inc-dec-btn {
     flex: 1;
     padding: 12px 8px;
-    border: 2px solid;
-    border-radius: 8px;
+    border: none;
+    border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
     font-weight: 600;
@@ -171,37 +261,67 @@ body.yellow-bg { background-color: #666600; }
     transition: all 0.3s ease;
     text-align: center;
     min-height: 45px;
+    box-shadow: 
+        3px 3px 6px rgba(0, 0, 0, 0.5),
+        -2px -2px 4px rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+}
+
+.inc-dec-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.2), 
+        transparent);
+    transition: left 0.5s ease;
+}
+
+.inc-dec-btn:hover::before {
+    left: 100%;
 }
 
 .increment-btn {
-    border-color: #00ff00;
-    background: #000000;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
     color: #00ff00;
 }
 
 .increment-btn.active {
-    background: #00ff00;
+    background: linear-gradient(145deg, #00ff00, #00cc00);
     color: #000000;
-    box-shadow: 0 0 10px #00ff00;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.2),
+        0 0 15px #00ff00;
 }
 
 .decrement-btn {
-    border-color: #ff0000;
-    background: #000000;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
     color: #ff0000;
 }
 
 .decrement-btn.active {
-    background: #ff0000;
+    background: linear-gradient(145deg, #ff0000, #cc0000);
     color: #000000;
-    box-shadow: 0 0 10px #ff0000;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.2),
+        0 0 15px #ff0000;
 }
 
 .inc-dec-btn:active {
     transform: scale(0.92);
+    box-shadow: 
+        inset 2px 2px 4px rgba(0, 0, 0, 0.3),
+        inset -2px -2px 4px rgba(255, 255, 255, 0.1);
 }
 
-/* カウントボタンエリア - 縦画面では下に */
+/* カウントボタンエリア */
 .circle-buttons {
     display: flex;
     justify-content: space-between;
@@ -232,6 +352,7 @@ body.yellow-bg { background-color: #666600; }
     display: flex;
     align-items: center;
     justify-content: center;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 }
 
 .rate-display {
@@ -246,12 +367,14 @@ body.yellow-bg { background-color: #666600; }
     display: flex;
     align-items: center;
     justify-content: center;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.3);
 }
 
+/* 立体的な丸いカウントボタン */
 .circle-btn {
-    width: 60px;
-    height: 60px;
-    border: 2px solid;
+    width: 70px;
+    height: 70px;
+    border: none;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -264,89 +387,107 @@ body.yellow-bg { background-color: #666600; }
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
+    box-shadow: 
+        4px 4px 8px rgba(0, 0, 0, 0.6),
+        -3px -3px 6px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* ボタン押下時のアニメーション */
+/* ネオン光彩効果 */
+.circle-btn::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50%;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* ボタン押下時の立体的な効果 */
 .circle-btn.pressed {
     transform: scale(0.85);
+    box-shadow: 
+        inset 3px 3px 6px rgba(0, 0, 0, 0.5),
+        inset -3px -3px 6px rgba(255, 255, 255, 0.1);
 }
 
 .circle-btn::after {
     content: '';
     position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
-    border: 3px solid #ffffff;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     border-radius: 50%;
-    opacity: 0;
-    transition: all 0.2s ease;
+    background: radial-gradient(circle at 30% 30%, 
+        rgba(255, 255, 255, 0.3) 0%, 
+        transparent 50%);
+    opacity: 0.3;
 }
 
-.circle-btn.pressed::after {
-    opacity: 1;
-    box-shadow: 
-        0 0 20px #ffffff,
-        0 0 40px #ffffff,
-        inset 0 0 20px rgba(255, 255, 255, 0.3);
-}
-
-/* 各ボタンの色 */
+/* 各ボタンの色と立体的な効果 */
 .circle-btn-1 {
-    border-color: #ff0000;
-    background: #ff0000;
+    background: linear-gradient(145deg, #ff3333, #cc0000);
     color: #000000;
 }
 
-.circle-btn-1.pressed::after {
-    border-color: #ff4444;
-    box-shadow: 
-        0 0 25px #ff0000,
-        0 0 50px #ff0000,
-        inset 0 0 20px rgba(255, 255, 255, 0.4);
+.circle-btn-1::before {
+    background: linear-gradient(135deg, #ff0000, #ff6666);
+    box-shadow: 0 0 20px #ff0000;
+}
+
+.circle-btn-1.pressed::before {
+    opacity: 1;
+    box-shadow: 0 0 30px #ff0000;
 }
 
 .circle-btn-2 {
-    border-color: #00ff00;
-    background: #00ff00;
+    background: linear-gradient(145deg, #33ff33, #00cc00);
     color: #000000;
 }
 
-.circle-btn-2.pressed::after {
-    border-color: #44ff44;
-    box-shadow: 
-        0 0 25px #00ff00,
-        0 0 50px #00ff00,
-        inset 0 0 20px rgba(255, 255, 255, 0.4);
+.circle-btn-2::before {
+    background: linear-gradient(135deg, #00ff00, #66ff66);
+    box-shadow: 0 0 20px #00ff00;
+}
+
+.circle-btn-2.pressed::before {
+    opacity: 1;
+    box-shadow: 0 0 30px #00ff00;
 }
 
 .circle-btn-3 {
-    border-color: #0000ff;
-    background: #0000ff;
+    background: linear-gradient(145deg, #3333ff, #0000cc);
     color: #ffffff;
 }
 
-.circle-btn-3.pressed::after {
-    border-color: #4444ff;
-    box-shadow: 
-        0 0 25px #0000ff,
-        0 0 50px #0000ff,
-        inset 0 0 20px rgba(255, 255, 255, 0.4);
+.circle-btn-3::before {
+    background: linear-gradient(135deg, #0000ff, #6666ff);
+    box-shadow: 0 0 20px #0000ff;
+}
+
+.circle-btn-3.pressed::before {
+    opacity: 1;
+    box-shadow: 0 0 30px #0000ff;
 }
 
 .circle-btn-4 {
-    border-color: #ffff00;
-    background: #ffff00;
+    background: linear-gradient(145deg, #ffff33, #cccc00);
     color: #000000;
 }
 
-.circle-btn-4.pressed::after {
-    border-color: #ffff44;
-    box-shadow: 
-        0 0 25px #ffff00,
-        0 0 50px #ffff00,
-        inset 0 0 20px rgba(255, 255, 255, 0.4);
+.circle-btn-4::before {
+    background: linear-gradient(135deg, #ffff00, #ffff66);
+    box-shadow: 0 0 20px #ffff00;
+}
+
+.circle-btn-4.pressed::before {
+    opacity: 1;
+    box-shadow: 0 0 30px #ffff00;
 }
 
 /* 数字入力時のスピンボタンを非表示 */
@@ -360,7 +501,7 @@ body.yellow-bg { background-color: #666600; }
     -moz-appearance: textfield;
 }
 
-/* 横向き用スタイル - 元のレイアウトを維持 */
+/* 横向き用スタイル */
 @media (orientation: landscape) {
     .main-content {
         flex-direction: row;
@@ -404,8 +545,8 @@ body.yellow-bg { background-color: #666600; }
     }
     
     .circle-btn {
-        width: 70px;
-        height: 70px;
+        width: 80px;
+        height: 80px;
     }
 }
 
@@ -457,8 +598,8 @@ body.yellow-bg { background-color: #666600; }
     }
     
     .circle-btn {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
         font-size: 14px;
     }
     
@@ -503,8 +644,8 @@ body.yellow-bg { background-color: #666600; }
     }
     
     .circle-btn {
-        width: 70px;
-        height: 70px;
+        width: 80px;
+        height: 80px;
     }
     
     .circle-btn-container {
@@ -527,15 +668,17 @@ body.yellow-bg { background-color: #666600; }
 }
 
 .confirm-dialog {
-    background: #1a1a1a;
-    border: 2px solid #00ff00;
-    border-radius: 10px;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: none;
+    border-radius: 15px;
     padding: 20px;
     text-align: center;
     max-width: 280px;
     width: 90%;
-    box-shadow: 0 0 30px #00ff00;
-    margin: 10px;
+    box-shadow: 
+        0 0 30px rgba(0, 255, 0, 0.5),
+        4px 4px 10px rgba(0, 0, 0, 0.5),
+        -2px -2px 6px rgba(255, 255, 255, 0.05);
 }
 
 .confirm-message {
@@ -544,6 +687,7 @@ body.yellow-bg { background-color: #666600; }
     margin-bottom: 20px;
     font-size: 16px;
     font-weight: 600;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 }
 
 .confirm-buttons {
@@ -554,38 +698,43 @@ body.yellow-bg { background-color: #666600; }
 
 .confirm-btn {
     padding: 12px 20px;
-    border: 2px solid #00ff00;
-    background: #000000;
-    color: #00ff00;
-    border-radius: 5px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
     font-family: 'Orbitron', sans-serif;
     font-weight: 600;
     transition: all 0.3s ease;
     flex: 1;
     font-size: 14px;
+    box-shadow: 
+        3px 3px 6px rgba(0, 0, 0, 0.5),
+        -2px -2px 4px rgba(255, 255, 255, 0.05);
 }
 
 .confirm-btn.yes {
-    background: #004400;
-    border-color: #00ff00;
+    background: linear-gradient(145deg, #00ff00, #00cc00);
+    color: #000000;
 }
 
 .confirm-btn.yes:active {
-    background: #00ff00;
-    color: #000000;
+    background: linear-gradient(145deg, #00cc00, #00ff00);
     transform: scale(0.95);
+    box-shadow: 
+        inset 2px 2px 4px rgba(0, 0, 0, 0.3),
+        inset -2px -2px 4px rgba(255, 255, 255, 0.1);
 }
 
 .confirm-btn.no {
-    background: #440000;
-    border-color: #ff0000;
+    background: linear-gradient(145deg, #ff3333, #cc0000);
+    color: #000000;
 }
 
 .confirm-btn.no:active {
-    background: #ff0000;
-    color: #000000;
+    background: linear-gradient(145deg, #cc0000, #ff3333);
     transform: scale(0.95);
+    box-shadow: 
+        inset 2px 2px 4px rgba(0, 0, 0, 0.3),
+        inset -2px -2px 4px rgba(255, 255, 255, 0.1);
 }
 </style>
 </head>
@@ -601,7 +750,7 @@ body.yellow-bg { background-color: #666600; }
         <button class="reset-btn" id="resetBtn">リセット</button>
     </div>
 
-    <!-- メインコンテンツ - 縦画面では縦並び -->
+    <!-- メインコンテンツ -->
     <div class="main-content">
         <!-- 上：入力フィールドと増減ボタン -->
         <div class="input-controls">
