@@ -6,7 +6,6 @@
 <title>カウンターアプリ</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* スタイルコードは変更なし（前回と同じ） */
 * {
     touch-action: manipulation;
     -webkit-touch-callout: none;
@@ -41,63 +40,63 @@ body.yellow-bg { background-color: #666600; }
     flex-direction: column;
     height: 100%;
     background: #1a1a1a;
-    padding: 15px;
+    padding: 10px;
     border: 1px solid #00ff00;
     border-radius: 10px;
     min-height: 0;
-    gap: 20px;
+    gap: 15px;
 }
 
 /* モードボタンとリセットボタンを横並びに */
 .mode-controls {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex-shrink: 0;
 }
 
 .mode-buttons {
     display: flex;
-    gap: 10px;
+    gap: 8px;
     flex: 1;
 }
 
 .mode-btn {
     flex: 1;
-    padding: 12px 5px;
+    padding: 10px 5px;
     border: 2px solid #00ff00;
     background: #000000;
     color: #00ff00;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    min-height: 40px;
+    min-height: 35px;
 }
 
 .mode-btn.active {
     background: #00ff00;
     color: #000000;
     font-weight: 700;
-    box-shadow: 0 0 15px #00ff00;
+    box-shadow: 0 0 10px #00ff00;
 }
 
 /* リセットボタン - 目立つ色で */
 .reset-btn {
-    padding: 12px 20px;
+    padding: 10px 15px;
     border: 2px solid #ff0000;
     background: #ff0000;
     color: #000000;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    min-height: 40px;
+    min-height: 35px;
     white-space: nowrap;
 }
 
@@ -107,41 +106,39 @@ body.yellow-bg { background-color: #666600; }
     transform: scale(0.95);
 }
 
-/* メインコンテンツ */
+/* メインコンテンツ - 縦画面用に縦並び */
 .main-content {
     display: flex;
-    gap: 25px;
+    flex-direction: column;
+    gap: 15px;
     flex: 1;
     min-height: 0;
     overflow: hidden;
-    align-items: stretch;
 }
 
-/* 左側：入力フィールドと増減ボタン */
-.left-controls {
+/* 入力フィールドと増減ボタン - 縦画面では上に */
+.input-controls {
     display: flex;
     flex-direction: column;
-    min-width: 120px;
+    gap: 12px;
     flex-shrink: 0;
-    gap: 25px;
-    justify-content: center;
 }
 
-/* 入力フィールドセクション */
 .input-section {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 8px;
 }
 
 .game-input {
     width: 100%;
-    padding: 15px;
+    max-width: 200px;
+    padding: 12px;
     border: 2px solid #00ff00;
     border-radius: 8px;
     text-align: center;
-    font-size: 28px;
+    font-size: 24px;
     background: #000000;
     color: #00ff00;
     font-family: 'Orbitron', sans-serif;
@@ -151,35 +148,29 @@ body.yellow-bg { background-color: #666600; }
 .game-input:focus {
     outline: none;
     border-color: #00ff00;
-    box-shadow: 0 0 20px #00ff00;
+    box-shadow: 0 0 15px #00ff00;
 }
 
-/* 増加・減少ボタンセクション */
-.inc-dec-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-}
-
+/* 増加・減少ボタン */
 .inc-dec-buttons {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     width: 100%;
+    max-width: 200px;
 }
 
 .inc-dec-btn {
     flex: 1;
-    padding: 15px 10px;
+    padding: 12px 8px;
     border: 2px solid;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     font-family: 'Orbitron', sans-serif;
     transition: all 0.3s ease;
     text-align: center;
-    min-height: 50px;
+    min-height: 45px;
 }
 
 .increment-btn {
@@ -191,7 +182,7 @@ body.yellow-bg { background-color: #666600; }
 .increment-btn.active {
     background: #00ff00;
     color: #000000;
-    box-shadow: 0 0 15px #00ff00;
+    box-shadow: 0 0 10px #00ff00;
 }
 
 .decrement-btn {
@@ -203,20 +194,20 @@ body.yellow-bg { background-color: #666600; }
 .decrement-btn.active {
     background: #ff0000;
     color: #000000;
-    box-shadow: 0 0 15px #ff0000;
+    box-shadow: 0 0 10px #ff0000;
 }
 
 .inc-dec-btn:active {
     transform: scale(0.92);
 }
 
-/* 右側：丸いカウントボタン */
+/* カウントボタンエリア - 縦画面では下に */
 .circle-buttons {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
+    gap: 10px;
     flex: 1;
-    min-width: 0;
+    min-height: 0;
 }
 
 .circle-btn-container {
@@ -226,30 +217,16 @@ body.yellow-bg { background-color: #666600; }
     justify-content: center;
     flex: 1;
     min-width: 0;
-    gap: 20px;
+    gap: 8px;
 }
 
-/* カウントと分数の表示（ボタンの上） */
+/* カウントと分数の表示 */
 .count-display {
-    font-size: 28px;
-    color: #00ff00;
-    text-align: center;
-    font-family: 'Orbitron', sans-serif;
-    font-weight: 700;
-    line-height: 1.2;
-    min-height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.rate-display {
     font-size: 20px;
     color: #00ff00;
     text-align: center;
     font-family: 'Orbitron', sans-serif;
-    opacity: 0.9;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.2;
     min-height: 30px;
     display: flex;
@@ -257,16 +234,30 @@ body.yellow-bg { background-color: #666600; }
     justify-content: center;
 }
 
+.rate-display {
+    font-size: 14px;
+    color: #00ff00;
+    text-align: center;
+    font-family: 'Orbitron', sans-serif;
+    opacity: 0.9;
+    font-weight: 600;
+    line-height: 1.2;
+    min-height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .circle-btn {
-    width: 80px;
-    height: 80px;
-    border: 3px solid;
+    width: 60px;
+    height: 60px;
+    border: 2px solid;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 700;
     font-family: 'Orbitron', sans-serif;
     transition: all 0.15s ease;
@@ -275,7 +266,7 @@ body.yellow-bg { background-color: #666600; }
     flex-shrink: 0;
 }
 
-/* ボタン押下時のアニメーション - 発光効果強化 */
+/* ボタン押下時のアニメーション */
 .circle-btn.pressed {
     transform: scale(0.85);
 }
@@ -301,7 +292,7 @@ body.yellow-bg { background-color: #666600; }
         inset 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
-/* 各ボタンの色 - 発光色を個別に */
+/* 各ボタンの色 */
 .circle-btn-1 {
     border-color: #ff0000;
     background: #ff0000;
@@ -369,28 +360,37 @@ body.yellow-bg { background-color: #666600; }
     -moz-appearance: textfield;
 }
 
-/* スマホ用スタイル調整 */
-@media (max-height: 700px) {
-    .container {
-        padding: 12px;
-        gap: 15px;
-    }
-    
-    .mode-controls {
-        gap: 8px;
-    }
-    
+/* 横向き用スタイル - 元のレイアウトを維持 */
+@media (orientation: landscape) {
     .main-content {
+        flex-direction: row;
         gap: 20px;
     }
     
-    .left-controls {
-        min-width: 100px;
+    .input-controls {
+        min-width: 120px;
+        justify-content: center;
         gap: 20px;
     }
     
-    .input-section, .inc-dec-section {
-        gap: 12px;
+    .input-section, .inc-dec-buttons {
+        max-width: none;
+    }
+    
+    .game-input {
+        font-size: 28px;
+        padding: 15px;
+        max-width: none;
+    }
+    
+    .inc-dec-btn {
+        padding: 15px 10px;
+        font-size: 16px;
+        min-height: 50px;
+    }
+    
+    .circle-btn-container {
+        gap: 15px;
     }
     
     .count-display {
@@ -407,29 +407,10 @@ body.yellow-bg { background-color: #666600; }
         width: 70px;
         height: 70px;
     }
-    
-    .game-input {
-        font-size: 24px;
-        padding: 12px;
-    }
-    
-    .inc-dec-btn {
-        padding: 12px 8px;
-        font-size: 14px;
-        min-height: 45px;
-    }
-    
-    .inc-dec-buttons {
-        gap: 12px;
-    }
-    
-    .circle-btn-container {
-        gap: 15px;
-    }
 }
 
-/* 横向き用スタイル */
-@media (orientation: landscape) and (max-height: 500px) {
+/* 縦画面の小さい画面用 */
+@media (orientation: portrait) and (max-height: 600px) {
     .container {
         padding: 8px;
         gap: 10px;
@@ -441,42 +422,22 @@ body.yellow-bg { background-color: #666600; }
     
     .mode-btn, .reset-btn {
         padding: 8px 4px;
-        font-size: 12px;
-        min-height: 35px;
-    }
-    
-    .main-content {
-        gap: 15px;
-    }
-    
-    .left-controls {
-        min-width: 90px;
-        gap: 15px;
-    }
-    
-    .input-section, .inc-dec-section {
-        gap: 10px;
-    }
-    
-    .count-display {
-        font-size: 20px;
+        font-size: 11px;
         min-height: 30px;
     }
     
-    .rate-display {
-        font-size: 16px;
-        min-height: 20px;
+    .main-content {
+        gap: 10px;
     }
     
-    .circle-btn {
-        width: 60px;
-        height: 60px;
-        font-size: 16px;
+    .input-controls {
+        gap: 8px;
     }
     
     .game-input {
         font-size: 20px;
         padding: 10px;
+        max-width: 180px;
     }
     
     .inc-dec-btn {
@@ -485,8 +446,65 @@ body.yellow-bg { background-color: #666600; }
         min-height: 40px;
     }
     
-    .inc-dec-buttons {
-        gap: 10px;
+    .count-display {
+        font-size: 18px;
+        min-height: 25px;
+    }
+    
+    .rate-display {
+        font-size: 12px;
+        min-height: 18px;
+    }
+    
+    .circle-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 14px;
+    }
+    
+    .circle-btn-container {
+        gap: 6px;
+    }
+}
+
+/* 縦画面の大きい画面用 */
+@media (orientation: portrait) and (min-height: 800px) {
+    .container {
+        padding: 15px;
+        gap: 20px;
+    }
+    
+    .main-content {
+        gap: 20px;
+    }
+    
+    .input-controls {
+        gap: 15px;
+    }
+    
+    .game-input {
+        font-size: 28px;
+        padding: 15px;
+        max-width: 220px;
+    }
+    
+    .inc-dec-btn {
+        padding: 15px 10px;
+        font-size: 16px;
+        min-height: 50px;
+    }
+    
+    .count-display {
+        font-size: 24px;
+    }
+    
+    .rate-display {
+        font-size: 16px;
+    }
+    
+    .circle-btn {
+        width: 70px;
+        height: 70px;
     }
     
     .circle-btn-container {
@@ -583,25 +601,21 @@ body.yellow-bg { background-color: #666600; }
         <button class="reset-btn" id="resetBtn">リセット</button>
     </div>
 
-    <!-- メインコンテンツ -->
+    <!-- メインコンテンツ - 縦画面では縦並び -->
     <div class="main-content">
-        <!-- 左側：入力フィールドと増減ボタン -->
-        <div class="left-controls">
-            <!-- 入力フィールドセクション -->
+        <!-- 上：入力フィールドと増減ボタン -->
+        <div class="input-controls">
             <div class="input-section">
                 <input type="number" class="game-input" id="totalCount" value="0" min="0">
             </div>
             
-            <!-- 増加・減少ボタンセクション -->
-            <div class="inc-dec-section">
-                <div class="inc-dec-buttons">
-                    <button class="inc-dec-btn increment-btn active" id="incrementBtn">増加</button>
-                    <button class="inc-dec-btn decrement-btn" id="decrementBtn">減少</button>
-                </div>
+            <div class="inc-dec-buttons">
+                <button class="inc-dec-btn increment-btn active" id="incrementBtn">増加</button>
+                <button class="inc-dec-btn decrement-btn" id="decrementBtn">減少</button>
             </div>
         </div>
 
-        <!-- 右側：丸いカウントボタン -->
+        <!-- 下：丸いカウントボタン -->
         <div class="circle-buttons">
             <div class="circle-btn-container">
                 <div class="count-display" id="countDisplay1">0</div>
@@ -628,6 +642,7 @@ body.yellow-bg { background-color: #666600; }
 </div>
 
 <script>
+// JavaScriptコードは変更なし（ローカルストレージ機能付き）
 class CounterApp {
     constructor() {
         this.currentMode = 'A';
@@ -659,11 +674,9 @@ class CounterApp {
             if (savedData) {
                 const data = JSON.parse(savedData);
                 
-                // カウントデータを読み込み
                 if (data.counts) {
                     this.counts = data.counts;
                 } else {
-                    // デフォルト値
                     this.counts = {
                         'A': [0, 0, 0, 0],
                         'B': [0, 0, 0, 0],
@@ -671,11 +684,9 @@ class CounterApp {
                     };
                 }
                 
-                // 総ゲーム数データを読み込み
                 if (data.totalGames) {
                     this.totalGames = data.totalGames;
                 } else {
-                    // デフォルト値
                     this.totalGames = {
                         'A': 0,
                         'B': 0,
@@ -683,19 +694,16 @@ class CounterApp {
                     };
                 }
                 
-                // 現在のモードを読み込み
                 if (data.currentMode) {
                     this.currentMode = data.currentMode;
                 }
                 
-                // 増加モードを読み込み
                 if (typeof data.isIncrementMode !== 'undefined') {
                     this.isIncrementMode = data.isIncrementMode;
                 }
                 
                 console.log('データをローカルストレージから読み込みました');
             } else {
-                // 初回起動時はデフォルト値
                 this.counts = {
                     'A': [0, 0, 0, 0],
                     'B': [0, 0, 0, 0],
@@ -710,7 +718,6 @@ class CounterApp {
             }
         } catch (error) {
             console.error('データの読み込みに失敗しました:', error);
-            // エラー時はデフォルト値を使用
             this.counts = {
                 'A': [0, 0, 0, 0],
                 'B': [0, 0, 0, 0],
@@ -751,7 +758,6 @@ class CounterApp {
         this.decrementBtn = document.getElementById('decrementBtn');
         this.resetBtn = document.getElementById('resetBtn');
         
-        // カウント表示要素
         this.countDisplays = [
             document.getElementById('countDisplay1'),
             document.getElementById('countDisplay2'),
@@ -759,7 +765,6 @@ class CounterApp {
             document.getElementById('countDisplay4')
         ];
         
-        // レート表示要素
         this.rateDisplays = [
             document.getElementById('rateDisplay1'),
             document.getElementById('rateDisplay2'),
@@ -778,14 +783,12 @@ class CounterApp {
     }
 
     setupEventListeners() {
-        // モードボタン
         this.modeButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 this.setMode(btn.dataset.mode);
             });
         });
 
-        // 丸いカウントボタン
         this.circleButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 this.handleButtonPress(btn, () => {
@@ -803,7 +806,6 @@ class CounterApp {
             });
         });
 
-        // 増加・減少ボタン
         [this.incrementBtn, this.decrementBtn].forEach(btn => {
             btn.addEventListener('click', () => {
                 this.handleButtonPress(btn, () => {
@@ -816,28 +818,24 @@ class CounterApp {
             });
         });
 
-        // リセットボタン
         this.resetBtn.addEventListener('click', () => {
             this.handleButtonPress(this.resetBtn, () => {
                 this.showResetConfirmation();
             });
         });
 
-        // 総G数入力の変更を監視
         this.totalCountElement.addEventListener('change', () => {
             this.updateTotalGames();
             this.updateDisplay();
-            this.saveToStorage(); // 変更時に保存
+            this.saveToStorage();
         });
 
-        // 定期的な自動保存（10秒ごと）
         setInterval(() => {
             this.saveToStorage();
         }, 10000);
     }
 
     handleButtonPress(button, callback) {
-        // ボタン押下時の背面色変化（丸いボタンのみ）
         if (button.classList.contains('circle-btn-1')) {
             document.body.classList.add('red-bg');
         } else if (button.classList.contains('circle-btn-2')) {
@@ -848,7 +846,6 @@ class CounterApp {
             document.body.classList.add('yellow-bg');
         }
         
-        // ボタン押下時の視覚的フィードバック
         if (button.classList.contains('circle-btn')) {
             button.classList.add('pressed');
             setTimeout(() => {
@@ -861,19 +858,16 @@ class CounterApp {
             }, 200);
         }
         
-        // 背面色を元に戻す
         setTimeout(() => {
             document.body.classList.remove('red-bg', 'green-bg', 'blue-bg', 'yellow-bg');
         }, 300);
         
-        // コールバック実行
         setTimeout(callback, 50);
     }
 
     setMode(mode) {
         this.currentMode = mode;
 
-        // アクティブなモードボタンのスタイル更新
         this.modeButtons.forEach(btn => {
             if (btn.dataset.mode === mode) {
                 btn.classList.add('active');
@@ -882,17 +876,15 @@ class CounterApp {
             }
         });
 
-        // 現在のモードのG数を表示
         this.totalCountElement.value = this.totalGames[this.currentMode];
         
         this.updateDisplay();
-        this.saveToStorage(); // モード変更時に保存
+        this.saveToStorage();
     }
 
     setIncrementMode(isIncrement) {
         this.isIncrementMode = isIncrement;
         
-        // ボタンのスタイル更新
         if (isIncrement) {
             this.incrementBtn.classList.add('active');
             this.decrementBtn.classList.remove('active');
@@ -901,7 +893,7 @@ class CounterApp {
             this.decrementBtn.classList.add('active');
         }
         
-        this.saveToStorage(); // モード変更時に保存
+        this.saveToStorage();
     }
 
     handleCountButton(buttonIndex) {
@@ -916,7 +908,7 @@ class CounterApp {
         }
         
         this.updateDisplay();
-        this.saveToStorage(); // カウント変更時に保存
+        this.saveToStorage();
     }
 
     showResetConfirmation() {
@@ -961,7 +953,7 @@ class CounterApp {
     resetCurrentMode() {
         this.counts[this.currentMode] = [0, 0, 0, 0];
         this.updateDisplay();
-        this.saveToStorage(); // リセット時に保存
+        this.saveToStorage();
     }
 
     updateTotalGames() {
@@ -972,19 +964,17 @@ class CounterApp {
         this.totalGames[this.currentMode] = value;
         this.totalCountElement.value = value;
         this.updateDisplay();
-        this.saveToStorage(); // ゲーム数変更時に保存
+        this.saveToStorage();
     }
 
     updateDisplay() {
         const currentCounts = this.counts[this.currentMode];
         const currentTotalGames = this.totalGames[this.currentMode];
         
-        // 各カウントボタンの表示を更新
         this.countDisplays.forEach((element, index) => {
             element.textContent = currentCounts[index];
         });
         
-        // レート表示を更新
         this.rateDisplays.forEach((element, index) => {
             const count = currentCounts[index];
             let rate = "1/0.00";
@@ -1001,7 +991,6 @@ class CounterApp {
     }
 }
 
-// アプリケーションの初期化
 document.addEventListener('DOMContentLoaded', () => {
     new CounterApp();
 });
