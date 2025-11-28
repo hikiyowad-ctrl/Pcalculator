@@ -35,11 +35,11 @@ body.green-bg { background: linear-gradient(135deg, #003300 0%, #006600 100%); }
 body.blue-bg { background: linear-gradient(135deg, #000033 0%, #000066 100%); }
 body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); }
 
-/* ハンバーガーメニュー - 右上に配置 */
+/* ハンバーガーメニュー - 左上に配置（修正） */
 .hamburger-menu {
     position: fixed;
     top: 15px;
-    right: 15px;
+    left: 15px; /* rightからleftに変更 */
     z-index: 1000;
 }
 
@@ -207,17 +207,20 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     50% { opacity: 1; }
 }
 
-/* モードボタンとリセットボタン */
+/* モードボタンとリセットボタン - 修正 */
 .mode-controls {
     display: flex;
     gap: 8px;
     flex-shrink: 0;
+    align-items: flex-start;
+    flex-wrap: wrap;
 }
 
 .mode-buttons {
     display: flex;
     gap: 8px;
     flex: 1;
+    min-width: 0;
 }
 
 /* 立体的なモードボタン */
@@ -270,7 +273,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
         0 0 15px #00ff00;
 }
 
-/* 立体的なリセットボタン */
+/* 立体的なリセットボタン - 修正 */
 .reset-btn {
     padding: 10px 15px;
     border: none;
@@ -285,6 +288,9 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     transition: all 0.3s ease;
     min-height: 35px;
     white-space: nowrap;
+    width: auto;
+    min-width: 70px;
+    flex-shrink: 0;
     box-shadow: 
         3px 3px 6px rgba(0, 0, 0, 0.5),
         -2px -2px 4px rgba(255, 255, 255, 0.05);
@@ -333,7 +339,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     flex-direction: column;
     gap: 12px;
     flex-shrink: 0;
-    align-items: center; /* 中央揃えに変更 */
+    align-items: center;
 }
 
 .input-section {
@@ -341,13 +347,13 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    width: 100%; /* 幅を100%に */
+    width: 100%;
 }
 
-/* 入力フィールドの横幅を調整 - 増減ボタンと同じ幅に */
+/* 入力フィールドの横幅を調整 */
 .game-input {
     width: 100%;
-    max-width: 200px; /* 最大幅を200pxに固定 */
+    max-width: 200px;
     padding: 12px;
     border: none;
     border-radius: 10px;
@@ -377,7 +383,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     display: flex;
     gap: 10px;
     width: 100%;
-    max-width: 200px; /* 入力フィールドと同じ幅に */
+    max-width: 200px;
 }
 
 /* 立体的な増減ボタン */
@@ -653,7 +659,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     .game-input {
         font-size: 28px;
         padding: 15px;
-        max-width: 200px; /* 横画面でも同じ幅を維持 */
+        max-width: 200px;
     }
     
     .inc-dec-btn {
@@ -680,6 +686,11 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
         width: 80px;
         height: 80px;
     }
+    
+    /* 横画面でのモードコントロール調整 */
+    .mode-controls {
+        flex-wrap: nowrap;
+    }
 }
 
 /* 縦画面の小さい画面用 */
@@ -691,6 +702,16 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     
     .mode-controls {
         gap: 6px;
+        flex-direction: column;
+    }
+    
+    .mode-buttons {
+        width: 100%;
+    }
+    
+    .reset-btn {
+        width: 100%;
+        min-width: auto;
     }
     
     .mode-btn, .reset-btn {
@@ -710,7 +731,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     .game-input {
         font-size: 20px;
         padding: 10px;
-        max-width: 180px; /* 小さい画面では少し小さく */
+        max-width: 180px;
     }
     
     .inc-dec-btn {
@@ -758,7 +779,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     .game-input {
         font-size: 28px;
         padding: 15px;
-        max-width: 200px; /* 大きい画面でも同じ幅 */
+        max-width: 200px;
     }
     
     .inc-dec-btn {
@@ -871,7 +892,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
 </style>
 </head>
 <body>
-<!-- ハンバーガーメニュー - 右上に配置 -->
+<!-- ハンバーガーメニュー - 左上に配置（修正） -->
 <div class="hamburger-menu">
     <button class="hamburger-btn" id="hamburgerBtn">
         <span></span>
@@ -1163,7 +1184,7 @@ class CounterApp {
         this.menuOverlay.classList.remove('active');
     }
 
-    // 既存のカウンター機能（変更なし）
+    // 既存のカウンター機能
     handleButtonPress(button, callback) {
         if (button.classList.contains('circle-btn-1')) {
             document.body.classList.add('red-bg');
