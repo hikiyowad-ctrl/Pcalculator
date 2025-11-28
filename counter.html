@@ -6,6 +6,7 @@
 <title>カウンターアプリ</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* スタイルコードは変更なし（前回と同じ） */
 * {
     touch-action: manipulation;
     -webkit-touch-callout: none;
@@ -627,25 +628,13 @@ body.yellow-bg { background-color: #666600; }
 </div>
 
 <script>
-// JavaScriptコードは変更なし（前回と同じ）
 class CounterApp {
     constructor() {
         this.currentMode = 'A';
         this.isIncrementMode = true;
         
-        // 各モードと各カウントボタンの値を保持
-        this.counts = {
-            'A': [0, 0, 0, 0],
-            'B': [0, 0, 0, 0],
-            'C': [0, 0, 0, 0]
-        };
-        
-        // 各モードごとのG数を保持
-        this.totalGames = {
-            'A': 0,
-            'B': 0,
-            'C': 0
-        };
+        // ローカルストレージからデータを読み込む
+        this.loadFromStorage();
         
         this.initializeElements();
         this.setupEventListeners();
@@ -656,6 +645,102 @@ class CounterApp {
         this.handleResize();
         window.addEventListener('resize', () => this.handleResize());
         window.addEventListener('orientationchange', () => this.handleResize());
+        
+        // ページを閉じる前にデータを保存
+        window.addEventListener('beforeunload', () => {
+            this.saveToStorage();
+        });
+    }
+
+    // ローカルストレージからデータを読み込む
+    loadFromStorage() {
+        try {
+            const savedData = localStorage.getItem('counterAppData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                
+                // カウントデータを読み込み
+                if (data.counts) {
+                    this.counts = data.counts;
+                } else {
+                    // デフォルト値
+                    this.counts = {
+                        'A': [0, 0, 0, 0],
+                        'B': [0, 0, 0, 0],
+                        'C': [0, 0, 0, 0]
+                    };
+                }
+                
+                // 総ゲーム数データを読み込み
+                if (data.totalGames) {
+                    this.totalGames = data.totalGames;
+                } else {
+                    // デフォルト値
+                    this.totalGames = {
+                        'A': 0,
+                        'B': 0,
+                        'C': 0
+                    };
+                }
+                
+                // 現在のモードを読み込み
+                if (data.currentMode) {
+                    this.currentMode = data.currentMode;
+                }
+                
+                // 増加モードを読み込み
+                if (typeof data.isIncrementMode !== 'undefined') {
+                    this.isIncrementMode = data.isIncrementMode;
+                }
+                
+                console.log('データをローカルストレージから読み込みました');
+            } else {
+                // 初回起動時はデフォルト値
+                this.counts = {
+                    'A': [0, 0, 0, 0],
+                    'B': [0, 0, 0, 0],
+                    'C': [0, 0, 0, 0]
+                };
+                
+                this.totalGames = {
+                    'A': 0,
+                    'B': 0,
+                    'C': 0
+                };
+            }
+        } catch (error) {
+            console.error('データの読み込みに失敗しました:', error);
+            // エラー時はデフォルト値を使用
+            this.counts = {
+                'A': [0, 0, 0, 0],
+                'B': [0, 0, 0, 0],
+                'C': [0, 0, 0, 0]
+            };
+            
+            this.totalGames = {
+                'A': 0,
+                'B': 0,
+                'C': 0
+            };
+        }
+    }
+
+    // ローカルストレージにデータを保存する
+    saveToStorage() {
+        try {
+            const data = {
+                counts: this.counts,
+                totalGames: this.totalGames,
+                currentMode: this.currentMode,
+                isIncrementMode: this.isIncrementMode,
+                lastSaved: new Date().toISOString()
+            };
+            
+            localStorage.setItem('counterAppData', JSON.stringify(data));
+            console.log('データをローカルストレージに保存しました');
+        } catch (error) {
+            console.error('データの保存に失敗しました:', error);
+        }
     }
 
     initializeElements() {
@@ -742,7 +827,13 @@ class CounterApp {
         this.totalCountElement.addEventListener('change', () => {
             this.updateTotalGames();
             this.updateDisplay();
+            this.saveToStorage(); // 変更時に保存
         });
+
+        // 定期的な自動保存（10秒ごと）
+        setInterval(() => {
+            this.saveToStorage();
+        }, 10000);
     }
 
     handleButtonPress(button, callback) {
@@ -795,6 +886,7 @@ class CounterApp {
         this.totalCountElement.value = this.totalGames[this.currentMode];
         
         this.updateDisplay();
+        this.saveToStorage(); // モード変更時に保存
     }
 
     setIncrementMode(isIncrement) {
@@ -808,6 +900,8 @@ class CounterApp {
             this.incrementBtn.classList.remove('active');
             this.decrementBtn.classList.add('active');
         }
+        
+        this.saveToStorage(); // モード変更時に保存
     }
 
     handleCountButton(buttonIndex) {
@@ -822,6 +916,7 @@ class CounterApp {
         }
         
         this.updateDisplay();
+        this.saveToStorage(); // カウント変更時に保存
     }
 
     showResetConfirmation() {
@@ -866,6 +961,7 @@ class CounterApp {
     resetCurrentMode() {
         this.counts[this.currentMode] = [0, 0, 0, 0];
         this.updateDisplay();
+        this.saveToStorage(); // リセット時に保存
     }
 
     updateTotalGames() {
@@ -876,6 +972,7 @@ class CounterApp {
         this.totalGames[this.currentMode] = value;
         this.totalCountElement.value = value;
         this.updateDisplay();
+        this.saveToStorage(); // ゲーム数変更時に保存
     }
 
     updateDisplay() {
