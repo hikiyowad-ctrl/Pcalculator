@@ -35,11 +35,11 @@ body.green-bg { background: linear-gradient(135deg, #003300 0%, #006600 100%); }
 body.blue-bg { background: linear-gradient(135deg, #000033 0%, #000066 100%); }
 body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); }
 
-/* ハンバーガーメニュー - 左上に配置（修正） */
+/* ハンバーガーメニュー - 左上に配置 */
 .hamburger-menu {
     position: fixed;
     top: 15px;
-    left: 15px; /* rightからleftに変更 */
+    left: 15px;
     z-index: 1000;
 }
 
@@ -207,7 +207,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     50% { opacity: 1; }
 }
 
-/* モードボタンとリセットボタン - 修正 */
+/* モードボタンとリセットボタン */
 .mode-controls {
     display: flex;
     gap: 8px;
@@ -273,7 +273,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
         0 0 15px #00ff00;
 }
 
-/* 立体的なリセットボタン - 修正 */
+/* 立体的なリセットボタン */
 .reset-btn {
     padding: 10px 15px;
     border: none;
@@ -892,7 +892,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
 </style>
 </head>
 <body>
-<!-- ハンバーガーメニュー - 左上に配置（修正） -->
+<!-- ハンバーガーメニュー - 左上に配置 -->
 <div class="hamburger-menu">
     <button class="hamburger-btn" id="hamburgerBtn">
         <span></span>
@@ -906,7 +906,9 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     <div class="menu-content">
         <div class="menu-title">メニュー</div>
         <div class="menu-items">
-            <a href="index.html" class="menu-link active">カウンターアプリ</a>
+            <!-- トップページへのリンクを追加 -->
+            <a href="index.html" class="menu-link">トップページへ</a>
+            <a href="counter.html" class="menu-link active">カウンターアプリ</a>
             <a href="pachinko_calc.html" class="menu-link">パチンコ計算機</a>
         </div>
     </div>
