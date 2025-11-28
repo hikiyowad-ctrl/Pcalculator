@@ -6,7 +6,6 @@
 <title>カウンターアプリ</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* CSSコードはそのまま */
 * {
     touch-action: manipulation;
     -webkit-touch-callout: none;
@@ -35,6 +34,134 @@ body.red-bg { background: linear-gradient(135deg, #330000 0%, #660000 100%); }
 body.green-bg { background: linear-gradient(135deg, #003300 0%, #006600 100%); }
 body.blue-bg { background: linear-gradient(135deg, #000033 0%, #000066 100%); }
 body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); }
+
+/* ハンバーガーメニュー */
+.hamburger-menu {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    z-index: 1000;
+}
+
+.hamburger-btn {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 2px solid #00ff00;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 8px;
+    box-shadow: 
+        3px 3px 6px rgba(0, 0, 0, 0.5),
+        -2px -2px 4px rgba(255, 255, 255, 0.05);
+    transition: all 0.3s ease;
+}
+
+.hamburger-btn span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: #00ff00;
+    transition: all 0.3s ease;
+}
+
+.hamburger-btn.active span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.hamburger-btn.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger-btn.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* メニューオーバーレイ */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 999;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-overlay.active {
+    display: flex;
+}
+
+.menu-content {
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border: 2px solid #00ff00;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 300px;
+    width: 90%;
+    box-shadow: 
+        0 0 30px rgba(0, 255, 0, 0.5),
+        4px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.menu-title {
+    color: #00ff00;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu-item {
+    padding: 15px 20px;
+    background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+    border: 2px solid #00ff00;
+    border-radius: 10px;
+    color: #00ff00;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 
+        3px 3px 6px rgba(0, 0, 0, 0.5),
+        -2px -2px 4px rgba(255, 255, 255, 0.05);
+}
+
+.menu-item:hover {
+    background: linear-gradient(145deg, #00ff00, #00cc00);
+    color: #000000;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.2),
+        0 0 15px #00ff00;
+}
+
+.menu-item.active {
+    background: linear-gradient(145deg, #00ff00, #00cc00);
+    color: #000000;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.2),
+        0 0 15px #00ff00;
+}
 
 /* 立体的な外枠 */
 .container {
@@ -667,7 +794,7 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 1001;
 }
 
 .confirm-dialog {
@@ -742,7 +869,28 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
 </style>
 </head>
 <body>
-<div class="container">
+<!-- ハンバーガーメニュー -->
+<div class="hamburger-menu">
+    <button class="hamburger-btn" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+</div>
+
+<!-- メニューオーバーレイ -->
+<div class="menu-overlay" id="menuOverlay">
+    <div class="menu-content">
+        <div class="menu-title">メニュー</div>
+        <div class="menu-items">
+            <div class="menu-item active" data-page="counter">カウンターアプリ</div>
+            <div class="menu-item" data-page="pachinko">パチンコ情報</div>
+        </div>
+    </div>
+</div>
+
+<!-- カウンターアプリのコンテンツ -->
+<div class="container" id="counterPage">
     <!-- モードボタンとリセットボタン -->
     <div class="mode-controls">
         <div class="mode-buttons">
@@ -789,6 +937,18 @@ body.yellow-bg { background: linear-gradient(135deg, #333300 0%, #666600 100%); 
                 <div class="rate-display" id="rateDisplay4">1/0.00</div>
                 <button class="circle-btn circle-btn-4" data-index="3"></button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- パチンコ情報ページのコンテンツ（非表示） -->
+<div id="pachinkoPage" style="display: none;">
+    <!-- ここにパチンコ情報ページの内容を追加 -->
+    <div class="container">
+        <div style="text-align: center; padding: 20px;">
+            <h2 style="color: #00ff00; font-family: 'Orbitron', sans-serif;">パチンコ・スロット情報</h2>
+            <p style="color: #00ff00;">ここにパチンコ店の情報を表示します</p>
+            <!-- パチンコ情報の内容をここに追加 -->
         </div>
     </div>
 </div>
@@ -882,7 +1042,6 @@ class CounterApp {
             };
         }
     }
-
     // ローカルストレージにデータを保存する
     saveToStorage() {
         try {
@@ -922,6 +1081,13 @@ class CounterApp {
             document.getElementById('rateDisplay3'),
             document.getElementById('rateDisplay4')
         ];
+
+        // ハンバーガーメニュー要素
+        this.hamburgerBtn = document.getElementById('hamburgerBtn');
+        this.menuOverlay = document.getElementById('menuOverlay');
+        this.menuItems = document.querySelectorAll('.menu-item');
+        this.counterPage = document.getElementById('counterPage');
+        this.pachinkoPage = document.getElementById('pachinkoPage');
     }
 
     handleResize() {
@@ -934,6 +1100,26 @@ class CounterApp {
     }
 
     setupEventListeners() {
+        // ハンバーガーメニューのイベント
+        this.hamburgerBtn.addEventListener('click', () => {
+            this.toggleMenu();
+        });
+
+        this.menuOverlay.addEventListener('click', (e) => {
+            if (e.target === this.menuOverlay) {
+                this.closeMenu();
+            }
+        });
+
+        this.menuItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const page = item.dataset.page;
+                this.switchPage(page);
+                this.closeMenu();
+            });
+        });
+
+        // 既存のカウンターイベント
         this.modeButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 this.setMode(btn.dataset.mode);
@@ -986,6 +1172,77 @@ class CounterApp {
         }, 10000);
     }
 
+    // ハンバーガーメニュー機能
+    toggleMenu() {
+        this.hamburgerBtn.classList.toggle('active');
+        this.menuOverlay.classList.toggle('active');
+    }
+
+    closeMenu() {
+        this.hamburgerBtn.classList.remove('active');
+        this.menuOverlay.classList.remove('active');
+    }
+
+    switchPage(page) {
+        // メニューアイテムのアクティブ状態を更新
+        this.menuItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.dataset.page === page) {
+                item.classList.add('active');
+            }
+        });
+
+        // ページ表示を切り替え
+        if (page === 'counter') {
+            this.counterPage.style.display = 'flex';
+            this.pachinkoPage.style.display = 'none';
+        } else if (page === 'pachinko') {
+            this.counterPage.style.display = 'none';
+            this.pachinkoPage.style.display = 'block';
+            this.loadPachinkoInfo();
+        }
+    }
+
+    loadPachinkoInfo() {
+        // ここにパチンコ情報を読み込む処理を追加
+        const pachinkoPage = document.getElementById('pachinkoPage');
+        pachinkoPage.innerHTML = `
+            <div class="container">
+                <div style="padding: 20px;">
+                    <h2 style="color: #00ff00; font-family: 'Orbitron', sans-serif; text-align: center; margin-bottom: 20px;">
+                        パチンコ・スロット情報
+                    </h2>
+                    
+                    <div style="display: grid; gap: 15px;">
+                        <div style="background: linear-gradient(145deg, #2a2a2a, #1a1a1a); padding: 15px; border-radius: 10px; border: 1px solid #00ff00;">
+                            <h3 style="color: #00ff00; margin: 0 0 10px 0;">店舗検索</h3>
+                            <input type="text" placeholder="店舗名を入力" style="width: 100%; padding: 10px; background: #1a1a1a; border: 1px solid #00ff00; border-radius: 5px; color: #00ff00;">
+                        </div>
+                        
+                        <div style="background: linear-gradient(145deg, #2a2a2a, #1a1a1a); padding: 15px; border-radius: 10px; border: 1px solid #00ff00;">
+                            <h3 style="color: #00ff00; margin: 0 0 10px 0;">人気店舗</h3>
+                            <div style="color: #00ff00;">
+                                <div>・〇〇パチンコ</div>
+                                <div>・△△スロット</div>
+                                <div>・□□アミューズメント</div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: linear-gradient(145deg, #2a2a2a, #1a1a1a); padding: 15px; border-radius: 10px; border: 1px solid #00ff00;">
+                            <h3 style="color: #00ff00; margin: 0 0 10px 0;">最新情報</h3>
+                            <div style="color: #00ff00; font-size: 14px;">
+                                <div>新台導入情報</div>
+                                <div>キャンペーン情報</div>
+                                <div>営業時間変更</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // 既存のカウンター機能（変更なし）
     handleButtonPress(button, callback) {
         if (button.classList.contains('circle-btn-1')) {
             document.body.classList.add('red-bg');
