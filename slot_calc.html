@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スロット計算ツール</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* 保存・読み込みボタン - 左上 */
+        .data-buttons {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* ハンバーガーメニュー - 右上 */
+        .menu-container {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+
+        .hamburger-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hamburger-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 12px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+
+        .menu-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            min-width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            margin-top: 5px;
+        }
+
+        .menu-content a {
+            display: block;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: #333;
+            border-bottom: 1px solid #f0f2f5;
+            transition: background 0.3s ease;
+        }
+
+        .menu-content a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .menu-content a:last-child {
+            border-bottom: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+            padding-top: 60px;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .input-groups-container {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .input-group:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 12px;
+            align-items: end;
+            flex-wrap: wrap;
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .input-field label {
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #333;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .input-field input {
+            padding: 8px 10px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .input-field input::placeholder {
+            color: #a0a4a8;
+        }
+
+        .group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f2f5;
+        }
+
+        .group-title-input {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #333;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            padding: 6px 10px;
+            background: white;
+            min-width: 150px;
+        }
+
+        .group-title-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .group-title-input::placeholder {
+            color: #a0a4a8;
+        }
+
+        /* メインボタン */
+        .main-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(2px);
+        }
+
+        .add-btn {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .add-btn:hover {
+            background: linear-gradient(135deg, #45a049, #4CAF50);
+            box-shadow: 0 6px 18px rgba(76, 175, 80, 0.4);
+        }
+
+        .calculate-btn {
+            background: linear-gradient(135deg, #2196F3, #0b7dda);
+            color: white;
+            padding: 12px 30px;
+            font-size: 1rem;
+        }
+
+        .calculate-btn:hover {
+            background: linear-gradient(135deg, #0b7dda, #2196F3);
+            box-shadow: 0 6px 18px rgba(33, 150, 243, 0.4);
+        }
+
+        .save-btn, .load-btn {
+            background: linear-gradient(135deg, #666, #444);
+            color: white;
+            padding: 8px 16px;
+            font-size: 0.8rem;
+        }
+
+        .save-btn:hover, .load-btn:hover {
+            background: linear-gradient(135deg, #555, #333);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .remove-btn {
+            background: linear-gradient(135deg, #ff4444, #cc0000);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            background: linear-gradient(135deg, #cc0000, #ff4444);
+            box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4);
+        }
+
+        .result-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .result-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .result-label {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .result-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .result-unit {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .result-profit {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-loss {
+            background: linear-gradient(135deg, #ff4444, #c62828);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* スピナー非表示 */
+        input[type=number]::-webkit-outer-spin-button,
+        input[type=number]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        @media (max-width: 768px) {
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 250px;
+                justify-content: center;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .result-value {
+                font-size: 1.8rem;
+            }
+            
+            .result-row {
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .data-buttons {
+                position: relative;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
+
+            .header {
+                padding-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 保存・読み込みボタン - 左上 -->
+        <div class="data-buttons">
+            <button class="btn save-btn" onclick="saveData()">
+                💾 保存
+            </button>
+            <button class="btn load-btn" onclick="loadData()">
+                📂 読み込み
+            </button>
+        </div>
+
+        <!-- ハンバーガーメニュー - 右上 -->
+        <div class="menu-container">
+            <div class="hamburger-menu">
+                <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+                <div class="menu-content" id="menuContent">
+                    <a href="index.html">🏠 トップページへ</a>
+                    <a href="counter.html">🎯 小役カウンター</a>
+                    <a href="pachinko_calc.html">🎰 パチンコ仕事量ツール</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>スロット計算ツール</h1>
+            <p>複数の台の仕事量をまとめて計算</p>
+        </div>
+        
+        <div id="inputGroups" class="input-groups-container">
+            <div class="input-group" data-group-id="1">
+                <div class="group-header">
+                    <input type="text" class="group-title-input" placeholder="機種名" value="">
+                    <button class="remove-btn" onclick="removeGroup(this)">
+                        🗑️ 削除
+                    </button>
+                </div>
+                <div class="input-row">
+                    <div class="input-field">
+                        <label>🎯 消化G数</label>
+                        <input type="number" class="input-games" value="7000" placeholder="例: 5000">
+                    </div>
+                    
+                    <div class="input-field">
+                        <label>📊 機械割 (%)</label>
+                        <input type="number" class="input-percentage" value="104" step="0.01" placeholder="例: 114.9">
+                    </div>
+                    
+                    <div class="input-field">
+                        <label>🪙 貸枚数 (枚)</label>
+                        <input type="number" class="input-loan" value="50" placeholder="例: 50">
+                    </div>
+                    
+                    <div class="input-field">
+                        <label>交換率 (1枚あたり)</label>
+                        <input type="number" class="input-exchange" value="20" placeholder="例: 18.18">
+                    </div>
+                    
+                    <div class="input-field">
+                        <label>💰 現金投資 (円)</label>
+                        <input type="number" class="input-cash" value="0" placeholder="例: 1000">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- メインボタン群 -->
+        <div class="main-buttons">
+            <button class="btn add-btn" onclick="addGroup()">
+                ➕ 条件を追加
+            </button>
+            <button class="btn calculate-btn" onclick="calculate()">
+                計算実行
+            </button>
+        </div>
+        
+        <div class="result-container">
+            <div class="result-row">
+                <div class="result-label">仕事量:</div>
+                <div id="result" class="result-value">0</div>
+                <div class="result-unit">円</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let groupCount = 1;
+
+        // ハンバーガーメニューの表示/非表示
+        function toggleMenu() {
+            const menu = document.getElementById('menuContent');
+            menu.classList.toggle('show');
+        }
+
+        // メニュー外をクリックで閉じる
+        window.onclick = function(event) {
+            if (!event.target.matches('.hamburger-btn')) {
+                const menu = document.getElementById('menuContent');
+                if (menu.classList.contains('show')) {
+                    menu.classList.remove('show');
+                }
+            }
+        }
+
+        function addGroup() {
+            groupCount++;
+            const newGroup = document.createElement('div');
+            newGroup.className = 'input-group';
+            newGroup.setAttribute('data-group-id', groupCount);
+            
+            newGroup.innerHTML = `
+                <div class="group-header">
+                    <input type="text" class="group-title-input" placeholder="機種名" value="">
+                    <button class="remove-btn" onclick="removeGroup(this)">
+                        🗑️ 削除
+                    </button>
+                </div>
+                <div class="input-row">
+                    <div class="input-field">
+                        <label>🎯 消化G数</label>
+                        <input type="number" class="input-games" value="7000" placeholder="例: 5000">
+                    </div>
+                    
+                    <div class="input-field">
+                        <label>📊 機械割 (%)</label>
+                        <input type="number" class="input-percentage" value="104" step="0.01" placeholder="例: 114.9">
+                    </div>
+                    
+                    <div class="input-field">
+                        <label>🪙 貸枚数 (枚)</label>
+                        <input type="number" class="input-loan" value="50" placeholder="例: 50">
+                    </div>
+                    
+                    <div class="input-field">
+                        <label>交換率 (1枚あたり)</label>
+                        <input type="number" class="input-exchange" value="20" placeholder="例: 18.18">
+                    </div>
+                    
+                    <div class="input-field">
+                        <label>💰 現金投資 (円)</label>
+                        <input type="number" class="input-cash" value="0" placeholder="例: 1000">
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('inputGroups').appendChild(newGroup);
+        }
+
+        function removeGroup(button) {
+            const group = button.closest('.input-group');
+            const groups = document.querySelectorAll('.input-group');
+            
+            if (groups.length > 1) {
+                group.remove();
+                calculate();
+            } else {
+                alert('少なくとも1つの条件セットは必要です');
+            }
+        }
+
+        function calculate() {
+            let totalProfit = 0;
+            const groups = document.querySelectorAll('.input-group');
+            
+            groups.forEach((group) => {
+                const games = parseFloat(group.querySelector('.input-games').value) || 0;
+                const percentage = parseFloat(group.querySelector('.input-percentage').value) || 0;
+                const exchange = parseFloat(group.querySelector('.input-exchange').value) || 0;
+                const cash = parseFloat(group.querySelector('.input-cash').value) || 0;
+                const loan = parseFloat(group.querySelector('.input-loan').value) || 0;
+                
+                const exchangeRate = exchange === 0 ? 1 : exchange;
+                const percentageDecimal = percentage / 100;
+                
+                const initialInvestmentLoss = (1000 - loan * exchangeRate) * (cash / 1000);
+                const slotProfit = ((games * 3 * percentageDecimal) - (games * 3)) * exchangeRate;
+                const calculation = slotProfit - initialInvestmentLoss;
+                
+                totalProfit += calculation;
+            });
+            
+            const resultElement = document.getElementById('result');
+            resultElement.textContent = Math.round(totalProfit).toLocaleString();
+            
+            // クラスのリセット
+            resultElement.className = 'result-value';
+            
+            if (totalProfit > 0) {
+                resultElement.classList.add('result-profit');
+            } else if (totalProfit < 0) {
+                resultElement.classList.add('result-loss');
+            }
+        }
+
+        function saveData() {
+            const groups = document.querySelectorAll('.input-group');
+            const data = [];
+            
+            groups.forEach((group) => {
+                const groupData = {
+                    title: group.querySelector('.group-title-input').value,
+                    games: group.querySelector('.input-games').value,
+                    percentage: group.querySelector('.input-percentage').value,
+                    loan: group.querySelector('.input-loan').value,
+                    exchange: group.querySelector('.input-exchange').value,
+                    cash: group.querySelector('.input-cash').value
+                };
+                data.push(groupData);
+            });
+            
+            localStorage.setItem('slotCalculatorData', JSON.stringify(data));
+            alert('データを保存しました！');
+        }
+
+        function loadData() {
+            const savedData = localStorage.getItem('slotCalculatorData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                const inputGroups = document.getElementById('inputGroups');
+                inputGroups.innerHTML = '';
+                groupCount = 0;
+                
+                data.forEach((groupData, index) => {
+                    groupCount++;
+                    const newGroup = document.createElement('div');
+                    newGroup.className = 'input-group';
+                    newGroup.setAttribute('data-group-id', groupCount);
+                    
+                    newGroup.innerHTML = `
+                        <div class="group-header">
+                            <input type="text" class="group-title-input" placeholder="機種名" value="${groupData.title}">
+                            <button class="remove-btn" onclick="removeGroup(this)">
+                                🗑️ 削除
+                            </button>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-field">
+                                <label>🎯 消化G数</label>
+                                <input type="number" class="input-games" value="${groupData.games}" placeholder="例: 5000">
+                            </div>
+                            
+                            <div class="input-field">
+                                <label>📊 機械割 (%)</label>
+                                <input type="number" class="input-percentage" value="${groupData.percentage}" step="0.01" placeholder="例: 114.9">
+                            </div>
+                            
+                            <div class="input-field">
+                                <label>🪙 貸枚数 (枚)</label>
+                                <input type="number" class="input-loan" value="${groupData.loan}" placeholder="例: 50">
+                            </div>
+                            
+                            <div class="input-field">
+                                <label>交換率 (1枚あたり)</label>
+                                <input type="number" class="input-exchange" value="${groupData.exchange}" placeholder="例: 18.18">
+                            </div>
+                            
+                            <div class="input-field">
+                                <label>💰 現金投資 (円)</label>
+                                <input type="number" class="input-cash" value="${groupData.cash}" placeholder="例: 1000">
+                            </div>
+                        </div>
+                    `;
+                    
+                    inputGroups.appendChild(newGroup);
+                });
+                
+                calculate();
+                alert('データを読み込みました！');
+            } else {
+                alert('保存されたデータが見つかりませんでした。');
+            }
+        }
+        
+        // ページ読み込み時に保存データをチェック
+        window.onload = function() {
+            calculate();
+            // 保存データがあれば読み込むか確認
+            if (localStorage.getItem('slotCalculatorData')) {
+                if (confirm('保存されたデータがあります。読み込みますか？')) {
+                    loadData();
+                }
+            }
+        };
+    </script>
+</body>
+</html>
