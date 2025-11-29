@@ -36,12 +36,6 @@
             gap: 15px;
         }
 
-        .data-buttons {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
         .menu-container {
             margin-left: auto;
         }
@@ -357,10 +351,11 @@
         .save-btn, .load-btn, .export-btn {
             background: linear-gradient(135deg, #8e44ad, #9b59b6);
             color: white;
-            padding: 10px 14px;
-            font-size: 0.8rem;
+            padding: 14px 20px;
+            font-size: 0.9rem;
             border: 2px solid #f1c40f;
             min-height: 44px;
+            flex: 1;
         }
 
         .save-btn:hover, .load-btn:hover, .export-btn:hover {
@@ -400,6 +395,7 @@
                 inset 0 0 20px rgba(241, 196, 15, 0.1);
             position: relative;
             overflow: hidden;
+            margin-bottom: 20px;
         }
 
         .result-container::before {
@@ -469,6 +465,83 @@
             background: linear-gradient(45deg, #e74c3c, #c0392b) !important;
             -webkit-background-clip: text !important;
             -webkit-text-fill-color: transparent !important;
+        }
+
+        /* データ管理セクション */
+        .data-management-section {
+            background: linear-gradient(135deg, rgba(52, 73, 94, 0.9), rgba(44, 62, 80, 0.9));
+            border-radius: 16px;
+            padding: 20px;
+            border: 2px solid #f1c40f;
+            box-shadow: 
+                0 6px 20px rgba(0, 0, 0, 0.4),
+                inset 0 0 15px rgba(241, 196, 15, 0.1);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .data-management-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #e74c3c, #f1c40f, #27ae60, #3498db, #9b59b6, #e74c3c);
+            background-size: 200% 100%;
+            animation: rainbow 3s linear infinite;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #f1c40f;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #34495e;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .data-management-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* 警告セクション */
+        .warning-section {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 2px solid #f1c40f;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 10px;
+            font-size: 13px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .warning-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 10px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .warning-content {
+            color: #856404;
+            line-height: 1.5;
+        }
+
+        .warning-content p {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         /* iOS向けの改善 */
@@ -546,13 +619,26 @@
                 align-items: stretch;
             }
             
-            .data-buttons {
-                justify-content: center;
-            }
-            
             .menu-container {
                 margin-left: 0;
                 align-self: flex-end;
+            }
+
+            .data-management-buttons {
+                flex-direction: column;
+            }
+
+            .data-management-section {
+                padding: 15px;
+            }
+
+            .warning-section {
+                margin: 15px 8px;
+                padding: 12px;
+            }
+            
+            .warning-content {
+                font-size: 12px;
             }
         }
 
@@ -576,18 +662,6 @@
     <div class="container">
         <!-- ヘッダー部分をまとめて配置 -->
         <div class="header-container">
-            <div class="data-buttons">
-                <button class="btn save-btn" onclick="saveData()">
-                    💾 保存
-                </button>
-                <button class="btn load-btn" onclick="loadData()">
-                    📂 読み込み
-                </button>
-                <button class="btn export-btn" onclick="exportToEmail()">
-                    📝 メモに保存
-                </button>
-            </div>
-
             <!-- ハンバーガーメニュー -->
             <div class="menu-container">
                 <div class="hamburger-menu">
@@ -660,6 +734,32 @@
                         <div class="result-label">仕事量:</div>
                         <div id="result" class="result-value">0</div>
                         <div class="result-unit">円</div>
+                    </div>
+                </div>
+
+                <!-- データ管理セクション -->
+                <div class="data-management-section">
+                    <div class="section-title">データ管理</div>
+                    <div class="data-management-buttons">
+                        <button class="btn save-btn" onclick="saveData()">
+                            💾 データ保存
+                        </button>
+                        <button class="btn load-btn" onclick="loadData()">
+                            📂 データ読み込み
+                        </button>
+                        <button class="btn export-btn" onclick="exportToEmail()">
+                            📝 メモに保存
+                        </button>
+                    </div>
+                </div>
+
+                <!-- データ保存注意書き -->
+                <div class="warning-section">
+                    <div class="warning-title">⚠️ データ保存についての注意</div>
+                    <div class="warning-content">
+                        <p>🎯 データはブラウザ内に保存されます</p>
+                        <p>🔥 キャッシュ削除や長期放置で消えることがあります</p>
+                        <p>💾 重要なデータは「メモ帳に保存」でバックアップしてください</p>
                     </div>
                 </div>
             </div>
