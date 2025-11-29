@@ -9,14 +9,15 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         body {
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
             color: white;
+            -webkit-text-size-adjust: 100%;
         }
 
         .container {
@@ -25,43 +26,47 @@
             position: relative;
         }
 
+        /* ヘッダー部分の改善 */
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .data-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .menu-container {
+            margin-left: auto;
+        }
+
         /* スロット風の装飾 */
         .slot-frame {
             background: linear-gradient(145deg, #e74c3c, #c0392b);
-            border: 8px solid #f1c40f;
-            border-radius: 25px;
-            padding: 5px;
+            border: 6px solid #f1c40f;
+            border-radius: 20px;
+            padding: 4px;
             box-shadow: 
-                0 0 30px rgba(231, 76, 60, 0.5),
-                inset 0 0 20px rgba(0, 0, 0, 0.3);
-            margin-bottom: 30px;
+                0 0 20px rgba(231, 76, 60, 0.5),
+                inset 0 0 15px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
         }
 
         .slot-inner {
             background: linear-gradient(135deg, #2c3e50, #34495e);
-            border-radius: 20px;
-            padding: 30px;
-            border: 3px solid #f1c40f;
-            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+            border-radius: 16px;
+            padding: 20px 15px;
+            border: 2px solid #f1c40f;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
         }
 
-        /* 保存・読み込みボタン - 左上 */
-        .data-buttons {
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        /* ハンバーガーメニュー - 右上 */
-        .menu-container {
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
-
+        /* ハンバーガーメニュー */
         .hamburger-menu {
             position: relative;
             display: inline-block;
@@ -73,10 +78,12 @@
             border-radius: 8px;
             padding: 10px 12px;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: white;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
+            min-width: 44px;
+            min-height: 44px;
         }
 
         .hamburger-btn:hover {
@@ -91,7 +98,7 @@
             top: 100%;
             background: linear-gradient(135deg, #2c3e50, #34495e);
             border: 2px solid #f1c40f;
-            min-width: 200px;
+            min-width: 180px;
             border-radius: 8px;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             z-index: 1000;
@@ -105,6 +112,10 @@
             color: white;
             border-bottom: 1px solid #34495e;
             transition: background 0.3s ease;
+            font-size: 0.9rem;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
         }
 
         .menu-content a:hover {
@@ -122,14 +133,14 @@
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             color: white;
-            padding-top: 60px;
+            width: 100%;
         }
 
         .header h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
+            font-size: 2.2rem;
+            margin-bottom: 12px;
             text-shadow: 
                 0 0 10px #f1c40f,
                 0 0 20px #f1c40f,
@@ -139,11 +150,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 900;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            line-height: 1.2;
         }
 
         .header p {
-            font-size: 1.2rem;
+            font-size: 1rem;
             opacity: 0.9;
             color: #f1c40f;
             text-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
@@ -151,18 +163,18 @@
 
         .input-groups-container {
             display: grid;
-            gap: 20px;
-            margin-bottom: 25px;
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         .input-group {
             background: linear-gradient(135deg, rgba(52, 73, 94, 0.9), rgba(44, 62, 80, 0.9));
-            border-radius: 15px;
-            padding: 25px;
-            border: 3px solid #f1c40f;
+            border-radius: 12px;
+            padding: 20px 15px;
+            border: 2px solid #f1c40f;
             box-shadow: 
-                0 8px 25px rgba(0, 0, 0, 0.4),
-                inset 0 0 20px rgba(241, 196, 15, 0.1);
+                0 6px 20px rgba(0, 0, 0, 0.4),
+                inset 0 0 15px rgba(241, 196, 15, 0.1);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -183,80 +195,29 @@
             left: 100%;
         }
 
-        .input-group:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.5),
-                inset 0 0 20px rgba(241, 196, 15, 0.2);
-        }
-
-        .input-row {
-            display: flex;
-            gap: 15px;
-            align-items: end;
-            flex-wrap: wrap;
-        }
-
-        .input-field {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            min-width: 100px;
-        }
-
-        .input-field label {
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #f1c40f;
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
-        }
-
-        .input-field input {
-            padding: 12px 15px;
-            border: 2px solid #34495e;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            background: rgba(26, 26, 46, 0.8);
-            color: white;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .input-field input:focus {
-            outline: none;
-            border-color: #f1c40f;
-            box-shadow: 
-                0 0 0 3px rgba(241, 196, 15, 0.3),
-                inset 0 2px 5px rgba(0, 0, 0, 0.3);
-            transform: translateY(-2px);
-        }
-
-        .input-field input::placeholder {
-            color: #95a5a6;
-        }
-
         .group-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
             border-bottom: 2px solid #34495e;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
         .group-title-input {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #f1c40f;
             border: 2px solid #34495e;
-            border-radius: 10px;
-            padding: 8px 15px;
+            border-radius: 8px;
+            padding: 10px 12px;
             background: rgba(26, 26, 46, 0.8);
-            min-width: 150px;
+            min-width: 140px;
+            flex: 1;
             text-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
+            font-size: 1rem;
         }
 
         .group-title-input:focus {
@@ -265,36 +226,83 @@
             box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.3);
         }
 
-        .group-title-input::placeholder {
+        /* 入力フィールドの改善 */
+        .input-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-field label {
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #f1c40f;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
+        }
+
+        .input-field input {
+            padding: 12px 10px;
+            border: 2px solid #34495e;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(26, 26, 46, 0.8);
+            color: white;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+            min-height: 44px;
+            -webkit-appearance: none;
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: #f1c40f;
+            box-shadow: 
+                0 0 0 3px rgba(241, 196, 15, 0.3),
+                inset 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-field input::placeholder {
             color: #95a5a6;
+            font-size: 0.9rem;
         }
 
         /* メインボタン */
         .main-buttons {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
         }
 
         .btn {
-            padding: 15px 30px;
+            padding: 14px 20px;
             border: none;
-            border-radius: 50px;
-            font-size: 1rem;
+            border-radius: 25px;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             box-shadow: 
-                0 6px 15px rgba(0, 0, 0, 0.4),
-                0 0 10px rgba(241, 196, 15, 0.3);
+                0 4px 12px rgba(0, 0, 0, 0.4),
+                0 0 8px rgba(241, 196, 15, 0.3);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             position: relative;
             overflow: hidden;
+            min-height: 44px;
+            justify-content: center;
         }
 
         .btn::before {
@@ -312,79 +320,84 @@
             left: 100%;
         }
 
-        .btn:active {
-            transform: translateY(3px);
-        }
-
         .add-btn {
             background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white;
             border: 2px solid #f1c40f;
+            flex: 1;
+            min-width: 160px;
+            max-width: 200px;
         }
 
         .add-btn:hover {
             background: linear-gradient(135deg, #2ecc71, #27ae60);
             box-shadow: 
-                0 8px 20px rgba(46, 204, 113, 0.4),
-                0 0 15px rgba(241, 196, 15, 0.5);
+                0 6px 15px rgba(46, 204, 113, 0.4),
+                0 0 12px rgba(241, 196, 15, 0.5);
         }
 
         .calculate-btn {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
-            padding: 15px 35px;
-            font-size: 1.1rem;
+            padding: 14px 25px;
+            font-size: 1rem;
             border: 2px solid #f1c40f;
+            flex: 1;
+            min-width: 160px;
+            max-width: 200px;
         }
 
         .calculate-btn:hover {
             background: linear-gradient(135deg, #c0392b, #e74c3c);
             box-shadow: 
-                0 8px 20px rgba(231, 76, 60, 0.4),
-                0 0 15px rgba(241, 196, 15, 0.5);
+                0 6px 15px rgba(231, 76, 60, 0.4),
+                0 0 12px rgba(241, 196, 15, 0.5);
         }
 
         .save-btn, .load-btn, .export-btn {
             background: linear-gradient(135deg, #8e44ad, #9b59b6);
             color: white;
-            padding: 10px 18px;
-            font-size: 0.85rem;
+            padding: 10px 14px;
+            font-size: 0.8rem;
             border: 2px solid #f1c40f;
+            min-height: 44px;
         }
 
         .save-btn:hover, .load-btn:hover, .export-btn:hover {
             background: linear-gradient(135deg, #9b59b6, #8e44ad);
             box-shadow: 
-                0 6px 15px rgba(155, 89, 182, 0.4),
-                0 0 10px rgba(241, 196, 15, 0.4);
+                0 4px 12px rgba(155, 89, 182, 0.4),
+                0 0 8px rgba(241, 196, 15, 0.4);
         }
 
         .remove-btn {
             background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
             border: 2px solid #f1c40f;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            padding: 8px 12px;
+            border-radius: 16px;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 700;
+            min-height: 36px;
+            white-space: nowrap;
         }
 
         .remove-btn:hover {
             background: linear-gradient(135deg, #c0392b, #e74c3c);
-            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+            box-shadow: 0 3px 10px rgba(231, 76, 60, 0.4);
         }
 
         .result-container {
             background: linear-gradient(135deg, rgba(52, 73, 94, 0.9), rgba(44, 62, 80, 0.9));
-            border-radius: 20px;
-            padding: 30px;
+            border-radius: 16px;
+            padding: 25px 20px;
             text-align: center;
-            border: 3px solid #f1c40f;
+            border: 2px solid #f1c40f;
             box-shadow: 
-                0 8px 25px rgba(0, 0, 0, 0.4),
-                inset 0 0 30px rgba(241, 196, 15, 0.1);
+                0 6px 20px rgba(0, 0, 0, 0.4),
+                inset 0 0 20px rgba(241, 196, 15, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -411,18 +424,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .result-label {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: #f1c40f;
             font-weight: 700;
-            text-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+            text-shadow: 0 0 8px rgba(241, 196, 15, 0.5);
         }
 
         .result-value {
-            font-size: 3rem;
+            font-size: 2.2rem;
             font-weight: 900;
             background: linear-gradient(45deg, #f1c40f, #e74c3c, #27ae60);
             -webkit-background-clip: text;
@@ -430,18 +444,19 @@
             background-clip: text;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
             animation: pulse 2s ease-in-out infinite;
+            line-height: 1;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.03); }
         }
 
         .result-unit {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             color: #f1c40f;
             font-weight: 700;
-            text-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
+            text-shadow: 0 0 8px rgba(241, 196, 15, 0.5);
         }
 
         .result-profit {
@@ -456,7 +471,7 @@
             -webkit-text-fill-color: transparent !important;
         }
 
-        /* スピナー非表示 */
+        /* iOS向けの改善 */
         input[type=number]::-webkit-outer-spin-button,
         input[type=number]::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -467,9 +482,45 @@
             -moz-appearance: textfield;
         }
 
-        @media (max-width: 768px) {
+        /* タップハイライトの色変更 */
+        * {
+            -webkit-tap-highlight-color: rgba(241, 196, 15, 0.3);
+        }
+
+        /* スマホ向けのメディアクエリ */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .slot-inner {
+                padding: 15px 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 0.9rem;
+            }
+            
             .input-row {
                 grid-template-columns: 1fr;
+                gap: 10px;
+            }
+            
+            .input-group {
+                padding: 15px 12px;
+            }
+            
+            .group-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .group-title-input {
+                min-width: 100%;
             }
             
             .main-buttons {
@@ -480,68 +531,83 @@
             .btn {
                 width: 100%;
                 max-width: 280px;
-                justify-content: center;
-            }
-            
-            .header h1 {
-                font-size: 2.2rem;
             }
             
             .result-value {
-                font-size: 2.2rem;
+                font-size: 1.8rem;
             }
             
-            .result-row {
+            .result-label, .result-unit {
+                font-size: 1.1rem;
+            }
+            
+            .header-container {
                 flex-direction: column;
-                gap: 10px;
+                align-items: stretch;
             }
-
+            
             .data-buttons {
-                position: relative;
                 justify-content: center;
-                margin-bottom: 15px;
             }
+            
+            .menu-container {
+                margin-left: 0;
+                align-self: flex-end;
+            }
+        }
 
-            .header {
-                padding-top: 20px;
+        @media (max-width: 320px) {
+            .header h1 {
+                font-size: 1.6rem;
+            }
+            
+            .btn {
+                padding: 12px 16px;
+                font-size: 0.9rem;
+            }
+            
+            .result-value {
+                font-size: 1.6rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 保存・読み込みボタン - 左上 -->
-        <div class="data-buttons">
-            <button class="btn save-btn" onclick="saveData()">
-                💾 保存
-            </button>
-            <button class="btn load-btn" onclick="loadData()">
-                📂 読み込み
-            </button>
-            <button class="btn export-btn" onclick="exportToEmail()">
-                📝 メモに保存
-            </button>
-        </div>
+        <!-- ヘッダー部分をまとめて配置 -->
+        <div class="header-container">
+            <div class="data-buttons">
+                <button class="btn save-btn" onclick="saveData()">
+                    💾 保存
+                </button>
+                <button class="btn load-btn" onclick="loadData()">
+                    📂 読み込み
+                </button>
+                <button class="btn export-btn" onclick="exportToEmail()">
+                    📝 メモに保存
+                </button>
+            </div>
 
-        <!-- ハンバーガーメニュー - 右上 -->
-        <div class="menu-container">
-            <div class="hamburger-menu">
-                <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
-                <div class="menu-content" id="menuContent">
-                    <a href="index.html">🏠 トップページへ</a>
-                    <a href="counter.html">🎯 小役カウンター</a>
-                    <a href="pachinko_calc.html">🎰 パチンコ仕事量ツール</a>
+            <!-- ハンバーガーメニュー -->
+            <div class="menu-container">
+                <div class="hamburger-menu">
+                    <button class="hamburger-btn" onclick="toggleMenu()">☰</button>
+                    <div class="menu-content" id="menuContent">
+                        <a href="index.html">🏠 トップページへ</a>
+                        <a href="counter.html">🎯 小役カウンター</a>
+                        <a href="pachinko_calc.html">🎰 パチンコ仕事量ツール</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
+            <div class="header">
+                <h1>🎰 スロット計算ツール 🎰</h1>
+                <p>複数の台の仕事量をまとめて計算</p>
+            </div>
+        </div>
+        
         <div class="slot-frame">
             <div class="slot-inner">
-                <div class="header">
-                    <h1>🎰 スロット計算ツール 🎰</h1>
-                    <p>複数の台の仕事量をまとめて計算</p>
-                </div>
-                
                 <div id="inputGroups" class="input-groups-container">
                     <div class="input-group" data-group-id="1">
                         <div class="group-header">
@@ -553,27 +619,27 @@
                         <div class="input-row">
                             <div class="input-field">
                                 <label>🎯 消化G数</label>
-                                <input type="number" class="input-games" value="7000" placeholder="例: 5000">
+                                <input type="number" class="input-games" placeholder="例: 5000">
                             </div>
                             
                             <div class="input-field">
                                 <label>📊 機械割 (%)</label>
-                                <input type="number" class="input-percentage" value="104" step="0.01" placeholder="例: 114.9">
+                                <input type="number" class="input-percentage" step="0.01" placeholder="例: 114.9">
                             </div>
                             
                             <div class="input-field">
                                 <label>🪙 貸枚数 (枚)</label>
-                                <input type="number" class="input-loan" value="50" placeholder="例: 50">
+                                <input type="number" class="input-loan" placeholder="例: 50">
                             </div>
                             
                             <div class="input-field">
                                 <label>交換率 (1枚あたり)</label>
-                                <input type="number" class="input-exchange" value="20" placeholder="例: 18.18">
+                                <input type="number" class="input-exchange" placeholder="例: 18.18">
                             </div>
                             
                             <div class="input-field">
                                 <label>💰 現金投資 (円)</label>
-                                <input type="number" class="input-cash" value="0" placeholder="例: 1000">
+                                <input type="number" class="input-cash" placeholder="例: 1000">
                             </div>
                         </div>
                     </div>
@@ -601,16 +667,13 @@
     </div>
 
     <script>
-        // 既存のJavaScriptコードは変更なし
         let groupCount = 1;
 
-        // ハンバーガーメニューの表示/非表示
         function toggleMenu() {
             const menu = document.getElementById('menuContent');
             menu.classList.toggle('show');
         }
 
-        // メニュー外をクリックで閉じる
         window.onclick = function(event) {
             if (!event.target.matches('.hamburger-btn')) {
                 const menu = document.getElementById('menuContent');
@@ -636,27 +699,27 @@
                 <div class="input-row">
                     <div class="input-field">
                         <label>🎯 消化G数</label>
-                        <input type="number" class="input-games" value="7000" placeholder="例: 5000">
+                        <input type="number" class="input-games" placeholder="例: 5000">
                     </div>
                     
                     <div class="input-field">
                         <label>📊 機械割 (%)</label>
-                        <input type="number" class="input-percentage" value="104" step="0.01" placeholder="例: 114.9">
+                        <input type="number" class="input-percentage" step="0.01" placeholder="例: 114.9">
                     </div>
                     
                     <div class="input-field">
                         <label>🪙 貸枚数 (枚)</label>
-                        <input type="number" class="input-loan" value="50" placeholder="例: 50">
+                        <input type="number" class="input-loan" placeholder="例: 50">
                     </div>
                     
                     <div class="input-field">
                         <label>交換率 (1枚あたり)</label>
-                        <input type="number" class="input-exchange" value="20" placeholder="例: 18.18">
+                        <input type="number" class="input-exchange" placeholder="例: 18.18">
                     </div>
                     
                     <div class="input-field">
                         <label>💰 現金投資 (円)</label>
-                        <input type="number" class="input-cash" value="0" placeholder="例: 1000">
+                        <input type="number" class="input-cash" placeholder="例: 1000">
                     </div>
                 </div>
             `;
@@ -700,7 +763,6 @@
             const resultElement = document.getElementById('result');
             resultElement.textContent = Math.round(totalProfit).toLocaleString();
             
-            // クラスのリセット
             resultElement.className = 'result-value';
             
             if (totalProfit > 0) {
@@ -809,24 +871,19 @@
                 emailContent += `現金投資: ${cash}円\n\n`;
             });
             
-            // 計算結果も追加
             calculate();
             const result = document.getElementById('result').textContent;
             emailContent += `合計仕事量: ${result}円\n\n`;
             emailContent += "---\nこのデータはスロット計算ツールで作成されました";
             
-            // メールの下書きを作成
             const subject = "スロット計算データ";
             const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailContent)}`;
             
-            // メールアプリを開く
             window.location.href = mailtoLink;
         }
         
-        // ページ読み込み時に保存データをチェック
         window.onload = function() {
             calculate();
-            // 保存データがあれば読み込むか確認
             if (localStorage.getItem('slotCalculatorData')) {
                 if (confirm('保存されたデータがあります。読み込みますか？')) {
                     loadData();
