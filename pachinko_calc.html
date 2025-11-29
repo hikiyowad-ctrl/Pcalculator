@@ -209,6 +209,33 @@
             background: #c0392b;
             transform: scale(1.1);
         }
+
+        /* ナビゲーションリンク */
+        .nav-links {
+            margin-bottom: 25px;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 15px;
+            margin-bottom: 8px;
+            background: rgba(44, 62, 80, 0.8);
+            border: 2px solid #34495e;
+            border-radius: 8px;
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            background: rgba(231, 76, 60, 0.3);
+            border-color: #f1c40f;
+            transform: translateX(5px);
+            color: #f1c40f;
+        }
         
         .container {
             max-width: 100%;
@@ -306,7 +333,6 @@
         }
         
         .btn {
-            flex: 1;
             height: 44px;
             border: none;
             border-radius: 8px;
@@ -322,6 +348,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             position: relative;
             overflow: hidden;
+            padding: 0 20px;
         }
 
         .btn::before {
@@ -378,6 +405,18 @@
         
         .btn-memo:hover {
             background: linear-gradient(135deg, #8e44ad, #9b59b6);
+        }
+
+        .btn-remove {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border: 2px solid #f1c40f;
+            padding: 0 15px;
+            font-size: 12px;
+            min-width: 60px;
+        }
+        
+        .btn-remove:hover {
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
         }
         
         /* パチンコ風結果ボックス */
@@ -450,6 +489,7 @@
             border-radius: 8px;
             border: 1px solid #34495e;
             transition: all 0.3s ease;
+            align-items: center;
         }
 
         .hit-data-container:hover {
@@ -640,6 +680,12 @@
             .warning-content {
                 font-size: 12px;
             }
+
+            .btn-remove {
+                min-width: 50px;
+                padding: 0 12px;
+                font-size: 11px;
+            }
         }
 
         /* タブレット用の調整 */
@@ -688,6 +734,13 @@
     <div class="nav-overlay" id="navOverlay"></div>
     <div class="nav-menu" id="navMenu">
         <button class="close-menu" id="closeMenu">×</button>
+        
+        <!-- ナビゲーションリンク -->
+        <div class="nav-links">
+            <a href="index.html" class="nav-link">🏠 トップページへ</a>
+            <a href="counter.html" class="nav-link">🎯 小役カウンター</a>
+            <a href="slot_calc.html" class="nav-link">🎰 スロット仕事量ツール</a>
+        </div>
         
         <div class="nav-section">
             <div class="nav-section-title" onclick="toggleSection('popular-machines')">🏆 人気機種一覧</div>
@@ -756,17 +809,6 @@
             </div>
         </div>
         
-        <!-- データ管理セクション -->
-        <div class="section" id="data-management">
-            <div class="section-title">データ管理</div>
-            
-            <div class="button-group">
-                <button class="btn btn-save" id="save_button">💾 データ保存</button>
-                <button class="btn btn-load" id="load_button">📂 データ読み込み</button>
-                <button class="btn btn-memo" id="memo_button">📝 メモ帳に保存</button>
-            </div>
-        </div>
-        
         <!-- 初当りデータセクション -->
         <div class="section" id="hit-data">
             <div class="section-title">初当りデータ</div>
@@ -780,6 +822,7 @@
                     <div class="hit-field">出玉</div>
                     <div class="hit-field">ラウンド</div>
                     <div class="hit-field">時短</div>
+                    <div class="hit-field" style="min-width: 70px;">操作</div>
                 </div>
                 <!-- 初当りデータがここに動的に追加されます -->
             </div>
@@ -828,6 +871,17 @@
             </div>
         </div>
 
+        <!-- データ管理セクション（収支の下に移動） -->
+        <div class="section" id="data-management">
+            <div class="section-title">データ管理</div>
+            
+            <div class="button-group">
+                <button class="btn btn-save" id="save_button">💾 データ保存</button>
+                <button class="btn btn-load" id="load_button">📂 データ読み込み</button>
+                <button class="btn btn-memo" id="memo_button">📝 メモ帳に保存</button>
+            </div>
+        </div>
+
         <!-- パチンコ風警告セクション -->
         <div class="warning-section">
             <div class="warning-title">⚠️ データ保存についての注意</div>
@@ -840,7 +894,6 @@
     </div>
 
     <script>
-        // 元のJavaScriptコードは変更なし（機能はそのまま）
         // グローバル変数
         let firstHitCount = 0;
         let firstHitFields = [];
@@ -1192,6 +1245,7 @@
                     <div class="hit-field">出玉</div>
                     <div class="hit-field">ラウンド</div>
                     <div class="hit-field">時短</div>
+                    <div class="hit-field" style="min-width: 70px;">操作</div>
                 `;
                 hitDataContainer.appendChild(headerRow);
                 
@@ -1250,11 +1304,44 @@
             const timeField = createTextField(fieldSetId, 'time', '時短');
             fieldContainer.appendChild(timeField);
             
+            // 削除ボタン
+            const removeButtonContainer = document.createElement('div');
+            removeButtonContainer.className = 'hit-field';
+            removeButtonContainer.style.minWidth = '70px';
+            
+            const removeButton = document.createElement('button');
+            removeButton.className = 'btn btn-remove';
+            removeButton.innerHTML = '🗑️ 削除';
+            removeButton.onclick = function() {
+                removeHitFields(fieldSetId);
+            };
+            
+            removeButtonContainer.appendChild(removeButton);
+            fieldContainer.appendChild(removeButtonContainer);
+            
             hitDataContainer.appendChild(fieldContainer);
             firstHitFields.push(fieldSetId);
             
             // 計算を更新
             calculateAll();
+        }
+        
+        // 初当りデータの削除
+        function removeHitFields(fieldSetId) {
+            const fieldContainer = document.getElementById(`${fieldSetId}_container`);
+            if (fieldContainer) {
+                fieldContainer.remove();
+                
+                // グローバル変数から削除
+                const index = firstHitFields.indexOf(fieldSetId);
+                if (index > -1) {
+                    firstHitFields.splice(index, 1);
+                    firstHitCount--;
+                }
+                
+                // 計算を更新
+                calculateAll();
+            }
         }
         
         // テキストフィールド作成ヘルパー
