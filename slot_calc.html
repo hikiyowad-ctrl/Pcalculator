@@ -258,14 +258,14 @@
             box-shadow: 0 6px 18px rgba(33, 150, 243, 0.4);
         }
 
-        .save-btn, .load-btn {
+        .save-btn, .load-btn, .export-btn {
             background: linear-gradient(135deg, #666, #444);
             color: white;
             padding: 8px 16px;
             font-size: 0.8rem;
         }
 
-        .save-btn:hover, .load-btn:hover {
+        .save-btn:hover, .load-btn:hover, .export-btn:hover {
             background: linear-gradient(135deg, #555, #333);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
@@ -398,6 +398,9 @@
             </button>
             <button class="btn load-btn" onclick="loadData()">
                 📂 読み込み
+            </button>
+            <button class="btn export-btn" onclick="exportToEmail()">
+                📝 メモに保存
             </button>
         </div>
 
@@ -660,6 +663,40 @@
             } else {
                 alert('保存されたデータが見つかりませんでした。');
             }
+        }
+
+        function exportToEmail() {
+            const groups = document.querySelectorAll('.input-group');
+            let emailContent = "スロット計算データ\n\n";
+            
+            groups.forEach((group, index) => {
+                const title = group.querySelector('.group-title-input').value || `条件 ${index + 1}`;
+                const games = group.querySelector('.input-games').value || '0';
+                const percentage = group.querySelector('.input-percentage').value || '0';
+                const loan = group.querySelector('.input-loan').value || '0';
+                const exchange = group.querySelector('.input-exchange').value || '0';
+                const cash = group.querySelector('.input-cash').value || '0';
+                
+                emailContent += `【${title}】\n`;
+                emailContent += `消化G数: ${games}G\n`;
+                emailContent += `機械割: ${percentage}%\n`;
+                emailContent += `貸枚数: ${loan}枚\n`;
+                emailContent += `交換率: ${exchange}円/枚\n`;
+                emailContent += `現金投資: ${cash}円\n\n`;
+            });
+            
+            // 計算結果も追加
+            calculate();
+            const result = document.getElementById('result').textContent;
+            emailContent += `合計仕事量: ${result}円\n\n`;
+            emailContent += "---\nこのデータはスロット計算ツールで作成されました";
+            
+            // メールの下書きを作成
+            const subject = "スロット計算データ";
+            const mailtoLink = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailContent)}`;
+            
+            // メールアプリを開く
+            window.location.href = mailtoLink;
         }
         
         // ページ読み込み時に保存データをチェック
