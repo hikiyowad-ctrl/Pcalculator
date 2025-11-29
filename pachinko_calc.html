@@ -9,11 +9,11 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
         }
         
         body {
-            background-color: #f0f0f5;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             color: #333;
             line-height: 1.6;
             padding: 0;
@@ -21,13 +21,14 @@
             min-height: 100vh;
         }
 
-        /* ヘッダーとハンバーガーメニュー */
+        /* パチンコ風ヘッダー */
         .header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
             color: white;
             padding: 15px 20px;
             position: relative;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+            border-bottom: 3px solid #f1c40f;
         }
 
         .header-content {
@@ -41,40 +42,47 @@
         .app-title {
             font-size: 20px;
             font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            color: #f1c40f;
         }
 
-        /* ハンバーガーメニュー */
+        /* パチンコ風ハンバーガーメニュー */
         .hamburger-menu {
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             cursor: pointer;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
-            padding: 5px;
+            padding: 6px;
+            background: #f1c40f;
+            border-radius: 5px;
+            border: 2px solid #d35400;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
         .hamburger-bar {
             width: 100%;
             height: 3px;
-            background-color: white;
+            background-color: #c0392b;
             border-radius: 2px;
             transition: all 0.3s ease;
         }
 
-        /* ナビゲーションメニュー */
+        /* パチンコ風ナビゲーションメニュー */
         .nav-menu {
             position: fixed;
             top: 0;
             right: -300px;
             width: 280px;
             height: 100vh;
-            background: white;
-            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            box-shadow: -2px 0 15px rgba(0,0,0,0.3);
             transition: right 0.3s ease;
             z-index: 1000;
             padding: 60px 20px 20px;
             overflow-y: auto;
+            border-left: 3px solid #f1c40f;
         }
 
         .nav-menu.active {
@@ -87,7 +95,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.7);
             opacity: 0;
             visibility: hidden;
             transition: all 0.3s ease;
@@ -100,33 +108,35 @@
         }
 
         .nav-section {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .nav-section-title {
             font-size: 16px;
             font-weight: bold;
-            color: #333;
+            color: #f1c40f;
             margin-bottom: 10px;
-            padding: 8px 12px;
-            border-radius: 5px;
-            background: #f8f9fa;
-            border: 1px solid #e0e0e0;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: rgba(52, 73, 94, 0.8);
+            border: 2px solid #f1c40f;
             cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
             transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
         .nav-section-title:hover {
-            background: #e3f2fd;
-            border-color: #667eea;
+            background: rgba(231, 76, 60, 0.3);
+            transform: translateY(-2px);
         }
 
         .nav-section-title::after {
             content: '▼';
             font-size: 12px;
+            color: #f1c40f;
             transition: transform 0.3s ease;
         }
 
@@ -138,37 +148,42 @@
             max-height: 300px;
             overflow-y: auto;
             transition: all 0.3s ease;
+            background: rgba(26, 26, 46, 0.6);
+            border-radius: 5px;
+            padding: 10px;
         }
 
         .nav-section-content.collapsed {
             max-height: 0;
             overflow: hidden;
+            padding: 0;
         }
 
         .machine-item {
-            padding: 10px;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
+            padding: 12px;
+            border: 1px solid #34495e;
+            border-radius: 6px;
             margin-bottom: 8px;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: #f8f9fa;
+            background: rgba(44, 62, 80, 0.8);
         }
 
         .machine-item:hover {
-            background: #e3f2fd;
-            border-color: #667eea;
+            background: rgba(231, 76, 60, 0.2);
+            border-color: #f1c40f;
+            transform: translateX(5px);
         }
 
         .machine-name {
             font-weight: bold;
             font-size: 14px;
-            color: #333;
+            color: #ecf0f1;
         }
 
         .machine-details {
             font-size: 12px;
-            color: #666;
+            color: #bdc3c7;
             margin-top: 5px;
         }
 
@@ -176,287 +191,399 @@
             position: absolute;
             top: 15px;
             right: 20px;
-            background: none;
-            border: none;
-            font-size: 24px;
+            background: #e74c3c;
+            border: 2px solid #f1c40f;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            font-size: 20px;
             cursor: pointer;
-            color: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        .close-menu:hover {
+            background: #c0392b;
+            transform: scale(1.1);
         }
         
         .container {
             max-width: 100%;
             margin: 0 auto;
-            padding: 10px;
+            padding: 15px;
         }
         
+        /* パチンコ風セクション */
         .section {
-            background-color: white;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, rgba(52, 73, 94, 0.9) 0%, rgba(44, 62, 80, 0.9) 100%);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 2px solid #f1c40f;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #e74c3c, #f1c40f, #3498db, #e74c3c);
+            background-size: 200% 100%;
+            animation: rainbow 3s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         .section-title {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
-            margin-bottom: 12px;
-            color: #333;
-            padding-bottom: 6px;
-            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+            color: #f1c40f;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #34495e;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
         
         .form-group {
             display: flex;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            background: rgba(26, 26, 46, 0.6);
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #34495e;
         }
         
         .form-label {
-            width: 80px;
-            font-size: 12px;
-            font-weight: 500;
+            width: 90px;
+            font-size: 13px;
+            font-weight: 600;
             flex-shrink: 0;
+            color: #ecf0f1;
         }
         
         .form-input {
             flex: 1;
-            height: 32px;
-            padding: 0 8px;
-            border: 1px solid #cccccc;
-            border-radius: 5px;
-            font-size: 11px;
-            background-color: white;
+            height: 36px;
+            padding: 0 12px;
+            border: 2px solid #34495e;
+            border-radius: 6px;
+            font-size: 14px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
             min-width: 0;
+            transition: all 0.3s ease;
         }
         
         .form-input:focus {
             outline: none;
-            border-color: #4CAF50;
+            border-color: #f1c40f;
+            box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.3);
+            background: white;
         }
         
         .form-input:disabled {
-            background-color: #f5f5f5;
-            color: #666666;
+            background-color: #bdc3c7;
+            color: #7f8c8d;
         }
         
         .button-group {
             display: flex;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 10px;
+            margin-top: 15px;
         }
         
         .btn {
             flex: 1;
-            height: 40px;
+            height: 44px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 14px;
             font-weight: bold;
             color: white;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
         }
         
         .btn-save {
-            background-color: #4CAF50;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border: 2px solid #f1c40f;
         }
         
         .btn-save:hover {
-            background-color: #45a049;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
         }
         
         .btn-load {
-            background-color: #2196F3;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border: 2px solid #f1c40f;
         }
         
         .btn-load:hover {
-            background-color: #0b7dda;
+            background: linear-gradient(135deg, #2980b9, #3498db);
         }
         
         .btn-add {
-            background-color: #FF9800;
+            background: linear-gradient(135deg, #e67e22, #d35400);
+            border: 2px solid #f1c40f;
         }
         
         .btn-add:hover {
-            background-color: #e68900;
+            background: linear-gradient(135deg, #d35400, #e67e22);
         }
         
         .btn-memo {
-            background-color: #9C27B0;
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            border: 2px solid #f1c40f;
         }
         
         .btn-memo:hover {
-            background-color: #7B1FA2;
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
         }
         
+        /* パチンコ風結果ボックス */
         .result-box {
             text-align: center;
-            padding: 15px;
-            border-radius: 8px;
-            border: 2px solid #dddddd;
-            background-color: white;
-            margin-top: 12px;
-            font-size: 18px;
+            padding: 20px;
+            border-radius: 10px;
+            border: 3px solid #f1c40f;
+            background: linear-gradient(135deg, rgba(44, 62, 80, 0.9), rgba(52, 73, 94, 0.9));
+            margin-top: 15px;
+            font-size: 20px;
             font-weight: bold;
-            color: #333;
+            color: #ecf0f1;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #e74c3c, #f1c40f, #27ae60, #3498db, #9b59b6, #e74c3c);
+            background-size: 200% 100%;
+            animation: rainbow 3s linear infinite;
         }
         
         .positive {
-            color: #008000;
+            color: #2ecc71;
+            text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
         }
         
         .negative {
-            color: #FF4500;
+            color: #e74c3c;
+            text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
         }
         
         .neutral {
-            color: #666666;
+            color: #bdc3c7;
         }
         
         /* 初当りデータヘッダー */
         .hit-data-header {
             display: flex;
-            gap: 3px;
-            margin-bottom: 5px;
-            padding: 0 6px;
-            font-size: 10px;
+            gap: 5px;
+            margin-bottom: 8px;
+            padding: 0 8px;
+            font-size: 12px;
             font-weight: bold;
-            color: #666;
+            color: #f1c40f;
             text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
         .hit-data-header .hit-field {
             flex: 1;
-            min-width: 50px;
-            padding: 2px 0;
+            min-width: 60px;
+            padding: 5px 0;
         }
         
         .hit-data-container {
             display: flex;
-            gap: 3px;
-            margin-bottom: 8px;
-            padding: 6px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-            border: 1px solid #e0e0e0;
+            gap: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(26, 26, 46, 0.6);
+            border-radius: 8px;
+            border: 1px solid #34495e;
+            transition: all 0.3s ease;
+        }
+
+        .hit-data-container:hover {
+            border-color: #f1c40f;
+            background: rgba(26, 26, 46, 0.8);
         }
         
         .hit-field {
             flex: 1;
-            min-width: 50px;
+            min-width: 60px;
         }
         
         .hit-field input {
             width: 100%;
-            font-size: 11px;
-            height: 32px;
-            padding: 0 6px;
-            border: 1px solid #cccccc;
-            border-radius: 4px;
+            font-size: 13px;
+            height: 36px;
+            padding: 0 8px;
+            border: 2px solid #34495e;
+            border-radius: 6px;
             text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            color: #2c3e50;
+            transition: all 0.3s ease;
         }
         
         .hit-field input:focus {
             outline: none;
-            border-color: #4CAF50;
-            background-color: #f0fff0;
+            border-color: #f1c40f;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.3);
         }
         
         .ratio-input {
             text-align: center;
             font-weight: bold;
-            font-size: 12px;
-            color: #000000;
-            background-color: #ffe8e8;
+            font-size: 14px;
+            color: #2c3e50;
+            background: #ffe8e8;
         }
         
         .ratio-good {
-            background-color: #e8ffe8;
+            background: #e8ffe8 !important;
         }
         
         .ratio-medium {
-            background-color: #fff8e8;
+            background: #fff8e8 !important;
         }
 
         .calculation-display {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
-            padding: 8px 0;
-            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #34495e;
         }
 
         .calculation-label {
-            font-size: 13px;
-            font-weight: 500;
-            color: #333;
+            font-size: 14px;
+            font-weight: 600;
+            color: #ecf0f1;
         }
 
         .calculation-value {
-            font-size: 13px;
+            font-size: 14px;
             font-weight: bold;
-            color: #333;
+            color: #f1c40f;
             background: none;
             border: none;
             padding: 0;
             margin: 0;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
 
-        /* データ消失注意書き */
+        /* パチンコ風警告セクション */
         .warning-section {
-            background-color: #fff3cd;
-            border: 1px solid #ffeaa7;
-            border-radius: 8px;
-            padding: 12px;
-            margin: 15px 10px;
-            font-size: 12px;
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 2px solid #f1c40f;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 10px;
+            font-size: 13px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .warning-title {
             font-weight: bold;
             color: #856404;
-            margin-bottom: 8px;
-            font-size: 13px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .warning-content {
             color: #856404;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .warning-content p {
-            margin-bottom: 4px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         /* スマホ用の調整 */
         @media (max-width: 480px) {
             .container {
-                padding: 8px;
+                padding: 10px;
             }
             
             .section {
-                padding: 10px;
-                margin-bottom: 12px;
+                padding: 12px;
+                margin-bottom: 15px;
             }
             
             .form-group {
                 flex-direction: column;
                 align-items: flex-start;
-                margin-bottom: 10px;
+                margin-bottom: 15px;
             }
             
             .form-label {
                 width: 100%;
-                margin-bottom: 4px;
-                font-size: 11px;
+                margin-bottom: 6px;
+                font-size: 12px;
             }
             
             .form-input {
                 width: 100%;
-                height: 36px;
-                font-size: 14px;
+                height: 40px;
+                font-size: 16px;
             }
             
             .button-group {
@@ -464,14 +591,14 @@
             }
             
             .btn {
-                height: 44px;
+                height: 48px;
                 font-size: 16px;
             }
             
             .hit-data-container {
                 flex-direction: row;
-                gap: 4px;
-                padding: 8px;
+                gap: 5px;
+                padding: 12px;
             }
             
             .hit-field {
@@ -479,25 +606,25 @@
             }
             
             .hit-field input {
-                height: 36px;
-                font-size: 12px;
-                padding: 0 4px;
+                height: 40px;
+                font-size: 14px;
+                padding: 0 6px;
             }
             
             .hit-data-header {
                 font-size: 11px;
-                padding: 0 8px;
+                padding: 0 10px;
             }
             
             .result-box {
-                font-size: 16px;
-                padding: 12px;
+                font-size: 18px;
+                padding: 15px;
             }
 
             .calculation-display {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 4px;
+                gap: 5px;
             }
 
             .calculation-value {
@@ -506,12 +633,12 @@
             }
 
             .warning-section {
-                margin: 10px 8px;
-                padding: 10px;
+                margin: 15px 8px;
+                padding: 12px;
             }
             
             .warning-content {
-                font-size: 11px;
+                font-size: 12px;
             }
         }
 
@@ -519,15 +646,15 @@
         @media (min-width: 481px) and (max-width: 768px) {
             .container {
                 max-width: 95%;
-                padding: 12px;
+                padding: 15px;
             }
             
             .form-label {
-                width: 90px;
+                width: 100px;
             }
 
             .hit-field {
-                min-width: 60px;
+                min-width: 70px;
             }
         }
 
@@ -535,17 +662,17 @@
         @media (min-width: 769px) {
             .container {
                 max-width: 800px;
-                padding: 15px;
+                padding: 20px;
             }
 
             .hit-field {
-                min-width: 70px;
+                min-width: 80px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- ヘッダー -->
+    <!-- パチンコ風ヘッダー -->
     <div class="header">
         <div class="header-content">
             <div class="app-title">🎰 パチンコ計算ツール</div>
@@ -557,7 +684,7 @@
         </div>
     </div>
 
-    <!-- ナビゲーションメニュー -->
+    <!-- パチンコ風ナビゲーションメニュー -->
     <div class="nav-overlay" id="navOverlay"></div>
     <div class="nav-menu" id="navMenu">
         <button class="close-menu" id="closeMenu">×</button>
@@ -634,9 +761,9 @@
             <div class="section-title">データ管理</div>
             
             <div class="button-group">
-                <button class="btn btn-save" id="save_button">データ保存</button>
-                <button class="btn btn-load" id="load_button">データ読み込み</button>
-                <button class="btn btn-memo" id="memo_button">メモ帳に保存</button>
+                <button class="btn btn-save" id="save_button">💾 データ保存</button>
+                <button class="btn btn-load" id="load_button">📂 データ読み込み</button>
+                <button class="btn btn-memo" id="memo_button">📝 メモ帳に保存</button>
             </div>
         </div>
         
@@ -644,7 +771,7 @@
         <div class="section" id="hit-data">
             <div class="section-title">初当りデータ</div>
             
-            <button class="btn btn-add" id="start_button">データを追加</button>
+            <button class="btn btn-add" id="start_button">➕ データを追加</button>
             
             <div id="hit_data_container">
                 <!-- ヘッダー行 -->
@@ -701,18 +828,19 @@
             </div>
         </div>
 
-        <!-- データ消失注意書き -->
+        <!-- パチンコ風警告セクション -->
         <div class="warning-section">
             <div class="warning-title">⚠️ データ保存についての注意</div>
             <div class="warning-content">
-                <p>・データはブラウザ内に保存されます</p>
-                <p>・キャッシュ削除や長期放置で消えることがあります</p>
-                <p>・重要なデータは「メモ帳に保存」でバックアップしてください</p>
+                <p>🎯 データはブラウザ内に保存されます</p>
+                <p>🔥 キャッシュ削除や長期放置で消えることがあります</p>
+                <p>💾 重要なデータは「メモ帳に保存」でバックアップしてください</p>
             </div>
         </div>
     </div>
 
     <script>
+        // 元のJavaScriptコードは変更なし（機能はそのまま）
         // グローバル変数
         let firstHitCount = 0;
         let firstHitFields = [];
@@ -1078,8 +1206,9 @@
                         const rotationField = document.getElementById(`${fieldSetId}_rotation`);
                         const ballsField = document.getElementById(`${fieldSetId}_balls`);
                         const roundsField = document.getElementById(`${fieldSetId}_rounds`);
-                        const timeField = document.getElementById
-                    if (rotationField && hitData.rotation) rotationField.value = hitData.rotation;
+                        const timeField = document.getElementById(`${fieldSetId}_time`);
+                        
+                        if (rotationField && hitData.rotation) rotationField.value = hitData.rotation;
                         if (ballsField && hitData.balls) ballsField.value = hitData.balls;
                         if (roundsField && hitData.rounds) roundsField.value = hitData.rounds;
                         if (timeField && hitData.time) timeField.value = hitData.time;
@@ -1401,4 +1530,4 @@
         }
     </script>
 </body>
-</html>    
+</html>
