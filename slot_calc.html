@@ -9,19 +9,40 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
             padding: 20px;
+            color: white;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
+        }
+
+        /* スロット風の装飾 */
+        .slot-frame {
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+            border: 8px solid #f1c40f;
+            border-radius: 25px;
+            padding: 5px;
+            box-shadow: 
+                0 0 30px rgba(231, 76, 60, 0.5),
+                inset 0 0 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 30px;
+        }
+
+        .slot-inner {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            border-radius: 20px;
+            padding: 30px;
+            border: 3px solid #f1c40f;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
         }
 
         /* 保存・読み込みボタン - 左上 */
@@ -47,18 +68,19 @@
         }
 
         .hamburger-btn {
-            background: rgba(255, 255, 255, 0.9);
-            border: none;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border: 2px solid #f1c40f;
             border-radius: 8px;
             padding: 10px 12px;
             cursor: pointer;
             font-size: 1.2rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
         }
 
         .hamburger-btn:hover {
-            background: white;
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
             transform: translateY(-2px);
         }
 
@@ -67,11 +89,11 @@
             position: absolute;
             right: 0;
             top: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            border: 2px solid #f1c40f;
             min-width: 200px;
             border-radius: 8px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
             z-index: 1000;
             margin-top: 5px;
         }
@@ -80,13 +102,13 @@
             display: block;
             padding: 12px 16px;
             text-decoration: none;
-            color: #333;
-            border-bottom: 1px solid #f0f2f5;
+            color: white;
+            border-bottom: 1px solid #34495e;
             transition: background 0.3s ease;
         }
 
         .menu-content a:hover {
-            background: #667eea;
+            background: #e74c3c;
             color: white;
         }
 
@@ -106,40 +128,71 @@
         }
 
         .header h1 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 
+                0 0 10px #f1c40f,
+                0 0 20px #f1c40f,
+                2px 2px 4px rgba(0,0,0,0.5);
+            background: linear-gradient(45deg, #f1c40f, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            letter-spacing: 2px;
         }
 
         .header p {
-            font-size: 1rem;
+            font-size: 1.2rem;
             opacity: 0.9;
+            color: #f1c40f;
+            text-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
         }
 
         .input-groups-container {
             display: grid;
-            gap: 15px;
+            gap: 20px;
             margin-bottom: 25px;
         }
 
         .input-group {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(52, 73, 94, 0.9), rgba(44, 62, 80, 0.9));
             border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            padding: 25px;
+            border: 3px solid #f1c40f;
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.4),
+                inset 0 0 20px rgba(241, 196, 15, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-group::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(241, 196, 15, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .input-group:hover::before {
+            left: 100%;
         }
 
         .input-group:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                inset 0 0 20px rgba(241, 196, 15, 0.2);
         }
 
         .input-row {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             align-items: end;
             flex-wrap: wrap;
         }
@@ -152,189 +205,255 @@
         }
 
         .input-field label {
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: #333;
-            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #f1c40f;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
         }
 
         .input-field input {
-            padding: 8px 10px;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            font-size: 0.85rem;
+            padding: 12px 15px;
+            border: 2px solid #34495e;
+            border-radius: 10px;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
-            background: white;
+            background: rgba(26, 26, 46, 0.8);
+            color: white;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         .input-field input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-            transform: translateY(-1px);
+            border-color: #f1c40f;
+            box-shadow: 
+                0 0 0 3px rgba(241, 196, 15, 0.3),
+                inset 0 2px 5px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
         }
 
         .input-field input::placeholder {
-            color: #a0a4a8;
+            color: #95a5a6;
         }
 
         .group-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #f0f2f5;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #34495e;
         }
 
         .group-title-input {
-            font-size: 1rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            color: #333;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            padding: 6px 10px;
-            background: white;
+            color: #f1c40f;
+            border: 2px solid #34495e;
+            border-radius: 10px;
+            padding: 8px 15px;
+            background: rgba(26, 26, 46, 0.8);
             min-width: 150px;
+            text-shadow: 0 0 5px rgba(241, 196, 15, 0.5);
         }
 
         .group-title-input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #f1c40f;
+            box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.3);
         }
 
         .group-title-input::placeholder {
-            color: #a0a4a8;
+            color: #95a5a6;
         }
 
         /* メインボタン */
         .main-buttons {
             display: flex;
-            gap: 12px;
+            gap: 15px;
             justify-content: center;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 15px 30px;
             border: none;
             border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
+            font-size: 1rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            gap: 10px;
+            box-shadow: 
+                0 6px 15px rgba(0, 0, 0, 0.4),
+                0 0 10px rgba(241, 196, 15, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn:active {
-            transform: translateY(2px);
+            transform: translateY(3px);
         }
 
         .add-btn {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white;
+            border: 2px solid #f1c40f;
         }
 
         .add-btn:hover {
-            background: linear-gradient(135deg, #45a049, #4CAF50);
-            box-shadow: 0 6px 18px rgba(76, 175, 80, 0.4);
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            box-shadow: 
+                0 8px 20px rgba(46, 204, 113, 0.4),
+                0 0 15px rgba(241, 196, 15, 0.5);
         }
 
         .calculate-btn {
-            background: linear-gradient(135deg, #2196F3, #0b7dda);
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
-            padding: 12px 30px;
-            font-size: 1rem;
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            border: 2px solid #f1c40f;
         }
 
         .calculate-btn:hover {
-            background: linear-gradient(135deg, #0b7dda, #2196F3);
-            box-shadow: 0 6px 18px rgba(33, 150, 243, 0.4);
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            box-shadow: 
+                0 8px 20px rgba(231, 76, 60, 0.4),
+                0 0 15px rgba(241, 196, 15, 0.5);
         }
 
         .save-btn, .load-btn, .export-btn {
-            background: linear-gradient(135deg, #666, #444);
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
             color: white;
-            padding: 8px 16px;
-            font-size: 0.8rem;
+            padding: 10px 18px;
+            font-size: 0.85rem;
+            border: 2px solid #f1c40f;
         }
 
         .save-btn:hover, .load-btn:hover, .export-btn:hover {
-            background: linear-gradient(135deg, #555, #333);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            box-shadow: 
+                0 6px 15px rgba(155, 89, 182, 0.4),
+                0 0 10px rgba(241, 196, 15, 0.4);
         }
 
         .remove-btn {
-            background: linear-gradient(135deg, #ff4444, #cc0000);
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
             color: white;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.75rem;
+            border: 2px solid #f1c40f;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: 700;
         }
 
         .remove-btn:hover {
-            background: linear-gradient(135deg, #cc0000, #ff4444);
-            box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4);
+            background: linear-gradient(135deg, #c0392b, #e74c3c);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
         }
 
         .result-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
+            background: linear-gradient(135deg, rgba(52, 73, 94, 0.9), rgba(44, 62, 80, 0.9));
+            border-radius: 20px;
+            padding: 30px;
             text-align: center;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 3px solid #f1c40f;
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.4),
+                inset 0 0 30px rgba(241, 196, 15, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #e74c3c, #f1c40f, #27ae60, #3498db, #9b59b6, #e74c3c);
+            background-size: 200% 100%;
+            animation: rainbow 3s linear infinite;
+        }
+
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .result-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
         }
 
         .result-label {
-            font-size: 1.1rem;
-            color: #666;
-            font-weight: 600;
+            font-size: 1.4rem;
+            color: #f1c40f;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
         }
 
         .result-value {
-            font-size: 2.2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #f1c40f, #e74c3c, #27ae60);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .result-unit {
-            font-size: 1.2rem;
-            color: #666;
-            font-weight: 600;
+            font-size: 1.4rem;
+            color: #f1c40f;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(241, 196, 15, 0.5);
         }
 
         .result-profit {
-            background: linear-gradient(135deg, #4CAF50, #2E7D32);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(45deg, #27ae60, #2ecc71) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
         }
 
         .result-loss {
-            background: linear-gradient(135deg, #ff4444, #c62828);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background: linear-gradient(45deg, #e74c3c, #c0392b) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
         }
 
         /* スピナー非表示 */
@@ -360,21 +479,21 @@
             
             .btn {
                 width: 100%;
-                max-width: 250px;
+                max-width: 280px;
                 justify-content: center;
             }
             
             .header h1 {
-                font-size: 1.8rem;
+                font-size: 2.2rem;
             }
             
             .result-value {
-                font-size: 1.8rem;
+                font-size: 2.2rem;
             }
             
             .result-row {
                 flex-direction: column;
-                gap: 5px;
+                gap: 10px;
             }
 
             .data-buttons {
@@ -416,68 +535,73 @@
             </div>
         </div>
 
-        <div class="header">
-            <h1>スロット計算ツール</h1>
-            <p>複数の台の仕事量をまとめて計算</p>
-        </div>
-        
-        <div id="inputGroups" class="input-groups-container">
-            <div class="input-group" data-group-id="1">
-                <div class="group-header">
-                    <input type="text" class="group-title-input" placeholder="機種名" value="">
-                    <button class="remove-btn" onclick="removeGroup(this)">
-                        🗑️ 削除
+        <div class="slot-frame">
+            <div class="slot-inner">
+                <div class="header">
+                    <h1>🎰 スロット計算ツール 🎰</h1>
+                    <p>複数の台の仕事量をまとめて計算</p>
+                </div>
+                
+                <div id="inputGroups" class="input-groups-container">
+                    <div class="input-group" data-group-id="1">
+                        <div class="group-header">
+                            <input type="text" class="group-title-input" placeholder="機種名" value="">
+                            <button class="remove-btn" onclick="removeGroup(this)">
+                                🗑️ 削除
+                            </button>
+                        </div>
+                        <div class="input-row">
+                            <div class="input-field">
+                                <label>🎯 消化G数</label>
+                                <input type="number" class="input-games" value="7000" placeholder="例: 5000">
+                            </div>
+                            
+                            <div class="input-field">
+                                <label>📊 機械割 (%)</label>
+                                <input type="number" class="input-percentage" value="104" step="0.01" placeholder="例: 114.9">
+                            </div>
+                            
+                            <div class="input-field">
+                                <label>🪙 貸枚数 (枚)</label>
+                                <input type="number" class="input-loan" value="50" placeholder="例: 50">
+                            </div>
+                            
+                            <div class="input-field">
+                                <label>交換率 (1枚あたり)</label>
+                                <input type="number" class="input-exchange" value="20" placeholder="例: 18.18">
+                            </div>
+                            
+                            <div class="input-field">
+                                <label>💰 現金投資 (円)</label>
+                                <input type="number" class="input-cash" value="0" placeholder="例: 1000">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- メインボタン群 -->
+                <div class="main-buttons">
+                    <button class="btn add-btn" onclick="addGroup()">
+                        ➕ 条件を追加
+                    </button>
+                    <button class="btn calculate-btn" onclick="calculate()">
+                        計算実行
                     </button>
                 </div>
-                <div class="input-row">
-                    <div class="input-field">
-                        <label>🎯 消化G数</label>
-                        <input type="number" class="input-games" value="7000" placeholder="例: 5000">
-                    </div>
-                    
-                    <div class="input-field">
-                        <label>📊 機械割 (%)</label>
-                        <input type="number" class="input-percentage" value="104" step="0.01" placeholder="例: 114.9">
-                    </div>
-                    
-                    <div class="input-field">
-                        <label>🪙 貸枚数 (枚)</label>
-                        <input type="number" class="input-loan" value="50" placeholder="例: 50">
-                    </div>
-                    
-                    <div class="input-field">
-                        <label>交換率 (1枚あたり)</label>
-                        <input type="number" class="input-exchange" value="20" placeholder="例: 18.18">
-                    </div>
-                    
-                    <div class="input-field">
-                        <label>💰 現金投資 (円)</label>
-                        <input type="number" class="input-cash" value="0" placeholder="例: 1000">
+                
+                <div class="result-container">
+                    <div class="result-row">
+                        <div class="result-label">仕事量:</div>
+                        <div id="result" class="result-value">0</div>
+                        <div class="result-unit">円</div>
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <!-- メインボタン群 -->
-        <div class="main-buttons">
-            <button class="btn add-btn" onclick="addGroup()">
-                ➕ 条件を追加
-            </button>
-            <button class="btn calculate-btn" onclick="calculate()">
-                計算実行
-            </button>
-        </div>
-        
-        <div class="result-container">
-            <div class="result-row">
-                <div class="result-label">仕事量:</div>
-                <div id="result" class="result-value">0</div>
-                <div class="result-unit">円</div>
             </div>
         </div>
     </div>
 
     <script>
+        // 既存のJavaScriptコードは変更なし
         let groupCount = 1;
 
         // ハンバーガーメニューの表示/非表示
