@@ -141,12 +141,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        .feature-icon {
-            font-size: 40px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
         .feature-title {
             font-size: 18px;
             font-weight: bold;
@@ -205,33 +199,6 @@
         .step-description {
             font-size: 14px;
             color: #bdc3c7;
-            line-height: 1.5;
-        }
-
-        /* 計算式 */
-        .formula-card {
-            background: rgba(26, 26, 46, 0.8);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-            border: 1px solid #34495e;
-            font-family: 'Courier New', monospace;
-        }
-
-        .formula {
-            font-size: 16px;
-            color: #f1c40f;
-            text-align: center;
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 5px;
-        }
-
-        .formula-explanation {
-            font-size: 14px;
-            color: #bdc3c7;
-            margin-top: 10px;
             line-height: 1.5;
         }
 
@@ -327,7 +294,7 @@
             <h1 class="section-title">パチンコ仕事量ツールについて</h1>
             <p>このツールは、パチンコの遊技データを入力することで、仕事量や収支を自動計算する便利なアプリケーションです。正確なデータ入力により、効率的な遊技戦略の参考としてご利用いただけます。</p>
             
-            <a href="index.html" class="tool-link">🚀 パチンコ仕事量ツールを起動</a>
+            <a href="pachinko_calc.html" class="tool-link">🚀 パチンコ仕事量ツールを起動</a>
         </div>
 
         <!-- 主な機能 -->
@@ -335,25 +302,21 @@
             <h2 class="section-title">主な機能</h2>
             <div class="feature-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">📊</div>
                     <h3 class="feature-title">機種データ管理</h3>
                     <p class="feature-description">交換率、トータル確率、投資玉数などの基本データを入力・管理できます。人気機種はワンタップでデータを読み込めます。</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
                     <h3 class="feature-title">初当りデータ記録</h3>
                     <p class="feature-description">各初当りの回転数、出玉、ラウンド数、時短を記録。データは自動で計算に反映され、通常回転数も自動算出されます。</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">🧮</div>
                     <h3 class="feature-title">詳細な計算機能</h3>
                     <p class="feature-description">仕事量、収支、回転率、等価ボーダー、持ち玉単価、現金単価など、様々な指標を自動計算します。</p>
                 </div>
                 
                 <div class="feature-card">
-                    <div class="feature-icon">💾</div>
                     <h3 class="feature-title">データ保存・共有</h3>
                     <p class="feature-description">入力データをブラウザに保存したり、メモ帳アプリにエクスポートして共有できます。</p>
                 </div>
@@ -396,29 +359,6 @@
                         <p class="step-description">「データ保存」でブラウザ内に保存したり、「メモ帳に保存」でデータをエクスポートして共有できます。</p>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- 計算式の説明 -->
-        <div class="section">
-            <h2 class="section-title">計算式の詳細</h2>
-            
-            <h3 class="subsection-title">仕事量の計算</h3>
-            <div class="formula-card">
-                <div class="formula">仕事量 = 総回転数 × (持ち玉比率/100) × 持ち玉単価 + 総回転数 × (1 - (持ち玉比率/100)) × 現金単価</div>
-                <p class="formula-explanation">この計算式は、持ち玉と現金投資の割合に応じて加重平均した仕事量を算出します。持ち玉比率が高いほど持ち玉単価の影響が大きくなります。</p>
-            </div>
-            
-            <h3 class="subsection-title">収支の計算</h3>
-            <div class="formula-card">
-                <div class="formula">収支 = (持ち玉 - 貯玉投資) × 交換率 - (現金投資 × 4)</div>
-                <p class="formula-explanation">現金投資は千円単位で計算されるため、玉数に換算する際は×4となります（250玉÷1000円×4=1玉/円）。</p>
-            </div>
-            
-            <h3 class="subsection-title">等価ボーダーの計算</h3>
-            <div class="formula-card">
-                <div class="formula">等価ボーダー = 250 ÷ (1R出玉 ÷ トータル確率)</div>
-                <p class="formula-explanation">等価交換で収支が±0になる回転率を表します。この値が低いほど効率の良い台と言えます。</p>
             </div>
         </div>
 
@@ -488,8 +428,6 @@
                     </div>
                 </div>
             </div>
-            
-            <a href="index.html" class="tool-link">🎰 パチンコ仕事量ツールを今すぐ使う</a>
         </div>
     </div>
 </body>
