@@ -168,6 +168,13 @@
             gap: 10px;
         }
 
+        .explanation-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
         .explanation-link {
             display: inline-flex;
             align-items: center;
@@ -182,6 +189,9 @@
             transition: all 0.3s ease;
             border: 2px dashed #adb5bd;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 400px;
+            justify-content: center;
         }
 
         .explanation-link:hover {
@@ -324,6 +334,10 @@
             .explanation-title {
                 font-size: 1.2rem;
             }
+            
+            .explanation-links {
+                gap: 12px;
+            }
         }
     </style>
 </head>
@@ -357,10 +371,16 @@
         <!-- 説明ページセクション -->
         <div class="explanation-section">
             <h2 class="explanation-title">📚 ツールの使い方を詳しく知りたい方へ</h2>
-            <a href="pachinko_calc_explan.html" class="explanation-link">
-                <span class="explanation-icon">📖</span>
-                パチンコ仕事量ツールの詳しい説明を見る
-            </a>
+            <div class="explanation-links">
+                <a href="pachinko_calc_explan.html" class="explanation-link">
+                    <span class="explanation-icon">📖</span>
+                    パチンコ仕事量ツールの詳しい説明を見る
+                </a>
+                <a href="slot_calc_explan.html" class="explanation-link">
+                    <span class="explanation-icon">📖</span>
+                    スロット仕事量ツールの詳しい説明を見る
+                </a>
+            </div>
         </div>
 
         <!-- 説明文 -->
