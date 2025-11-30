@@ -147,13 +147,55 @@
             background: linear-gradient(135deg, #fffbf0, #fff7e0);
         }
 
-        .tool-link:nth-child(5) {
-            border-color: #9b59b6;
-            background: linear-gradient(135deg, #ffffff, #f9f0ff);
+        /* 説明ページリンクの特別なデザイン */
+        .explanation-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
         }
 
-        .tool-link:nth-child(5):hover {
-            background: linear-gradient(135deg, #f9f0ff, #f3e0ff);
+        .explanation-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .explanation-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: #6c757d;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px dashed #adb5bd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .explanation-link:hover {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            border-color: #6c757d;
+            border-style: solid;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            color: #495057;
+        }
+
+        .explanation-icon {
+            font-size: 1.3rem;
+            opacity: 0.8;
         }
 
         /* 説明文 */
@@ -240,6 +282,15 @@
                 font-size: 1.1rem;
             }
 
+            .explanation-section {
+                padding: 25px 20px;
+            }
+
+            .explanation-link {
+                padding: 16px 25px;
+                font-size: 1rem;
+            }
+
             .description {
                 padding: 25px 20px;
                 font-size: 1rem;
@@ -269,6 +320,10 @@
             .header {
                 padding: 30px 20px;
             }
+
+            .explanation-title {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -297,9 +352,14 @@
             <a href="split_bill.html" class="tool-link">
                 🎉 ノリ打ち精算ツール
             </a>
+        </div>
 
-            <a href="pachinko_calc_explan.html" class="tool-link">
-                📖 パチンコ仕事量ツール説明
+        <!-- 説明ページセクション -->
+        <div class="explanation-section">
+            <h2 class="explanation-title">📚 ツールの使い方を詳しく知りたい方へ</h2>
+            <a href="pachinko_calc_explan.html" class="explanation-link">
+                <span class="explanation-icon">📖</span>
+                パチンコ仕事量ツールの詳しい説明を見る
             </a>
         </div>
 
@@ -307,7 +367,7 @@
         <div class="description">
             <p>パチンコ・スロットの効率的な遊技をサポートする計算ツール集です。</p>
             <p>仕事量計算、期待値分析、小役カウント、友達との精算など、様々なシーンで役立つ機能を提供しています。</p>
-            <p>各ツールの詳細な使い方は、説明ページをご覧ください。</p>
+            <p>各ツールの詳細な使い方は、上の説明ページをご覧ください。</p>
         </div>
 
         <!-- フッターリンク -->
