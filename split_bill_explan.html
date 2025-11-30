@@ -91,6 +91,32 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
 
+        /* トップページボタン */
+        .top-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #ffd166, #ffb347);
+            color: #5a3e36;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            border: 2px solid white;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            background: linear-gradient(135deg, #ffb347, #ffd166);
+        }
+
         /* セクション */
         .section {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 248, 225, 0.9));
@@ -180,8 +206,9 @@
             box-shadow: 0 10px 25px rgba(255, 107, 107, 0.2);
         }
 
+        /* 絵文字を削除 */
         .feature-card::before {
-            content: '🎯';
+            content: '';
             position: absolute;
             top: -15px;
             left: 20px;
@@ -245,22 +272,6 @@
             margin-bottom: 10px;
         }
 
-        /* 計算例 */
-        .example {
-            background: linear-gradient(135deg, rgba(17, 138, 178, 0.1), rgba(17, 138, 178, 0.05));
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 2px solid rgba(17, 138, 178, 0.3);
-        }
-
-        .example-title {
-            font-weight: bold;
-            color: #118ab2;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-        }
-
         /* 注意点 */
         .note {
             background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 107, 107, 0.05));
@@ -315,6 +326,22 @@
             .header {
                 padding: 25px 20px;
             }
+            
+            .top-btn {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 10px auto;
+                display: inline-flex;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .top-btn {
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
         }
     </style>
 </head>
@@ -322,6 +349,11 @@
     <div class="container">
         <!-- ヘッダー -->
         <div class="header">
+            <!-- トップページボタン -->
+            <a href="index.html" class="top-btn">
+                <span>🏠</span> トップページ
+            </a>
+            
             <h1>🎉 ノリうち精算ツール 説明ページ</h1>
             <div class="subtitle">友達とのお金のやり取りを楽しく簡単に！</div>
             <a href="split_bill.html" class="back-btn">🔙 ツールを使う</a>
@@ -334,7 +366,6 @@
                 ツール概要
             </div>
             <p>ノリうち精算ツールは、友達と遊びに行ったときの費用を公平に精算するための便利なツールです。パチンコやスロットなど、複数人で遊んだ際の投資額と回収額を入力するだけで、誰が誰にいくら支払えばよいかを自動的に計算します。</p>
-            <p>面倒な計算を自動化することで、友達同士のお金のやり取りをスムーズにし、もめ事を防ぐことができます。</p>
         </div>
 
         <!-- 特徴セクション -->
@@ -413,45 +444,6 @@
             </div>
         </div>
 
-        <!-- 計算方法セクション -->
-        <div class="section">
-            <div class="section-title">
-                <span class="emoji-decoration">🧮</span>
-                計算方法
-            </div>
-            
-            <h2>精算の仕組み</h2>
-            <p>このツールは以下の手順で精算を計算します：</p>
-            
-            <ol>
-                <li>各メンバーの純収支（回収額 - 投資額）を計算</li>
-                <li>全員の純収支の合計を計算</li>
-                <li>1人あたりの平均純収支を計算（合計 ÷ 人数）</li>
-                <li>各メンバーの不足額（平均純収支 - 個人の純収支）を計算</li>
-                <li>不足額が正のメンバー（受け取る側）と負のメンバー（支払う側）に分ける</li>
-                <li>支払いの流れを計算し、最小限の取引で精算が完了するようにする</li>
-            </ol>
-            
-            <div class="example">
-                <div class="example-title">計算例</div>
-                <p>3人で遊んだ場合：</p>
-                <ul>
-                    <li>Aさん: 投資10,000円、回収5,000円 → 純収支 -5,000円</li>
-                    <li>Bさん: 投資8,000円、回収12,000円 → 純収支 +4,000円</li>
-                    <li>Cさん: 投資6,000円、回収9,000円 → 純収支 +3,000円</li>
-                </ul>
-                <p>純収支合計: -5,000 + 4,000 + 3,000 = 2,000円</p>
-                <p>1人あたり平均: 2,000 ÷ 3 = 約667円（端数処理あり）</p>
-                <p>不足額:</p>
-                <ul>
-                    <li>Aさん: 667 - (-5,000) = 5,667円（受け取る）</li>
-                    <li>Bさん: 667 - 4,000 = -3,333円（支払う）</li>
-                    <li>Cさん: 667 - 3,000 = -2,333円（支払う）</li>
-                </ul>
-                <p>精算結果: Bさん→Aさん 3,333円、Cさん→Aさん 2,333円</p>
-            </div>
-        </div>
-
         <!-- 注意点セクション -->
         <div class="section">
             <div class="section-title">
@@ -473,30 +465,6 @@
                 <div class="note-title">最小人数</div>
                 <p>精算を行うには2人以上のメンバーが必要です。1人しかいない場合は精算できません。</p>
             </div>
-        </div>
-
-        <!-- よくある質問セクション -->
-        <div class="section">
-            <div class="section-title">
-                <span class="emoji-decoration">❓</span>
-                よくある質問
-            </div>
-            
-            <h2>Q: 投資額や回収額にマイナスの値を入力できますか？</h2>
-            <p>A: いいえ、投資額と回収額は0以上の数値のみ入力できます。マイナスの値を入力すると0として扱われます。</p>
-            
-            <h2>Q: 精算結果を印刷したいのですが</h2>
-            <p>A: ブラウザの印刷機能を使用してください。精算結果が表示されている状態で印刷すると、精算内容を紙に出力できます。</p>
-            
-            <h2>Q: メンバーが多い場合でも使えますか？</h2>
-            <p>A: はい、何人でも追加できますが、画面の表示領域に収まる範囲でご利用ください。多くのメンバーを追加すると、画面が縦に長くなります。</p>
-        </div>
-
-        <!-- フッター -->
-        <div class="section" style="text-align: center;">
-            <p>ノリうち精算ツールは、友達とのお金のやり取りをスムーズにするために開発されました。</p>
-            <p>楽しい遊びの時間を、お金のことで台無しにしないためにご活用ください！</p>
-            <a href="split_bill.html" class="back-btn" style="margin-top: 20px;">🎉 ツールを使ってみる</a>
         </div>
     </div>
 </body>
