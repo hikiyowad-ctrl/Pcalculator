@@ -222,33 +222,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        /* 計算式 */
-        .formula-card {
-            background: rgba(26, 26, 46, 0.8);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 15px 0;
-            border: 1px solid #34495e;
-            font-family: 'Courier New', monospace;
-        }
-
-        .formula {
-            font-size: 16px;
-            color: #f1c40f;
-            text-align: center;
-            margin: 10px 0;
-            padding: 10px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 5px;
-        }
-
-        .formula-explanation {
-            font-size: 14px;
-            color: #bdc3c7;
-            margin-top: 10px;
-            line-height: 1.5;
-        }
-
         /* レスポンシブ */
         @media (max-width: 768px) {
             .container {
@@ -287,7 +260,7 @@
         <!-- 導入セクション -->
         <div class="section">
             <h1 class="section-title">スロット計算ツールについて</h1>
-            <p>このツールは、1日に打った複数の台のデータをまとめて計算し、現金ギャップを考慮した実質的な期待値を明確化します。ハイエナの期待値稼働において、期待値表の機械割から実際に回したG数（期待値表のやめ時までのG数）を合算して、その日の期待値を算出できます。</p>
+            <p>このツールは、1日に打った複数の台のデータをまとめて計算し、現金ギャップを考慮した実質的な期待値を明確化します。</p>
             
             <a href="slot_calc.html" class="tool-link">🚀 スロット計算ツールを起動</a>
         </div>
@@ -307,37 +280,9 @@
                 </div>
                 
                 <div class="feature-card">
-                    <h3 class="feature-title">ハイエナ期待値計算</h3>
-                    <p class="feature-description">期待値表の機械割と実際に回したG数から、その日の期待値を合算して計算。やめ時までのG数を入力することで、正確な期待値がわかります。</p>
-                </div>
-                
-                <div class="feature-card">
                     <h3 class="feature-title">データ保存・共有</h3>
                     <p class="feature-description">入力データをブラウザに保存したり、メールでエクスポートして共有できます。定期的な利用に便利です。</p>
                 </div>
-            </div>
-        </div>
-
-        <!-- 計算式の説明 -->
-        <div class="section">
-            <h2 class="section-title">計算式の詳細</h2>
-            
-            <h3 class="subsection-title">現金ギャップの計算</h3>
-            <div class="formula-card">
-                <div class="formula">現金ギャップ = (1000 - 貸枚数 × 交換率) × (現金投資 ÷ 1000)</div>
-                <p class="formula-explanation">この計算式は、実際の投資額と貸枚数による実質的な投資額の差を算出します。これにより、純粋な機械割による期待値だけでなく、現金投資に対する実質的な期待値を計算できます。</p>
-            </div>
-            
-            <h3 class="subsection-title">スロット期待値の計算</h3>
-            <div class="formula-card">
-                <div class="formula">スロット期待値 = (消化G数 × 3 × 機械割/100 - 消化G数 × 3) × 交換率</div>
-                <p class="formula-explanation">通常のスロット期待値計算に、交換率を掛けることで実際の金額に換算します。これに現金ギャップを考慮することで、実質的な期待値を算出します。</p>
-            </div>
-            
-            <h3 class="subsection-title">実質期待値の計算</h3>
-            <div class="formula-card">
-                <div class="formula">実質期待値 = スロット期待値 - 現金ギャップ</div>
-                <p class="formula-explanation">最終的な実質期待値は、スロット期待値から現金ギャップを引くことで求められます。これがその台の実質的な期待値となります。</p>
             </div>
         </div>
 
@@ -350,7 +295,7 @@
                     <div class="step-number">1</div>
                     <div class="step-content">
                         <h3 class="step-title">機種データを入力</h3>
-                        <p class="step-description">各台の機種名、消化G数、機械割、貸枚数、交換率、現金投資を入力します。ハイエナ稼働の場合は、期待値表の機械割とやめ時までのG数を入力します。</p>
+                        <p class="step-description">各台の機種名、消化G数、機械割、貸枚数、交換率、現金投資を入力します。</p>
                     </div>
                 </div>
                 
@@ -388,8 +333,8 @@
                 <div class="step">
                     <div class="step-number">🎯</div>
                     <div class="step-content">
-                        <h3 class="step-title">ハイエナ期待値計算</h3>
-                        <p class="step-description">期待値表に記載されている機械割と、実際に回したG数（期待値表のやめ時までのG数）を入力することで、その台の期待値を正確に計算できます。複数台回した場合も、すべての台の期待値を合算してその日の総合期待値を算出します。</p>
+                        <h3 class="step-title">複数台の期待値計算</h3>
+                        <p class="step-description">実際に回したG数と機械割を入力することで、その台の期待値を正確に計算できます。複数台回した場合も、すべての台の期待値を合算してその日の総合期待値を算出します。</p>
                     </div>
                 </div>
                 
@@ -398,14 +343,6 @@
                     <div class="step-content">
                         <h3 class="step-title">現金ギャップ考慮による実質期待値</h3>
                         <p class="step-description">貸枚数と交換率の違いによる現金ギャップを考慮するため、単純な機械割計算よりも実践に即した期待値が算出されます。これにより、実際の収支に近い予測が可能になります。</p>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">📊</div>
-                    <div class="step-content">
-                        <h3 class="step-title">複数台の総合評価</h3>
-                        <p class="step-description">1日に複数の台を回した場合、それぞれの台のデータを入力することで、その日の総合的な仕事量がわかります。これにより、効率的な台選びや投資計画の立案に役立ちます。</p>
                     </div>
                 </div>
             </div>
