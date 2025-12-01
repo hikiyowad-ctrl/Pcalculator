@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【仕事量計算】パチスロツール集 トップページ</title>
+    <title>パチスロスタッツ - 仕事量計算・収支管理ツール</title>
     <style>
         * {
             margin: 0;
@@ -16,26 +16,27 @@
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
             color: #2c3e50;
-            text-align: center;
             line-height: 1.6;
         }
 
         .main-container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 40px 20px;
         }
 
+        /* ヘッダー */
         .header {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
-            padding: 40px 30px;
+            padding: 50px 40px;
             border-radius: 20px;
-            margin-bottom: 40px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            border: 2px solid #3498db;
+            margin-bottom: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 3px solid #3498db;
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
 
         .header::before {
@@ -44,46 +45,80 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #3498db, #2ecc71, #3498db);
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #f39c12, #e74c3c, #3498db);
+            background-size: 200% 100%;
+            animation: gradientMove 3s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 200% 0%; }
+        }
+
+        .site-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo-icon {
+            font-size: 3rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+            font-size: 3rem;
+            margin: 0;
             color: #ecf0f1;
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+
+        .site-name-en {
+            font-size: 1rem;
+            color: #95a5a6;
+            font-weight: 400;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 5px;
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
+            font-size: 1.1rem;
+            opacity: 0.85;
             color: #bdc3c7;
-            font-weight: 500;
-            margin-bottom: 20px;
+            font-weight: 400;
+            margin-top: 20px;
+            margin-bottom: 25px;
         }
 
-        /* PayPay支援ボタン */
         .support-button {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 12px 24px;
+            padding: 12px 28px;
             background: linear-gradient(135deg, #ff6b6b, #ff4757);
             color: white;
             text-decoration: none;
-            border-radius: 25px;
+            border-radius: 30px;
             font-size: 0.95rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
 
         .support-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(255, 71, 87, 0.5);
             background: linear-gradient(135deg, #ff4757, #ff6b6b);
         }
 
@@ -92,108 +127,153 @@
             font-size: 1.1rem;
         }
 
-        .tool-menu {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .tool-link {
+        /* セクションタイトル */
+        .section-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 25px 20px;
-            background: white;
-            color: #2c3e50;
-            text-decoration: none;
-            border-radius: 15px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            position: relative;
-            overflow: hidden;
-            min-height: 100px;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #e9ecef;
         }
 
-        .tool-link::before {
+        .section-icon {
+            font-size: 1.8rem;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        /* ツールセクション */
+        .tools-section {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .tool-card {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 25px;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            text-decoration: none;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: left 0.5s ease;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            transition: left 0.6s ease;
         }
 
-        .tool-link:hover::before {
+        .tool-card:hover::before {
             left: 100%;
         }
 
-        .tool-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
         }
 
-        .tool-link:nth-child(1) {
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .tool-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+
+        .tool-description {
+            font-size: 0.95rem;
+            color: #6c757d;
+            line-height: 1.5;
+        }
+
+        /* 各ツールの個別カラー */
+        .tool-card:nth-child(1) {
             border-color: #27ae60;
-            background: linear-gradient(135deg, #ffffff, #f8fff9);
         }
 
-        .tool-link:nth-child(1):hover {
-            background: linear-gradient(135deg, #f8fff9, #f0fff4);
-        }
-
-        .tool-link:nth-child(2) {
+        .tool-card:nth-child(2) {
             border-color: #e74c3c;
-            background: linear-gradient(135deg, #ffffff, #fff8f8);
         }
 
-        .tool-link:nth-child(2):hover {
-            background: linear-gradient(135deg, #fff8f8, #fff0f0);
-        }
-
-        .tool-link:nth-child(3) {
+        .tool-card:nth-child(3) {
             border-color: #3498db;
-            background: linear-gradient(135deg, #ffffff, #f8fbff);
         }
 
-        .tool-link:nth-child(3):hover {
-            background: linear-gradient(135deg, #f8fbff, #f0f7ff);
-        }
-        
-        .tool-link:nth-child(4) {
+        .tool-card:nth-child(4) {
             border-color: #9b59b6;
-            background: linear-gradient(135deg, #ffffff, #faf8ff);
         }
 
-        .tool-link:nth-child(4):hover {
-            background: linear-gradient(135deg, #faf8ff, #f5f0ff);
+        .tool-card:nth-child(5) {
+            border-color: #f39c12;
+            grid-column: 1 / -1;
+            max-width: 50%;
+            margin: 0 auto;
+            width: 100%;
         }
 
-        .tool-link:nth-child(5) {
-            border-color: #f39c12; 
-            background: linear-gradient(135deg, #ffffff, #fffbf0);
-        }
-
-        .tool-link:nth-child(5):hover {
-            background: linear-gradient(135deg, #fffbf0, #fff7e0);
-        }
-
-        .collapsible-section {
+        /* サイト説明 */
+        .about-section {
             background: white;
-            border-radius: 15px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .about-section p {
+            font-size: 1.05rem;
+            color: #495057;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .about-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* 使い方セクション */
+        .help-section {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             border: 1px solid #e9ecef;
             overflow: hidden;
         }
 
         .collapsible-header {
-            padding: 20px 30px;
+            padding: 30px 35px;
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             cursor: pointer;
             display: flex;
@@ -207,22 +287,19 @@
             background: linear-gradient(135deg, #e9ecef, #dee2e6);
         }
 
-        .collapsible-title {
-            font-size: 1.3rem;
-            color: #2c3e50;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .collapsible-header .section-header {
+            border: none;
+            padding: 0;
+            margin: 0;
         }
 
         .collapsible-arrow {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #6c757d;
             transition: transform 0.3s ease;
         }
 
-        .collapsible-section.active .collapsible-arrow {
+        .help-section.active .collapsible-arrow {
             transform: rotate(180deg);
         }
 
@@ -232,83 +309,63 @@
             transition: max-height 0.4s ease;
         }
 
-        .collapsible-section.active .collapsible-content {
+        .help-section.active .collapsible-content {
             max-height: 1000px;
         }
 
-        .explanation-links {
-            display: flex;
-            flex-direction: column;
+        .help-links {
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 15px;
-            padding: 25px 30px;
+            padding: 30px 35px;
         }
 
-        .explanation-link {
-            display: inline-flex;
+        .help-link {
+            display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 18px 30px;
+            gap: 15px;
+            padding: 20px 25px;
             background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            color: #6c757d;
+            color: #495057;
             text-decoration: none;
             border-radius: 12px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
             transition: all 0.3s ease;
-            border: 2px dashed #adb5bd;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border: 2px solid #dee2e6;
         }
 
-        .explanation-link:hover {
+        .help-link:hover {
             background: linear-gradient(135deg, #e9ecef, #dee2e6);
-            border-color: #6c757d;
-            border-style: solid;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            color: #495057;
+            border-color: #adb5bd;
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        .explanation-icon {
-            font-size: 1.3rem;
-            opacity: 0.8;
+        .help-icon {
+            font-size: 1.5rem;
+            opacity: 0.7;
         }
 
-        .description {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 1px solid #e9ecef;
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #2c3e50;
-        }
-
-        .description p {
-            margin-bottom: 15px;
-        }
-
-        .description p:last-child {
-            margin-bottom: 0;
-        }
-
+        /* 広告エリア */
         .ad-area {
             text-align: center;
-            margin: 20px 0 40px 0;
-            padding: 10px;
-            background: #f0f0f0;
-            border-radius: 10px;
-            border: 1px dashed #adb5bd;
+            margin: 35px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px dashed #dee2e6;
         }
 
+        /* フッター */
         .footer-links {
             background: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 35px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
             border: 1px solid #e9ecef;
+            text-align: center;
         }
 
         .footer-links a {
@@ -319,96 +376,66 @@
             font-size: 1rem;
             transition: all 0.3s ease;
             position: relative;
-            padding: 5px 10px;
-            border-radius: 6px;
-        }
-
-        .footer-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            width: 0;
-            height: 1px;
-            background: #3498db;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
+            padding: 8px 12px;
+            border-radius: 8px;
+            display: inline-block;
         }
 
         .footer-links a:hover {
             color: #2980b9;
-            background: rgba(52, 152, 219, 0.05);
+            background: rgba(52, 152, 219, 0.08);
         }
 
-        .footer-links a:hover::after {
-            width: 100%;
-        }
-
+        /* レスポンシブ */
         @media (max-width: 768px) {
             .main-container {
-                padding: 30px 15px;
+                padding: 25px 15px;
+            }
+
+            .header {
+                padding: 35px 25px;
             }
 
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
 
-            .subtitle {
-                font-size: 1.1rem;
+            .logo-icon {
+                font-size: 2.5rem;
             }
 
-            .support-button {
-                font-size: 0.9rem;
-                padding: 10px 20px;
-            }
-
-            .tool-menu {
+            .tool-grid {
                 grid-template-columns: 1fr;
-                gap: 15px;
             }
 
-            .tool-link {
-                padding: 20px 15px;
-                font-size: 1.1rem;
-                min-height: 80px;
+            .tool-card:nth-child(5) {
+                max-width: 100%;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .tools-section,
+            .about-section {
+                padding: 25px 20px;
             }
 
             .collapsible-header {
-                padding: 18px 20px;
-            }
-
-            .collapsible-title {
-                font-size: 1.1rem;
-            }
-
-            .explanation-links {
                 padding: 20px;
-                gap: 12px;
             }
 
-            .explanation-link {
-                padding: 16px 25px;
-                font-size: 1rem;
+            .help-links {
+                padding: 20px;
             }
 
-            .description {
+            .footer-links {
                 padding: 25px 20px;
-                font-size: 1rem;
-            }
-
-            .ad-area {
-                margin: 15px 0 30px 0;
-                padding: 8px;
             }
 
             .footer-links a {
                 display: block;
-                margin: 8px 0;
-                font-size: 0.95rem;
-            }
-
-            .footer-links {
-                padding: 20px;
+                margin: 10px 0;
             }
         }
 
@@ -417,113 +444,154 @@
                 font-size: 1.8rem;
             }
 
-            .support-button {
+            .logo-icon {
+                font-size: 2rem;
+            }
+
+            .site-name-en {
                 font-size: 0.85rem;
-                padding: 9px 18px;
             }
 
-            .tool-link {
-                padding: 18px 15px;
+            .subtitle {
                 font-size: 1rem;
-                min-height: 70px;
             }
 
-            .header {
-                padding: 30px 20px;
+            .support-button {
+                font-size: 0.9rem;
+                padding: 10px 22px;
             }
 
-            .collapsible-title {
-                font-size: 1rem;
+            .tool-card {
+                padding: 20px;
+            }
+
+            .tool-name {
+                font-size: 1.15rem;
+            }
+
+            .section-title {
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="main-container">
+        <!-- ヘッダー -->
         <div class="header">
-            <h1>🎰 パチスロ計算ツール集 🎰</h1>
-            <div class="subtitle">収支・仕事量計算ツール</div>
-            <a href="https://qr.paypay.ne.jp/p2p01_UfwrOd3KqaYJ0Luk" class="support-button" target="_blank" rel="noopener noreferrer">
+            <div class="site-logo">
+                <span class="logo-icon">🎰</span>
+                <div>
+                    <h1>パチスロスタッツ</h1>
+                    <div class="site-name-en">Pachislot Stats</div>
+                </div>
+            </div>
+            <div class="subtitle">パチンコ・スロットの期待値計算・収支管理ツール</div>
+            <a href="YOUR_PAYPAY_LINK_HERE" class="support-button" target="_blank" rel="noopener noreferrer">
                 開発者を支援する（PayPay）
             </a>
         </div>
 
-        <div class="tool-menu">
-            <a href="./counter.html" class="tool-link">
-                🎯 小役カウンター
-            </a>
-            
-            <a href="./pachinko_calc.html" class="tool-link">
-                🎰 パチンコ仕事量ツール
-            </a>
-            
-            <a href="slot_calc.html" class="tool-link">
-                💰 スロット仕事量ツール
-            </a>
+        <!-- ツールセクション -->
+        <div class="tools-section">
+            <div class="section-header">
+                <span class="section-icon">🛠️</span>
+                <h2 class="section-title">ツール一覧</h2>
+            </div>
+            <div class="tool-grid">
+                <a href="./counter.html" class="tool-card">
+                    <div class="tool-icon">🎯</div>
+                    <div class="tool-name">小役カウンター</div>
+                    <div class="tool-description">リアルタイムで小役をカウント。設定推測に役立つ詳細な統計データを表示します。</div>
+                </a>
 
-            <a href="finance.html" class="tool-link">
-                📊 収支管理ツール
-            </a>
-            
-            <a href="split_bill.html" class="tool-link">
-                🎉 ノリ打ち精算ツール
-            </a>
+                <a href="./pachinko_calc.html" class="tool-card">
+                    <div class="tool-icon">🎰</div>
+                    <div class="tool-name">パチンコ仕事量</div>
+                    <div class="tool-description">大当り確率・出玉・回転数から期待値を自動計算。効率的な台選びをサポートします。</div>
+                </a>
+
+                <a href="slot_calc.html" class="tool-card">
+                    <div class="tool-icon">💰</div>
+                    <div class="tool-name">スロット仕事量</div>
+                    <div class="tool-description">機械割・投資・時間から期待収支を算出。天井狙い・ゾーン狙いの判断材料に。</div>
+                </a>
+
+                <a href="finance.html" class="tool-card">
+                    <div class="tool-icon">📊</div>
+                    <div class="tool-name">収支管理ツール</div>
+                    <div class="tool-description">日々の収支を記録・分析。グラフで可視化し、長期的な勝率向上をサポートします。</div>
+                </a>
+
+                <a href="split_bill.html" class="tool-card">
+                    <div class="tool-icon">🎉</div>
+                    <div class="tool-name">ノリ打ち精算</div>
+                    <div class="tool-description">複数人での遊戯後の精算を簡単に。投資額と回収額を入力するだけで自動計算。</div>
+                </a>
+            </div>
         </div>
 
-        <div class="collapsible-section" id="explanationSection">
-            <div class="collapsible-header" onclick="toggleCollapse()">
-                <div class="collapsible-title">
-                    📚 ツールの使い方を詳しく知りたい方へ
+        <!-- サイト説明 -->
+        <div class="about-section">
+            <div class="section-header">
+                <span class="section-icon">📖</span>
+                <h2 class="section-title">パチスロスタッツについて</h2>
+            </div>
+            <p>パチスロスタッツは、パチンコ・スロットの効率的な遊技をサポートする無料の計算ツール集です。</p>
+            <p>期待値計算、小役カウント、収支管理、友達との精算など、様々なシーンで役立つ機能を提供しています。</p>
+            <p>すべてのツールはブラウザ上で動作し、インストール不要で今すぐ使えます。データはお使いのデバイスに保存されるため、プライバシーも安心です。</p>
+        </div>
+
+        <!-- 使い方セクション -->
+        <div class="help-section" id="helpSection">
+            <div class="collapsible-header" onclick="toggleHelp()">
+                <div class="section-header">
+                    <span class="section-icon">📚</span>
+                    <h2 class="section-title">使い方ガイド</h2>
                 </div>
                 <div class="collapsible-arrow">▼</div>
             </div>
             <div class="collapsible-content">
-                <div class="explanation-links">
-                    <a href="counter_explan.html" class="explanation-link">
-                        <span class="explanation-icon">📖</span>
-                        小役カウンターの詳しい説明を見る
+                <div class="help-links">
+                    <a href="counter_explan.html" class="help-link">
+                        <span class="help-icon">📖</span>
+                        小役カウンターの使い方
                     </a>
-                    <a href="pachinko_calc_explan.html" class="explanation-link">
-                        <span class="explanation-icon">📖</span>
-                        パチンコ仕事量ツールの詳しい説明を見る
+                    <a href="pachinko_calc_explan.html" class="help-link">
+                        <span class="help-icon">📖</span>
+                        パチンコ仕事量ツールの使い方
                     </a>
-                    <a href="slot_calc_explan.html" class="explanation-link">
-                        <span class="explanation-icon">📖</span>
-                        スロット仕事量ツールの詳しい説明を見る
+                    <a href="slot_calc_explan.html" class="help-link">
+                        <span class="help-icon">📖</span>
+                        スロット仕事量ツールの使い方
                     </a>
-                    <a href="finance_explan.html" class="explanation-link">
-                        <span class="explanation-icon">📖</span>
-                        収支管理ツールの詳しい説明を見る
+                    <a href="finance_explan.html" class="help-link">
+                        <span class="help-icon">📖</span>
+                        収支管理ツールの使い方
                     </a>
-                    <a href="split_bill_explan.html" class="explanation-link">
-                        <span class="explanation-icon">📖</span>
-                        ノリ打ち精算ツールの詳しい説明を見る
+                    <a href="split_bill_explan.html" class="help-link">
+                        <span class="help-icon">📖</span>
+                        ノリ打ち精算ツールの使い方
                     </a>
                 </div>
             </div>
         </div>
 
-        <div class="description">
-            <p>パチンコ・スロットの効率的な遊技をサポートする計算ツール集です。</p>
-            <p>仕事量計算、期待値分析、小役カウント、友達との精算など、様々なシーンで役立つ機能を提供しています。</p>
-            <p>各ツールの詳細な使い方は、上の説明ページをご覧ください。</p>
-        </div>
-
+        <!-- 広告エリア -->
         <div class="ad-area">
             <script src="https://adm.shinobi.jp/s/5ec50e80c6d5e9ef865cd130e031443f"></script>
         </div>
 
+        <!-- フッター -->
         <div class="footer-links">
             <a href="index.html">トップページ</a>
             <a href="privacy.html">プライバシーポリシー</a>
             <a href="contact.html">お問い合わせ</a>
             <a href="disclaimer.html">免責事項・利用規約</a>
         </div>
-    </div>
-
     <script>
-        function toggleCollapse() {
-            const section = document.getElementById('explanationSection');
+        function toggleHelp() {
+            const section = document.getElementById('helpSection');
             section.classList.toggle('active');
         }
     </script>
