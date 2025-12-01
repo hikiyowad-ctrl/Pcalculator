@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>投資収支管理カレンダー - 説明書</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'メイリオ', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* ヘッダー */
+        .app-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+        }
+
+        .app-header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .app-header h1 .icon {
+            font-size: 2.8rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .app-header .subtitle {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* 機能カード */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 5px solid #3498db;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .feature-card:nth-child(2) {
+            border-left-color: #2ecc71;
+        }
+
+        .feature-card:nth-child(3) {
+            border-left-color: #e74c3c;
+        }
+
+        .feature-card:nth-child(4) {
+            border-left-color: #f39c12;
+        }
+
+        .feature-card:nth-child(5) {
+            border-left-color: #9b59b6;
+        }
+
+        .feature-card:nth-child(6) {
+            border-left-color: #1abc9c;
+        }
+
+        .feature-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .feature-card:nth-child(2) .feature-icon {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .feature-card:nth-child(3) .feature-icon {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .feature-card:nth-child(4) .feature-icon {
+            background: linear-gradient(135deg, #f39c12, #d35400);
+        }
+
+        .feature-card:nth-child(5) .feature-icon {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .feature-card:nth-child(6) .feature-icon {
+            background: linear-gradient(135deg, #1abc9c, #16a085);
+        }
+
+        .feature-card h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            margin: 0;
+        }
+
+        .feature-content {
+            flex: 1;
+        }
+
+        .feature-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-content li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .feature-content li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        /* 使用方法セクション */
+        .usage-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .usage-section h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3498db;
+            display: inline-block;
+            margin-left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .step-by-step {
+            counter-reset: step-counter;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step {
+            margin-bottom: 30px;
+            padding-left: 70px;
+            position: relative;
+        }
+
+        .step::before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .step:nth-child(2)::before {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .step:nth-child(3)::before {
+            background: linear-gradient(135deg, #f39c12, #d35400);
+        }
+
+        .step:nth-child(4)::before {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        }
+
+        .step h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .step p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        /* 注意事項セクション */
+        .notice-section {
+            background: linear-gradient(135deg, #fff8e1 0%, #fff3e0 100%);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border-left: 5px solid #f39c12;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notice-section::before {
+            content: '⚠️';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            opacity: 0.1;
+        }
+
+        .notice-section h2 {
+            color: #d35400;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .notice-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .notice-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #f39c12;
+        }
+
+        .notice-item h4 {
+            color: #d35400;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ボタン */
+        .buttons-section {
+            text-align: center;
+            margin: 50px 0;
+        }
+
+        .app-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .app-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+            background: linear-gradient(135deg, #2980b9, #3498db);
+        }
+
+        .app-button.start {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .app-button.start:hover {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
+        }
+
+        /* フッター */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #7f8c8d;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .app-header h1 {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .step {
+                padding-left: 60px;
+            }
+            
+            .step::before {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .usage-section,
+            .notice-section {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-header {
+                padding: 20px;
+            }
+            
+            .feature-card {
+                padding: 20px;
+            }
+            
+            .step {
+                padding-left: 50px;
+            }
+            
+            .step::before {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+            
+            .app-button {
+                padding: 14px 24px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ヘッダー -->
+        <header class="app-header">
+            <h1>
+                <span class="icon">📊</span>
+                <span>投資収支管理カレンダー</span>
+            </h1>
+            <p class="subtitle">
+                パチンコ・スロットなどの投資的遊戯の収支を、直感的なカレンダーインターフェースで管理。詳細な統計分析とカスタマイズ可能なデザインで、効果的な資金管理を実現します。
+            </p>
+        </header>
+
+        <!-- 主な機能 -->
+        <section class="features-section">
+            <h2 style="text-align: center; color: #2c3e50; margin-bottom: 30px; font-size: 2rem;">🎯 主な機能</h2>
+            <div class="features-grid">
+                <!-- 機能1 -->
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon">📅</div>
+                        <h3>カレンダー表示機能</h3>
+                    </div>
+                    <div class="feature-content">
+                        <ul>
+                            <li>月単位での収支一覧表示</li>
+                            <li>日別収支の色分け表示（緑: 利益 / 赤: 損失）</li>
+                            <li>土日の視覚的区別</li>
+                            <li>カレンダークリックで詳細表示と取引追加</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 機能2 -->
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon">💾</div>
+                        <h3>取引管理機能</h3>
+                    </div>
+                    <div class="feature-content">
+                        <ul>
+                            <li>投資金額・回収金額の記録</li>
+                            <li>機種名・店舗名の登録</li>
+                            <li>取引の追加・編集・削除</li>
+                            <li>エラーデータの自動検出と修復</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 機能3 -->
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon">📈</div>
+                        <h3>統計分析機能</h3>
+                    </div>
+                    <div class="feature-content">
+                        <ul>
+                            <li>年次別収支分析</li>
+                            <li>店舗別収支ランキング</li>
+                            <li>機種別収支ランキング</li>
+                            <li>生涯通算収支計算</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 機能4 -->
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon">🎨</div>
+                        <h3>テーマカスタマイズ</h3>
+                    </div>
+                    <div class="feature-content">
+                        <ul>
+                            <li>6種類のプリセットテーマ</li>
+                            <li>個人カラーカスタマイズ</li>
+                            <li>リアルタイムプレビュー</li>
+                            <li>設定の自動保存</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 機能5 -->
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon">🔍</div>
+                        <h3>データ管理機能</h3>
+                    </div>
+                    <div class="feature-content">
+                        <ul>
+                            <li>ブラウザ自動保存（LocalStorage）</li>
+                            <li>月単位データフィルタリング</li>
+                            <li>データ整合性チェック</li>
+                            <li>簡単なデータエクスポート</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 機能6 -->
+                <div class="feature-card">
+                    <div class="feature-card-header">
+                        <div class="feature-icon">📱</div>
+                        <h3>レスポンシブデザイン</h3>
+                    </div>
+                    <div class="feature-content">
+                        <ul>
+                            <li>PC・タブレット・スマホ対応</li>
+                            <li>直感的なタッチ操作</li>
+                            <li>画面サイズ自動最適化</li>
+                            <li>高速なローディング</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 使用方法 -->
+        <section class="usage-section">
+            <h2>📖 使用方法</h2>
+            <div class="step-by-step">
+                <!-- ステップ1 -->
+                <div class="step">
+                    <h3>1. 取引の登録</h3>
+                    <p><strong>方法1:</strong> カレンダー上の日付をクリック → 「取引を追加」ボタンをクリック</p>
+                    <p><strong>方法2:</strong> 直接カレンダーの日付をダブルクリック</p>
+                    <p>必要な情報を入力してください：投資金額・回収金額・機種名・店舗名（任意）</p>
+                </div>
+
+                <!-- ステップ2 -->
+                <div class="step">
+                    <h3>2. データの閲覧と編集</h3>
+                    <p>取引がある日付をクリックすると、下部に詳細が表示されます。</p>
+                    <p>「編集」ボタンで内容修正、「削除」ボタンで取引を削除できます。</p>
+                </div>
+
+                <!-- ステップ3 -->
+                <div class="step">
+                    <h3>3. 統計情報の確認</h3>
+                    <p>画面右上の「メニュー」ボタンから各種統計情報にアクセスできます。</p>
+                    <p>・年次別収支 ・店舗別収支 ・機種別収支 ・生涯通算収支</p>
+                </div>
+
+                <!-- ステップ4 -->
+                <div class="step">
+                    <h3>4. カスタマイズ</h3>
+                    <p>左側の「🎨」ボタンでテーマカスタマイザーを開きます。</p>
+                    <p>プリセットテーマを選択するか、カラーを個別に設定して「適用」をクリック。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 注意事項 -->
+        <section class="notice-section">
+            <h2><span>⚠️</span> 重要な注意事項</h2>
+            <div class="notice-grid">
+                <div class="notice-item">
+                    <h4><span>💾</span> データ保存について</h4>
+                    <p>データはブラウザのLocalStorageに保存されます。ブラウザのデータを消去すると記録も消去されます。</p>
+                </div>
+                <div class="notice-item">
+                    <h4><span>🔒</span> セキュリティ</h4>
+                    <p>このアプリはローカルで動作するため、サーバーへのデータ送信はありませんが、公衆PCでの利用はお控えください。</p>
+                </div>
+                <div class="notice-item">
+                    <h4><span>📊</span> データバックアップ</h4>
+                    <p>重要なデータは定期的にスクリーンショットやExcel等でバックアップすることをお勧めします。</p>
+                </div>
+                <div class="notice-item">
+                    <h4><span>🎮</span> 責任ある娯楽</h4>
+                    <p>このアプリは資金管理を支援するツールです。予算を設定し、節度ある娯楽を心がけましょう。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ボタンセクション -->
+        <div class="buttons-section">
+            <a href="index.html" class="app-button start">
+                <span>🚀</span>
+                アプリを開始する
+            </a>
+            <button onclick="window.print()" class="app-button" style="margin-left: 15px;">
+                <span>🖨️</span>
+                この説明書を印刷
+            </button>
+        </div>
+
+        <!-- トラブルシューティング -->
+        <section class="usage-section">
+            <h2>🔧 よくあるお問い合わせ</h2>
+            <div class="step-by-step">
+                <div class="step">
+                    <h3>データが表示されない場合</h3>
+                    <p>ブラウザのLocalStorageが有効か確認してください。別のブラウザで試すか、ブラウザの設定を確認してください。</p>
+                </div>
+                <div class="step">
+                    <h3>動作が遅い場合</h3>
+                    <p>データが多い場合は統計表示が遅くなることがあります。不要な取引データを削除するか、「データ修復」機能でエラーデータを削除してください。</p>
+                </div>
+                <div class="step">
+                    <h3>デザインが崩れる場合</h3>
+                    <p>ブラウザを最新版に更新してください。古いブラウザでは正しく表示されない場合があります。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- フッター -->
+        <footer>
+            <p>© 2025 投資収支管理カレンダー - 効果的な資金管理ツール</p>
+            <p style="margin-top: 10px; font-size: 0.9rem;">
+                このアプリケーションは個人向けの資金管理補助ツールです。健康的な娯楽を心がけ、適切な予算設定を行ってご利用ください。
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // 簡単なアニメーション
+        document.addEventListener('DOMContentLoaded', function() {
+            // スクロール時のアニメーション
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // 観察対象の要素を設定
+            const cards = document.querySelectorAll('.feature-card, .usage-section, .notice-section');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+
+            // 印刷ボタン
+            const printButton = document.querySelector('button[onclick="window.print()"]');
+            printButton.addEventListener('click', function() {
+                window.print();
+            });
+
+            // アプリ開始ボタンのアニメーション
+            const startButton = document.querySelector('.app-button.start');
+            startButton.addEventListener('mouseenter', function() {
+                this.querySelector('span').style.transform = 'rotate(20deg)';
+            });
+            startButton.addEventListener('mouseleave', function() {
+                this.querySelector('span').style.transform = 'rotate(0deg)';
+            });
+        });
+    </script>
+</body>
+</html>
