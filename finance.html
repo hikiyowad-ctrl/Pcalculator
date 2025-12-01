@@ -521,94 +521,115 @@
             font-weight: bold;
         }
 
-        /* 着せ替えツール */
-        .theme-customizer {
+        /* テーマ設定モーダル */
+        .theme-modal {
+            display: none;
             position: fixed;
-            top: 50%;
-            left: 20px;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            z-index: 999;
-            min-width: 280px;
-            max-width: 350px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(0,0,0,0.1);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .theme-modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .theme-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .theme-modal-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .theme-close-btn {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--danger-color);
+            cursor: pointer;
+            padding: 0 10px;
+            line-height: 1;
+        }
+
+        .theme-close-btn:hover {
+            color: #d32f2f;
         }
 
         .theme-section {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .theme-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
         }
 
         .theme-section h4 {
-            margin-bottom: 8px;
+            margin-bottom: 15px;
             color: var(--text-color);
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
         }
 
         .color-picker {
             display: flex;
-            gap: 5px;
-            margin-bottom: 8px;
             align-items: center;
+            gap: 15px;
+            margin-bottom: 12px;
         }
 
         .color-picker label {
-            font-size: 0.8rem;
-            min-width: 100px;
+            font-size: 0.9rem;
+            min-width: 120px;
             font-weight: bold;
+            color: var(--text-color);
         }
 
         .color-input {
-            width: 40px;
-            height: 40px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            width: 50px;
+            height: 50px;
             border: 2px solid #eee;
-        }
-
-        .theme-presets {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 5px;
-            margin-top: 10px;
-        }
-
-        .theme-preset {
-            width: 30px;
-            height: 30px;
-            border: 2px solid transparent;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .theme-preset:hover {
-            transform: scale(1.1);
-        }
-
-        .theme-preset.active {
-            border-color: var(--accent-color);
-            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            background: white;
+            padding: 0;
         }
 
         /* カレンダー背景設定 */
         .calendar-bg-controls {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 10px;
+            gap: 15px;
         }
 
         .bg-preview {
             width: 100%;
             height: 150px;
-            border: 2px solid var(--border-color);
-            border-radius: 5px;
+            border: 2px dashed var(--border-color);
+            border-radius: 10px;
             overflow: hidden;
             position: relative;
             background: linear-gradient(45deg, #f8f9fa 25%, #e9ecef 25%, #e9ecef 50%, #f8f9fa 50%, #f8f9fa 75%, #e9ecef 75%, #e9ecef);
@@ -631,19 +652,20 @@
         }
 
         .file-input-button {
-            padding: 12px 15px;
+            padding: 15px;
             background: var(--accent-color);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
-            width: 100%;
             justify-content: center;
-            transition: background-color 0.2s;
+            gap: 10px;
+            width: 100%;
             font-weight: bold;
+            font-size: 1rem;
+            transition: background-color 0.2s;
         }
 
         .file-input-button:hover {
@@ -663,42 +685,41 @@
         .bg-controls {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
         }
 
         .control-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 12px;
         }
 
         .control-row {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .control-label {
-            min-width: 100px;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: bold;
             color: var(--text-color);
         }
 
-        .opacity-control, .scale-control, .position-control {
+        .opacity-control, .scale-control {
             display: flex;
             align-items: center;
-            gap: 8px;
-            flex: 1;
+            gap: 15px;
+            width: 100%;
         }
 
         .opacity-slider, .scale-slider {
             flex: 1;
-            height: 6px;
+            height: 8px;
             -webkit-appearance: none;
             appearance: none;
             background: linear-gradient(to right, #ddd, var(--accent-color));
-            border-radius: 3px;
+            border-radius: 4px;
             outline: none;
         }
 
@@ -706,40 +727,45 @@
         .scale-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             border-radius: 50%;
             background: var(--accent-color);
             cursor: pointer;
-            border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: 3px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
         }
 
         .opacity-value, .scale-value {
-            min-width: 50px;
+            min-width: 60px;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: bold;
             color: var(--text-color);
+        }
+
+        .position-control {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .position-buttons {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 5px;
-            flex: 1;
+            gap: 8px;
         }
 
         .position-btn {
-            padding: 8px;
+            padding: 12px;
             background: #f8f9fa;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             transition: all 0.2s;
         }
 
@@ -754,16 +780,16 @@
         }
 
         .reset-bg-btn, .remove-bg-btn {
-            padding: 10px 12px;
+            padding: 15px;
             background: var(--danger-color);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: bold;
-            flex: 1;
             transition: background-color 0.2s;
+            width: 100%;
         }
 
         .reset-bg-btn {
@@ -781,7 +807,41 @@
         .bg-buttons {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 15px;
+        }
+
+        /* プリセットテーマ */
+        .theme-presets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .theme-preset {
+            width: 100%;
+            aspect-ratio: 1;
+            border: 3px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .theme-preset:hover {
+            transform: scale(1.05);
+        }
+
+        .theme-preset.active {
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .theme-modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
         }
 
         /* モーダル */
@@ -806,6 +866,7 @@
             max-width: 500px;
             max-height: 80vh;
             overflow-y: auto;
+            position: relative;
         }
 
         .form-group {
@@ -927,15 +988,23 @@
             font-size: 1rem;
         }
 
-        /* レスポンシブデザイン */
-        @media (max-width: 768px) {
-            .theme-customizer {
-                left: 10px;
-                right: 10px;
-                min-width: auto;
-                max-width: none;
-            }
+        /* コントロール部分のスタイル */
+        .controls {
+            padding: 15px;
+            background: rgba(248, 249, 250, 0.9);
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(3px);
+        }
 
+        /* レスポンシブデザイン - モバイル最適化 */
+        @media (max-width: 768px) {
             .header {
                 padding: 12px;
             }
@@ -979,13 +1048,61 @@
             .transaction-amount {
                 font-size: 1.1rem;
             }
-            
-            .calendar-bg-controls {
+
+            .theme-modal-content {
+                padding: 20px;
+                width: 95%;
+                max-height: 85vh;
+            }
+
+            .theme-modal-header {
+                margin-bottom: 15px;
+            }
+
+            .theme-modal-title {
+                font-size: 1.3rem;
+            }
+
+            .color-picker {
+                flex-direction: column;
+                align-items: flex-start;
                 gap: 8px;
             }
-            
+
+            .color-picker label {
+                min-width: auto;
+            }
+
+            .color-input {
+                width: 60px;
+                height: 60px;
+            }
+
             .bg-preview {
                 height: 120px;
+            }
+
+            .bg-buttons {
+                flex-direction: column;
+            }
+
+            .opacity-control, .scale-control {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .opacity-slider, .scale-slider {
+                width: 100%;
+            }
+
+            .position-buttons {
+                gap: 6px;
+            }
+
+            .position-btn {
+                padding: 10px;
+                font-size: 1.2rem;
             }
         }
 
@@ -1028,51 +1145,54 @@
                 gap: 5px;
             }
             
-            .calendar-bg-controls {
-                gap: 6px;
-            }
-            
-            .bg-preview {
-                height: 100px;
-            }
-            
-            .bg-controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
             .day-details {
                 max-height: 25vh;
                 padding: 10px;
             }
-            
-            .control-row {
+
+            .theme-modal-content {
+                padding: 15px;
+                border-radius: 10px;
+            }
+
+            .theme-modal-title {
+                font-size: 1.2rem;
+            }
+
+            .theme-close-btn {
+                font-size: 1.8rem;
+            }
+
+            .theme-section h4 {
+                font-size: 1rem;
+            }
+
+            .color-input {
+                width: 50px;
+                height: 50px;
+            }
+
+            .bg-preview {
+                height: 100px;
+            }
+
+            .file-input-button {
+                padding: 12px;
+                font-size: 0.9rem;
+            }
+
+            .opacity-value, .scale-value {
+                min-width: 50px;
+                font-size: 0.9rem;
+            }
+
+            .theme-modal-buttons {
                 flex-direction: column;
-                align-items: flex-start;
             }
-            
-            .control-label {
-                min-width: auto;
-            }
-            
-            .position-buttons {
+
+            .theme-modal-buttons button {
                 width: 100%;
             }
-        }
-        
-        /* コントロール部分のスタイル */
-        .controls {
-            padding: 15px;
-            background: rgba(248, 249, 250, 0.9);
-            border-top: 1px solid var(--border-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0;
-            gap: 15px;
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(3px);
         }
         
         /* モバイル対応の追加スタイル */
@@ -1088,100 +1208,16 @@
                 justify-content: center;
             }
         }
+
+        /* タブレット対応 */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .theme-modal-content {
+                width: 85%;
+            }
+        }
     </style>
 </head>
 <body>
-    <!-- テーマカスタマイザー -->
-    <div class="theme-customizer" id="theme-customizer" style="display: none;">
-        <div class="theme-section">
-            <h4>テーマ設定</h4>
-            <div class="color-picker">
-                <label>メイン色:</label>
-                <input type="color" class="color-input" id="primary-color" value="#2c3e50">
-            </div>
-            <div class="color-picker">
-                <label>アクセント色:</label>
-                <input type="color" class="color-input" id="accent-color" value="#3498db">
-            </div>
-            <div class="color-picker">
-                <label>追加ボタン色:</label>
-                <input type="color" class="color-input" id="add-button-color" value="#27ae60">
-            </div>
-        </div>
-        
-        <div class="theme-section">
-            <h4>カレンダー背景設定</h4>
-            <div class="calendar-bg-controls">
-                <div class="bg-preview" id="bg-preview">
-                    <div id="bg-preview-text">画像が設定されていません</div>
-                    <img id="bg-preview-image" class="bg-preview-image" alt="背景プレビュー">
-                </div>
-                <div class="file-input-wrapper">
-                    <input type="file" id="bg-image-input" accept="image/*">
-                    <button class="file-input-button" id="bg-image-select">
-                        <span>🖼️</span>
-                        <span>背景画像を選択</span>
-                    </button>
-                </div>
-                
-                <div class="control-group">
-                    <div class="control-row">
-                        <span class="control-label">透過度:</span>
-                        <div class="opacity-control">
-                            <input type="range" min="0" max="100" value="70" class="opacity-slider" id="bg-opacity-slider">
-                            <span class="opacity-value" id="bg-opacity-value">70%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="control-row">
-                        <span class="control-label">拡大/縮小:</span>
-                        <div class="scale-control">
-                            <input type="range" min="10" max="500" value="100" class="scale-slider" id="bg-scale-slider">
-                            <span class="scale-value" id="bg-scale-value">100%</span>
-                        </div>
-                    </div>
-                    
-                    <div class="control-row">
-                        <span class="control-label">位置調整:</span>
-                        <div class="position-buttons" id="bg-position-buttons">
-                            <button class="position-btn" data-position="left top">↖</button>
-                            <button class="position-btn" data-position="center top">↑</button>
-                            <button class="position-btn" data-position="right top">↗</button>
-                            <button class="position-btn" data-position="left center">←</button>
-                            <button class="position-btn active" data-position="center center">◎</button>
-                            <button class="position-btn" data-position="right center">→</button>
-                            <button class="position-btn" data-position="left bottom">↙</button>
-                            <button class="position-btn" data-position="center bottom">↓</button>
-                            <button class="position-btn" data-position="right bottom">↘</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="bg-buttons">
-                    <button class="reset-bg-btn" id="reset-bg-btn">設定リセット</button>
-                    <button class="remove-bg-btn" id="remove-bg-btn">背景削除</button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="theme-section">
-            <h4>プリセットテーマ</h4>
-            <div class="theme-presets">
-                <div class="theme-preset active" style="background: linear-gradient(135deg, #667eea, #764ba2);" data-theme="default"></div>
-                <div class="theme-preset" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);" data-theme="sunset"></div>
-                <div class="theme-preset" style="background: linear-gradient(135deg, #00d2ff, #3a7bd5);" data-theme="ocean"></div>
-                <div class="theme-preset" style="background: linear-gradient(135deg, #a8ff78, #78ffd6);" data-theme="forest"></div>
-                <div class="theme-preset" style="background: linear-gradient(135deg, #ff9a9e, #fecfef);" data-theme="cherry"></div>
-                <div class="theme-preset" style="background: linear-gradient(135deg, #4facfe, #00f2fe);" data-theme="sky"></div>
-            </div>
-        </div>
-        
-        <div class="form-buttons">
-            <button class="cancel-btn" id="reset-theme">リセット</button>
-            <button class="save-btn" id="save-theme">適用</button>
-        </div>
-    </div>
-
     <!-- サイドメニュー -->
     <div class="side-menu" id="side-menu">
         <div class="menu-header">
@@ -1198,6 +1234,108 @@
             <div class="menu-item" id="import-backup">バックアップから復元</div>
             <div class="menu-item" id="show-current-month">当月表示</div>
             <div class="menu-item" id="customize-theme">テーマ設定</div>
+        </div>
+    </div>
+
+    <!-- テーマ設定モーダル -->
+    <div class="theme-modal" id="theme-modal">
+        <div class="theme-modal-content">
+            <div class="theme-modal-header">
+                <div class="theme-modal-title">テーマ設定</div>
+                <button class="theme-close-btn" id="theme-close-btn">×</button>
+            </div>
+            
+            <div class="theme-section">
+                <h4>カラー設定</h4>
+                <div class="color-picker">
+                    <label for="primary-color">メイン色:</label>
+                    <input type="color" class="color-input" id="primary-color" value="#2c3e50">
+                </div>
+                <div class="color-picker">
+                    <label for="accent-color">アクセント色:</label>
+                    <input type="color" class="color-input" id="accent-color" value="#3498db">
+                </div>
+                <div class="color-picker">
+                    <label for="add-button-color">追加ボタン色:</label>
+                    <input type="color" class="color-input" id="add-button-color" value="#27ae60">
+                </div>
+            </div>
+            
+            <div class="theme-section">
+                <h4>プリセットテーマ</h4>
+                <div class="theme-presets">
+                    <div class="theme-preset active" style="background: linear-gradient(135deg, #667eea, #764ba2);" data-theme="default"></div>
+                    <div class="theme-preset" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);" data-theme="sunset"></div>
+                    <div class="theme-preset" style="background: linear-gradient(135deg, #00d2ff, #3a7bd5);" data-theme="ocean"></div>
+                    <div class="theme-preset" style="background: linear-gradient(135deg, #a8ff78, #78ffd6);" data-theme="forest"></div>
+                    <div class="theme-preset" style="background: linear-gradient(135deg, #ff9a9e, #fecfef);" data-theme="cherry"></div>
+                    <div class="theme-preset" style="background: linear-gradient(135deg, #4facfe, #00f2fe);" data-theme="sky"></div>
+                </div>
+            </div>
+            
+            <div class="theme-section">
+                <h4>カレンダー背景設定</h4>
+                <div class="calendar-bg-controls">
+                    <div class="bg-preview" id="bg-preview">
+                        <div id="bg-preview-text">画像が設定されていません</div>
+                        <img id="bg-preview-image" class="bg-preview-image" alt="背景プレビュー">
+                    </div>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="bg-image-input" accept="image/*">
+                        <button class="file-input-button" id="bg-image-select">
+                            <span>🖼️</span>
+                            <span>背景画像を選択</span>
+                        </button>
+                    </div>
+                    
+                    <div class="bg-controls">
+                        <div class="control-group">
+                            <div class="control-row">
+                                <span class="control-label">透過度:</span>
+                                <div class="opacity-control">
+                                    <input type="range" min="0" max="100" value="70" class="opacity-slider" id="bg-opacity-slider">
+                                    <span class="opacity-value" id="bg-opacity-value">70%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="control-row">
+                                <span class="control-label">拡大/縮小:</span>
+                                <div class="scale-control">
+                                    <input type="range" min="10" max="500" value="100" class="scale-slider" id="bg-scale-slider">
+                                    <span class="scale-value" id="bg-scale-value">100%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="control-row">
+                                <span class="control-label">位置調整:</span>
+                                <div class="position-control">
+                                    <div class="position-buttons" id="bg-position-buttons">
+                                        <button class="position-btn" data-position="left top">↖</button>
+                                        <button class="position-btn" data-position="center top">↑</button>
+                                        <button class="position-btn" data-position="right top">↗</button>
+                                        <button class="position-btn" data-position="left center">←</button>
+                                        <button class="position-btn active" data-position="center center">◎</button>
+                                        <button class="position-btn" data-position="right center">→</button>
+                                        <button class="position-btn" data-position="left bottom">↙</button>
+                                        <button class="position-btn" data-position="center bottom">↓</button>
+                                        <button class="position-btn" data-position="right bottom">↘</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-buttons">
+                            <button class="reset-bg-btn" id="reset-bg-btn">設定リセット</button>
+                            <button class="remove-bg-btn" id="remove-bg-btn">背景削除</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="theme-modal-buttons">
+                <button class="cancel-btn" id="reset-theme">リセット</button>
+                <button class="save-btn" id="save-theme">適用</button>
+            </div>
         </div>
     </div>
 
@@ -1528,8 +1666,8 @@
                     addButton: addButtonColor
                 }));
                 
-                // 適用後、カスタマイザーを閉じる
-                this.toggleThemeCustomizer();
+                // 適用後、モーダルを閉じる
+                this.closeThemeModal();
             }
 
             // カレンダー背景画像の設定
@@ -1737,9 +1875,14 @@
                 document.getElementById('main-container').classList.remove('menu-open');
             }
 
-            toggleThemeCustomizer() {
-                const customizer = document.getElementById('theme-customizer');
-                customizer.style.display = customizer.style.display === 'none' ? 'block' : 'none';
+            openThemeModal() {
+                document.getElementById('theme-modal').style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            closeThemeModal() {
+                document.getElementById('theme-modal').style.display = 'none';
+                document.body.style.overflow = 'auto';
             }
 
             // カレンダー表示
@@ -2386,10 +2529,15 @@
                     this.closeMenu();
                 });
 
-                // テーマ変更（ハンバーガーメニューから）
+                // テーマ設定モーダル
                 document.getElementById('customize-theme').addEventListener('click', () => {
-                    this.toggleThemeCustomizer();
+                    this.openThemeModal();
                     this.closeMenu();
+                });
+
+                // テーマモーダル閉じるボタン
+                document.getElementById('theme-close-btn').addEventListener('click', () => {
+                    this.closeThemeModal();
                 });
 
                 // メニュー外クリックで閉じる
@@ -2408,6 +2556,7 @@
 
                 document.getElementById('reset-theme').addEventListener('click', () => {
                     this.applyTheme('default');
+                    this.closeThemeModal();
                 });
 
                 // プリセットテーマのクリックイベント
@@ -2590,9 +2739,8 @@
                         document.getElementById('transaction-modal').style.display = 'none';
                         form.reset();
                     }
-                    // テーマカスタマイザー外クリックで閉じる
-                    if (!e.target.closest('.theme-customizer') && e.target.id !== 'customize-theme') {
-                        document.getElementById('theme-customizer').style.display = 'none';
+                    if (e.target.classList.contains('theme-modal')) {
+                        this.closeThemeModal();
                     }
                 });
 
