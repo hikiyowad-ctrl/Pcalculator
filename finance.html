@@ -11,9 +11,23 @@
             box-sizing: border-box;
         }
 
+        :root {
+            /* デフォルトテーマ */
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-color: #2c3e50;
+            --card-bg: white;
+            --border-color: #bdc3c7;
+        }
+
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--background-gradient);
             height: 100vh;
             overflow: hidden;
         }
@@ -21,7 +35,7 @@
         .container {
             width: 100vw;
             height: 100vh;
-            background: white;
+            background: var(--card-bg);
             display: flex;
             flex-direction: column;
             transition: transform 0.3s ease;
@@ -33,7 +47,7 @@
 
         /* ヘッダー */
         .header {
-            background: #2c3e50;
+            background: var(--primary-color);
             color: white;
             padding: 15px;
             text-align: center;
@@ -79,12 +93,12 @@
         .total-amount {
             font-size: 2.2rem;
             font-weight: bold;
-            color: #27ae60;
+            color: var(--success-color);
         }
 
         .nav-btn {
             padding: 8px 16px;
-            background: #3498db;
+            background: var(--accent-color);
             color: white;
             border: none;
             border-radius: 5px;
@@ -97,14 +111,14 @@
             background: #2980b9;
         }
 
-        /* サイドメニュー - 右側に変更 */
+        /* サイドメニュー */
         .side-menu {
             position: fixed;
             top: 0;
             right: -250px;
             width: 250px;
             height: 100vh;
-            background: #2c3e50;
+            background: var(--primary-color);
             color: white;
             transition: right 0.3s ease;
             z-index: 1001;
@@ -117,7 +131,7 @@
 
         .menu-header {
             padding: 20px;
-            background: #34495e;
+            background: var(--secondary-color);
             border-bottom: 1px solid #4a6572;
             display: flex;
             justify-content: space-between;
@@ -151,14 +165,14 @@
             padding: 15px 20px;
             color: #ecf0f1;
             text-decoration: none;
-            border-bottom: 1px solid #34495e;
+            border-bottom: 1px solid var(--secondary-color);
             transition: background-color 0.2s;
             cursor: pointer;
             font-size: 1rem;
         }
 
         .menu-item:hover {
-            background: #34495e;
+            background: var(--secondary-color);
         }
 
         .menu-item:last-child {
@@ -166,7 +180,7 @@
         }
 
         .menu-toggle {
-            background: #3498db;
+            background: var(--accent-color);
             color: white;
             border: none;
             border-radius: 5px;
@@ -191,7 +205,7 @@
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             grid-template-rows: auto repeat(6, 1fr);
-            border: 1px solid #bdc3c7;
+            border: 1px solid var(--border-color);
             overflow: hidden;
             flex: 1;
             min-height: 0;
@@ -202,10 +216,10 @@
         .weekday {
             padding: 10px 5px;
             text-align: center;
-            background: #34495e;
+            background: var(--secondary-color);
             color: white;
             font-weight: bold;
-            border-right: 1px solid #2c3e50;
+            border-right: 1px solid var(--primary-color);
             font-size: 0.9rem;
         }
 
@@ -229,12 +243,12 @@
 
         .day.selected {
             background: #e3f2fd !important;
-            border: 2px solid #2196f3;
+            border: 2px solid var(--accent-color);
         }
 
         .day.has-error {
             background: #ffebee !important;
-            border: 1px solid #f44336;
+            border: 1px solid var(--danger-color);
         }
 
         .day:nth-child(7n) {
@@ -269,11 +283,11 @@
         }
 
         .day.sunday .day-number {
-            color: #e74c3c;
+            color: var(--danger-color);
         }
 
         .day.saturday .day-number {
-            color: #3498db;
+            color: var(--accent-color);
         }
 
         .daily-total {
@@ -287,11 +301,11 @@
         }
 
         .daily-total.income {
-            color: #27ae60;
+            color: var(--success-color);
         }
 
         .daily-total.expense {
-            color: #e74c3c;
+            color: var(--danger-color);
         }
 
         .daily-total.zero {
@@ -299,7 +313,7 @@
         }
 
         .daily-total.error {
-            color: #f44336;
+            color: var(--danger-color);
             font-size: 0.7rem;
         }
 
@@ -307,7 +321,7 @@
         .day-details {
             padding: 15px;
             background: #f8f9fa;
-            border-top: 1px solid #bdc3c7;
+            border-top: 1px solid var(--border-color);
             flex-shrink: 0;
             max-height: 30vh;
             overflow-y: auto;
@@ -315,7 +329,7 @@
 
         .day-details h3 {
             margin-bottom: 10px;
-            color: #2c3e50;
+            color: var(--text-color);
         }
 
         .transaction-list {
@@ -334,7 +348,7 @@
         }
 
         .transaction-item.has-error {
-            border-color: #f44336;
+            border-color: var(--danger-color);
             background: #ffebee;
         }
 
@@ -345,15 +359,15 @@
         }
 
         .transaction-amount.positive {
-            color: #27ae60;
+            color: var(--success-color);
         }
 
         .transaction-amount.negative {
-            color: #e74c3c;
+            color: var(--danger-color);
         }
 
         .transaction-amount.error {
-            color: #f44336;
+            color: var(--danger-color);
         }
 
         .transaction-details {
@@ -363,7 +377,7 @@
         }
 
         .transaction-machine {
-            color: #3498db;
+            color: var(--accent-color);
             font-weight: bold;
             font-size: 1rem;
             margin-bottom: 3px;
@@ -383,7 +397,7 @@
             gap: 8px;
         }
 
-        /* 編集ボタンと削除ボタンを大きく改善 */
+        /* ボタン */
         .edit-btn, .delete-btn {
             color: white;
             border: none;
@@ -401,7 +415,7 @@
         }
 
         .edit-btn {
-            background: #3498db;
+            background: var(--accent-color);
         }
 
         .edit-btn:hover {
@@ -411,7 +425,7 @@
         }
 
         .delete-btn {
-            background: #f44336;
+            background: var(--danger-color);
         }
 
         .delete-btn:hover {
@@ -420,42 +434,9 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
-        .edit-btn:active, .delete-btn:active {
-            transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .no-transactions {
-            text-align: center;
-            color: #7f8c8d;
-            font-style: italic;
-            padding: 20px;
-            font-size: 1.1rem;
-        }
-
-        .error-notice {
-            background: #ffebee;
-            border: 1px solid #f44336;
-            border-radius: 5px;
-            padding: 12px;
-            margin: 10px 0;
-            color: #c62828;
-            font-size: 1rem;
-        }
-
-        /* コントロール */
-        .controls {
-            display: flex;
-            justify-content: center;
-            padding: 15px;
-            background: #ecf0f1;
-            border-top: 1px solid #bdc3c7;
-            flex-shrink: 0;
-        }
-
         .add-btn {
             padding: 12px 20px;
-            background: #27ae60;
+            background: var(--success-color);
             color: white;
             border: none;
             border-radius: 5px;
@@ -469,48 +450,114 @@
             background: #219a52;
         }
 
-        /* モーダル */
-        .month-picker-modal, .stats-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .month-picker-content, .stats-content {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-
-        .month-picker select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #bdc3c7;
+        .save-btn {
+            padding: 12px 20px;
+            background: var(--success-color);
+            color: white;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
             font-size: 1rem;
+            font-weight: bold;
         }
 
-        .month-picker-buttons {
+        .cancel-btn {
+            padding: 12px 20px;
+            background: #95a5a6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* 着せ替えツール */
+        .theme-customizer {
+            position: fixed;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 999;
+            min-width: 200px;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 0 10px 10px 0;
+            padding: 10px 15px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+        }
+
+        .theme-section {
+            margin-bottom: 15px;
+        }
+
+        .theme-section h4 {
+            margin-bottom: 8px;
+            color: var(--text-color);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .color-picker {
             display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 15px;
+            gap: 5px;
+            margin-bottom: 8px;
+            align-items: center;
         }
 
-        .modal {
+        .color-picker label {
+            font-size: 0.8rem;
+            min-width: 60px;
+        }
+
+        .color-input {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .theme-presets {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .theme-preset {
+            width: 30px;
+            height: 30px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .theme-preset:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-preset.active {
+            border-color: var(--accent-color);
+        }
+
+        /* モーダル */
+        .month-picker-modal, .stats-modal, .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -523,7 +570,7 @@
             z-index: 1000;
         }
 
-        .modal-content {
+        .month-picker-content, .stats-content, .modal-content {
             background: white;
             padding: 25px;
             border-radius: 10px;
@@ -547,7 +594,7 @@
         .form-group input, .form-group select {
             width: 100%;
             padding: 10px;
-            border: 1px solid #bdc3c7;
+            border: 1px solid var(--border-color);
             border-radius: 5px;
             font-size: 1rem;
         }
@@ -559,28 +606,6 @@
             margin-top: 20px;
         }
 
-        .save-btn {
-            padding: 12px 20px;
-            background: #27ae60;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .cancel-btn {
-            padding: 12px 20px;
-            background: #95a5a6;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
         /* 統計表示 */
         .stats-section {
             margin-bottom: 20px;
@@ -588,9 +613,9 @@
         }
 
         .stats-section h3 {
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 10px;
-            border-bottom: 2px solid #3498db;
+            border-bottom: 2px solid var(--accent-color);
             padding-bottom: 5px;
         }
 
@@ -611,7 +636,7 @@
         .year-stat-year, .shop-stat-name, .machine-stat-name {
             font-weight: bold;
             font-size: 1.1rem;
-            color: #2c3e50;
+            color: var(--text-color);
             margin-bottom: 5px;
         }
 
@@ -621,15 +646,15 @@
         }
 
         .year-stat-amount.positive, .shop-stat-amount.positive, .machine-stat-amount.positive {
-            color: #27ae60;
+            color: var(--success-color);
         }
 
         .year-stat-amount.negative, .shop-stat-amount.negative, .machine-stat-amount.negative {
-            color: #e74c3c;
+            color: var(--danger-color);
         }
 
         .lifetime-stats {
-            background: #2c3e50;
+            background: var(--primary-color);
             color: white;
             padding: 20px;
             border-radius: 8px;
@@ -643,14 +668,43 @@
         }
 
         .lifetime-amount.positive {
-            color: #27ae60;
+            color: var(--success-color);
         }
 
         .lifetime-amount.negative {
-            color: #e74c3c;
+            color: var(--danger-color);
         }
 
+        .no-transactions {
+            text-align: center;
+            color: #7f8c8d;
+            font-style: italic;
+            padding: 20px;
+            font-size: 1.1rem;
+        }
+
+        .error-notice {
+            background: #ffebee;
+            border: 1px solid var(--danger-color);
+            border-radius: 5px;
+            padding: 12px;
+            margin: 10px 0;
+            color: #c62828;
+            font-size: 1rem;
+        }
+
+        /* レスポンシブデザイン */
         @media (max-width: 768px) {
+            .theme-customizer {
+                left: 10px;
+                right: 10px;
+                min-width: auto;
+            }
+            
+            .theme-toggle {
+                padding: 8px 12px;
+            }
+
             .header {
                 padding: 12px;
             }
@@ -673,9 +727,6 @@
             .daily-total {
                 font-size: 0.7rem;
             }
-            .year-stats, .shop-stats, .machine-stats {
-                grid-template-columns: 1fr;
-            }
             .side-menu {
                 width: 280px;
                 right: -280px;
@@ -684,7 +735,6 @@
                 transform: translateX(-280px);
             }
             
-            /* モバイル用にボタンを調整 */
             .edit-btn, .delete-btn {
                 padding: 8px 12px;
                 font-size: 0.9rem;
@@ -726,7 +776,6 @@
                 gap: 10px;
             }
             
-            /* さらに小さい画面用に調整 */
             .edit-btn, .delete-btn {
                 padding: 6px 10px;
                 font-size: 0.8rem;
@@ -742,7 +791,48 @@
     </style>
 </head>
 <body>
-    <!-- サイドメニュー - 右側に変更 -->
+    <!-- 着せ替えツール -->
+    <button class="theme-toggle" id="theme-toggle">🎨</button>
+    <div class="theme-customizer" id="theme-customizer" style="display: none;">
+        <div class="theme-section">
+            <h4>テーマカスタマイズ</h4>
+            <div class="color-picker">
+                <label>メイン色:</label>
+                <input type="color" class="color-input" id="primary-color" value="#2c3e50">
+            </div>
+            <div class="color-picker">
+                <label>アクセント:</label>
+                <input type="color" class="color-input" id="accent-color" value="#3498db">
+            </div>
+            <div class="color-picker">
+                <label>成功色:</label>
+                <input type="color" class="color-input" id="success-color" value="#27ae60">
+            </div>
+            <div class="color-picker">
+                <label>背景:</label>
+                <input type="color" class="color-input" id="bg-color" value="#667eea">
+            </div>
+        </div>
+        
+        <div class="theme-section">
+            <h4>プリセットテーマ</h4>
+            <div class="theme-presets">
+                <div class="theme-preset active" style="background: linear-gradient(135deg, #667eea, #764ba2);" data-theme="default"></div>
+                <div class="theme-preset" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);" data-theme="sunset"></div>
+                <div class="theme-preset" style="background: linear-gradient(135deg, #00d2ff, #3a7bd5);" data-theme="ocean"></div>
+                <div class="theme-preset" style="background: linear-gradient(135deg, #a8ff78, #78ffd6);" data-theme="forest"></div>
+                <div class="theme-preset" style="background: linear-gradient(135deg, #ff9a9e, #fecfef);" data-theme="cherry"></div>
+                <div class="theme-preset" style="background: linear-gradient(135deg, #4facfe, #00f2fe);" data-theme="sky"></div>
+            </div>
+        </div>
+        
+        <div class="form-buttons">
+            <button class="cancel-btn" id="reset-theme">リセット</button>
+            <button class="save-btn" id="save-theme">適用</button>
+        </div>
+    </div>
+
+    <!-- サイドメニュー -->
     <div class="side-menu" id="side-menu">
         <div class="menu-header">
             <div class="menu-title">メニュー</div>
@@ -755,13 +845,14 @@
             <div class="menu-item" id="show-shop-stats">店舗別収支</div>
             <div class="menu-item" id="show-machine-stats">機種別収支</div>
             <div class="menu-item" id="show-current-month">当月表示</div>
+            <div class="menu-item" id="customize-theme">テーマ変更</div>
         </div>
     </div>
 
     <div class="container" id="main-container">
         <div class="header">
             <div class="header-content">
-                <div style="width: 80px;"></div> <!-- 左側のスペーサー -->
+                <div style="width: 80px;"></div>
                 
                 <div class="header-title">
                     <div class="month-year" id="current-month">2025年11月</div>
@@ -787,13 +878,10 @@
                 <div class="weekday">木</div>
                 <div class="weekday">金</div>
                 <div class="weekday">土</div>
-                <!-- 日付はJavaScriptで動的に追加されます -->
             </div>
         </div>
 
-        <div class="day-details" id="day-details">
-            <!-- 日別詳細はJavaScriptで動的に追加されます -->
-        </div>
+        <div class="day-details" id="day-details"></div>
 
         <div class="controls">
             <button class="add-btn" id="add-transaction">取引を追加</button>
@@ -820,9 +908,7 @@
     <div class="stats-modal" id="stats-modal">
         <div class="stats-content">
             <h3 id="stats-title">統計情報</h3>
-            <div id="stats-content">
-                <!-- 統計内容がここに表示されます -->
-            </div>
+            <div id="stats-content"></div>
             <div class="form-buttons">
                 <button class="cancel-btn" id="close-stats">閉じる</button>
             </div>
@@ -864,22 +950,133 @@
     </div>
 
     <script>
-        // シンプルなFinanceCalendarクラス
         class FinanceCalendar {
             constructor() {
                 this.currentDate = new Date();
-                this.currentDate.setDate(1); // 月の最初の日に設定
+                this.currentDate.setDate(1);
                 this.selectedDate = null;
                 this.transactions = JSON.parse(localStorage.getItem('financeTransactions')) || [];
                 this.editingTransactionId = null;
+                this.currentTheme = JSON.parse(localStorage.getItem('appTheme')) || 'default';
                 this.init();
             }
 
             init() {
+                this.applyTheme(this.currentTheme);
                 this.renderCalendar();
                 this.setupEventListeners();
                 this.populateMonthPicker();
                 console.log('FinanceCalendar initialized');
+            }
+
+            // テーマ関連のメソッド
+            applyTheme(themeName) {
+                const themes = {
+                    default: {
+                        primary: '#2c3e50',
+                        secondary: '#34495e',
+                        accent: '#3498db',
+                        success: '#27ae60',
+                        danger: '#e74c3c',
+                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                    },
+                    sunset: {
+                        primary: '#c44569',
+                        secondary: '#e66767',
+                        accent: '#f19066',
+                        success: '#78e08f',
+                        danger: '#e55039',
+                        background: 'linear-gradient(135deg, #ff6b6b, #ee5a24)'
+                    },
+                    ocean: {
+                        primary: '#0c2461',
+                        secondary: '#1e3799',
+                        accent: '#4a69bd',
+                        success: '#38ada9',
+                        danger: '#eb2f06',
+                        background: 'linear-gradient(135deg, #00d2ff, #3a7bd5)'
+                    },
+                    forest: {
+                        primary: '#1e272e',
+                        secondary: '#485460',
+                        accent: '#05c46b',
+                        success: '#0be881',
+                        danger: '#ff3f34',
+                        background: 'linear-gradient(135deg, #a8ff78, #78ffd6)'
+                    },
+                    cherry: {
+                        primary: '#6D214F',
+                        secondary: '#B33771',
+                        accent: '#FC427B',
+                        success: '#58B19F',
+                        danger: '#E74292',
+                        background: 'linear-gradient(135deg, #ff9a9e, #fecfef)'
+                    },
+                    sky: {
+                        primary: '#2C3A47',
+                        secondary: '#3B3B98',
+                        accent: '#25CCF7',
+                        success: '#1B9CFC',
+                        danger: '#FD7272',
+                        background: 'linear-gradient(135deg, #4facfe, #00f2fe)'
+                    }
+                };
+
+                const theme = themes[themeName] || themes.default;
+                
+                document.documentElement.style.setProperty('--primary-color', theme.primary);
+                document.documentElement.style.setProperty('--secondary-color', theme.secondary);
+                document.documentElement.style.setProperty('--accent-color', theme.accent);
+                document.documentElement.style.setProperty('--success-color', theme.success);
+                document.documentElement.style.setProperty('--danger-color', theme.danger);
+                document.documentElement.style.setProperty('--background-gradient', theme.background);
+
+                document.getElementById('primary-color').value = theme.primary;
+                document.getElementById('accent-color').value = theme.accent;
+                document.getElementById('success-color').value = theme.success;
+
+                document.querySelectorAll('.theme-preset').forEach(preset => {
+                    preset.classList.remove('active');
+                    if (preset.dataset.theme === themeName) {
+                        preset.classList.add('active');
+                    }
+                });
+
+                this.currentTheme = themeName;
+                localStorage.setItem('appTheme', JSON.stringify(themeName));
+            }
+
+            applyCustomTheme() {
+                const primaryColor = document.getElementById('primary-color').value;
+                const accentColor = document.getElementById('accent-color').value;
+                const successColor = document.getElementById('success-color').value;
+                const bgColor = document.getElementById('bg-color').value;
+
+                document.documentElement.style.setProperty('--primary-color', primaryColor);
+                document.documentElement.style.setProperty('--accent-color', accentColor);
+                document.documentElement.style.setProperty('--success-color', successColor);
+                document.documentElement.style.setProperty('--background-gradient', 
+                    `linear-gradient(135deg, ${bgColor} 0%, ${this.darkenColor(bgColor, 20)} 100%)`);
+
+                this.currentTheme = 'custom';
+                localStorage.setItem('appTheme', JSON.stringify('custom'));
+                localStorage.setItem('customTheme', JSON.stringify({
+                    primary: primaryColor,
+                    accent: accentColor,
+                    success: successColor,
+                    background: bgColor
+                }));
+            }
+
+            darkenColor(color, percent) {
+                const num = parseInt(color.slice(1), 16);
+                const amt = Math.round(2.55 * percent);
+                const R = (num >> 16) - amt;
+                const G = (num >> 8 & 0x00FF) - amt;
+                const B = (num & 0x0000FF) - amt;
+                return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
+                    (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
+                    (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
             }
 
             // メニュー操作
@@ -891,6 +1088,11 @@
             closeMenu() {
                 document.getElementById('side-menu').classList.remove('open');
                 document.getElementById('main-container').classList.remove('menu-open');
+            }
+
+            toggleThemeCustomizer() {
+                const customizer = document.getElementById('theme-customizer');
+                customizer.style.display = customizer.style.display === 'none' ? 'block' : 'none';
             }
 
             // カレンダー表示
@@ -1093,11 +1295,9 @@
 
             // 取引編集
             editTransaction(index, dateStr) {
-                // 該当する日付の取引をすべて取得
                 const dailyTransactions = this.transactions.filter(t => t.date === dateStr);
                 const transaction = dailyTransactions[index];
                 
-                // モーダルを編集モードで表示
                 document.getElementById('transaction-modal-title').textContent = '取引を編集';
                 document.getElementById('edit-transaction-id').value = this.transactions.indexOf(transaction);
                 document.getElementById('transaction-date').value = transaction.date;
@@ -1109,7 +1309,7 @@
                 document.getElementById('transaction-modal').style.display = 'flex';
             }
 
-            // 取引保存（新規追加と編集の両方に対応）
+            // 取引保存
             saveTransaction(investmentAmount, returnAmount, machineName, shopName) {
                 const date = document.getElementById('transaction-date').value;
                 const editId = document.getElementById('edit-transaction-id').value;
@@ -1124,11 +1324,9 @@
                 };
                 
                 if (editId !== '') {
-                    // 編集モード
                     const index = parseInt(editId);
                     this.transactions[index] = transactionData;
                 } else {
-                    // 新規追加モード
                     this.transactions.push(transactionData);
                 }
                 
@@ -1137,10 +1335,8 @@
 
             // 取引削除
             deleteTransaction(index, dateStr) {
-                // 該当する日付の取引をすべて取得
                 const dailyTransactions = this.transactions.filter(t => t.date === dateStr);
                 
-                // グローバルなインデックスを見つける
                 let globalIndex = -1;
                 let count = 0;
                 for (let i = 0; i < this.transactions.length; i++) {
@@ -1171,7 +1367,6 @@
                 const yearSelect = document.getElementById('year-select');
                 const monthSelect = document.getElementById('month-select');
                 
-                // 年リスト（2020-2030）
                 for (let year = 2020; year <= 2030; year++) {
                     const option = document.createElement('option');
                     option.value = year;
@@ -1182,7 +1377,6 @@
                     yearSelect.appendChild(option);
                 }
                 
-                // 月リスト
                 for (let month = 0; month < 12; month++) {
                     const option = document.createElement('option');
                     option.value = month;
@@ -1429,6 +1623,11 @@
                     this.closeMenu();
                 });
 
+                document.getElementById('customize-theme').addEventListener('click', () => {
+                    this.toggleThemeCustomizer();
+                    this.closeMenu();
+                });
+
                 // メニュー外クリックで閉じる
                 document.addEventListener('click', (e) => {
                     const sideMenu = document.getElementById('side-menu');
@@ -1436,6 +1635,29 @@
                     if (!sideMenu.contains(e.target) && !menuToggle.contains(e.target)) {
                         this.closeMenu();
                     }
+                });
+
+                // テーマ関連のイベントリスナー
+                document.getElementById('theme-toggle').addEventListener('click', () => {
+                    this.toggleThemeCustomizer();
+                });
+
+                document.getElementById('save-theme').addEventListener('click', () => {
+                    this.applyCustomTheme();
+                    this.toggleThemeCustomizer();
+                });
+
+                document.getElementById('reset-theme').addEventListener('click', () => {
+                    this.applyTheme('default');
+                    this.toggleThemeCustomizer();
+                });
+
+                // プリセットテーマのクリックイベント
+                document.querySelectorAll('.theme-preset').forEach(preset => {
+                    preset.addEventListener('click', () => {
+                        const themeName = preset.dataset.theme;
+                        this.applyTheme(themeName);
+                    });
                 });
 
                 // 統計モーダルを閉じる
@@ -1554,7 +1776,6 @@
                         
                         if (this.selectedDate && 
                             this.formatDate(this.selectedDate) === dateStr) {
-                            // 同じ日を再度クリックした場合は取引追加モーダルを表示
                             document.getElementById('transaction-modal-title').textContent = '投資取引を追加';
                             document.getElementById('edit-transaction-id').value = '';
                             document.getElementById('transaction-date').value = dateStr;
@@ -1564,7 +1785,6 @@
                             document.getElementById('shop-name').value = '';
                             modal.style.display = 'flex';
                         } else {
-                            // 新しい日を選択した場合は詳細を表示
                             this.selectedDate = new Date(dateStr);
                             this.renderCalendar();
                             this.showDayDetails(dateStr);
