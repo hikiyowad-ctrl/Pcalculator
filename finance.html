@@ -16,13 +16,17 @@
             --primary-color: #2c3e50;
             --secondary-color: #34495e;
             --accent-color: #3498db;
-            --add-button-color: #27ae60; /* 成功色から追加ボタン色に変更 */
+            --add-button-color: #27ae60;
             --danger-color: #e74c3c;
             --warning-color: #f39c12;
             --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --text-color: #2c3e50;
             --card-bg: white;
             --border-color: #bdc3c7;
+            --calendar-bg-opacity: 0.7; /* 背景透過率を大幅に上げる */
+            --calendar-bg-image: none;
+            --calendar-bg-size: cover;
+            --calendar-bg-position: center;
         }
 
         body {
@@ -93,7 +97,7 @@
         .total-amount {
             font-size: 2.2rem;
             font-weight: bold;
-            color: var(--add-button-color); /* 追加ボタン色を使用 */
+            color: var(--add-button-color);
         }
 
         .nav-btn {
@@ -199,6 +203,23 @@
             flex-direction: column;
             min-height: 0;
             padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calendar-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: var(--calendar-bg-size);
+            background-position: var(--calendar-bg-position);
+            background-repeat: no-repeat;
+            opacity: var(--calendar-bg-opacity);
+            z-index: 0;
+            transition: all 0.3s ease;
+            background-image: var(--calendar-bg-image, none);
         }
 
         .calendar-main {
@@ -211,16 +232,20 @@
             min-height: 0;
             width: 100%;
             height: 100%;
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.7); /* セルの透明度を下げて背景をより見やすく */
         }
 
         .weekday {
             padding: 10px 5px;
             text-align: center;
-            background: var(--secondary-color);
+            background: rgba(52, 73, 94, 0.85); /* 背景色を少し濃く */
             color: white;
             font-weight: bold;
             border-right: 1px solid var(--primary-color);
             font-size: 0.9rem;
+            backdrop-filter: blur(2px);
         }
 
         .weekday:last-child {
@@ -229,25 +254,26 @@
 
         .day {
             padding: 5px;
-            border-right: 1px solid #ecf0f1;
-            border-bottom: 1px solid #ecf0f1;
+            border-right: 1px solid rgba(236, 240, 241, 0.7);
+            border-bottom: 1px solid rgba(236, 240, 241, 0.7);
             position: relative;
             cursor: pointer;
             transition: background-color 0.2s;
-            background: white;
+            background: rgba(255, 255, 255, 0.75); /* セルの背景透過を調整 */
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             min-height: 0;
+            backdrop-filter: blur(1px);
         }
 
         .day.selected {
-            background: #e3f2fd !important;
+            background: rgba(227, 242, 253, 0.9) !important;
             border: 2px solid var(--accent-color);
         }
 
         .day.has-error {
-            background: #ffebee !important;
+            background: rgba(255, 235, 238, 0.9) !important;
             border: 1px solid var(--danger-color);
         }
 
@@ -260,26 +286,28 @@
         }
 
         .day:hover {
-            background: #f8f9fa;
+            background: rgba(248, 249, 250, 0.85);
         }
 
         .day.empty {
-            background: #f8f9fa;
+            background: rgba(248, 249, 250, 0.6);
             cursor: default;
         }
 
         .day.sunday {
-            background: #fff5f5;
+            background: rgba(255, 245, 245, 0.8);
         }
 
         .day.saturday {
-            background: #f0f8ff;
+            background: rgba(240, 248, 255, 0.8);
         }
 
         .day-number {
             font-size: 0.85rem;
             font-weight: bold;
             line-height: 1;
+            color: var(--text-color);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); /* 文字を背景から浮き立たせる */
         }
 
         .day.sunday .day-number {
@@ -298,10 +326,11 @@
             overflow: hidden;
             max-height: 100%;
             transition: font-size 0.2s;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); /* 文字を背景から浮き立たせる */
         }
 
         .daily-total.income {
-            color: var(--add-button-color); /* 追加ボタン色を使用 */
+            color: var(--add-button-color);
         }
 
         .daily-total.expense {
@@ -309,7 +338,8 @@
         }
 
         .daily-total.zero {
-            color: #7f8c8d;
+            color: #2c3e50; /* 濃い色に変更 */
+            opacity: 0.9;
         }
 
         .daily-total.error {
@@ -320,16 +350,20 @@
         /* 詳細表示 */
         .day-details {
             padding: 15px;
-            background: #f8f9fa;
+            background: rgba(248, 249, 250, 0.9);
             border-top: 1px solid var(--border-color);
             flex-shrink: 0;
             max-height: 30vh;
             overflow-y: auto;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(3px); /* 背景をぼかして文字を見やすく */
         }
 
         .day-details h3 {
             margin-bottom: 10px;
             color: var(--text-color);
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
         }
 
         .transaction-list {
@@ -339,17 +373,18 @@
         }
 
         .transaction-item {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             padding: 15px;
             border-radius: 8px;
-            border: 1px solid #ecf0f1;
+            border: 1px solid rgba(236, 240, 241, 0.8);
             position: relative;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            backdrop-filter: blur(2px);
         }
 
         .transaction-item.has-error {
             border-color: var(--danger-color);
-            background: #ffebee;
+            background: rgba(255, 235, 238, 0.95);
         }
 
         .transaction-amount {
@@ -359,7 +394,7 @@
         }
 
         .transaction-amount.positive {
-            color: var(--add-button-color); /* 追加ボタン色を使用 */
+            color: var(--add-button-color);
         }
 
         .transaction-amount.negative {
@@ -434,7 +469,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
-        /* +追加ボタン - 変更部分 */
+        /* +追加ボタン */
         .add-btn {
             padding: 12px 24px;
             background: var(--add-button-color);
@@ -492,12 +527,15 @@
             top: 50%;
             left: 20px;
             transform: translateY(-50%);
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             padding: 15px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             z-index: 999;
-            min-width: 200px;
+            min-width: 280px;
+            max-width: 350px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(0,0,0,0.1);
         }
 
         .theme-toggle {
@@ -516,13 +554,13 @@
         }
 
         .theme-section {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .theme-section h4 {
             margin-bottom: 8px;
             color: var(--text-color);
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 2px solid var(--accent-color);
             padding-bottom: 5px;
         }
 
@@ -535,7 +573,8 @@
 
         .color-picker label {
             font-size: 0.8rem;
-            min-width: 80px;
+            min-width: 100px;
+            font-weight: bold;
         }
 
         .color-input {
@@ -569,6 +608,195 @@
 
         .theme-preset.active {
             border-color: var(--accent-color);
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        /* カレンダー背景設定 - 大幅に拡張 */
+        .calendar-bg-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .bg-preview {
+            width: 100%;
+            height: 150px; /* プレビューを大きく */
+            border: 2px solid var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            background: linear-gradient(45deg, #f8f9fa 25%, #e9ecef 25%, #e9ecef 50%, #f8f9fa 50%, #f8f9fa 75%, #e9ecef 75%, #e9ecef);
+            background-size: 20px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+        }
+
+        .bg-preview-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 画像全体が表示されるように */
+            display: none;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+        }
+
+        .file-input-button {
+            padding: 12px 15px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            justify-content: center;
+            transition: background-color 0.2s;
+            font-weight: bold;
+        }
+
+        .file-input-button:hover {
+            background: #2980b9;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .bg-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-label {
+            min-width: 100px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .opacity-control, .scale-control, .position-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .opacity-slider, .scale-slider {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, #ddd, var(--accent-color));
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .opacity-slider::-webkit-slider-thumb,
+        .scale-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .opacity-value, .scale-value {
+            min-width: 50px;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .position-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            flex: 1;
+        }
+
+        .position-btn {
+            padding: 8px;
+            background: #f8f9fa;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .position-btn:hover {
+            background: #e9ecef;
+        }
+
+        .position-btn.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .reset-bg-btn, .remove-bg-btn {
+            padding: 10px 12px;
+            background: var(--danger-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            flex: 1;
+            transition: background-color 0.2s;
+        }
+
+        .reset-bg-btn {
+            background: #f39c12;
+        }
+
+        .reset-bg-btn:hover {
+            background: #d68910;
+        }
+
+        .remove-bg-btn:hover {
+            background: #d32f2f;
+        }
+
+        .bg-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
         }
 
         /* モーダル */
@@ -627,168 +855,6 @@
             margin-top: 20px;
         }
 
-        /* バックアップ機能スタイル */
-        .backup-options {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .backup-option {
-            padding: 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .backup-option:hover {
-            border-color: var(--accent-color);
-            background: #f8f9fa;
-        }
-
-        .backup-option-icon {
-            font-size: 24px;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: var(--accent-color);
-            color: white;
-        }
-
-        .backup-option-content h4 {
-            margin-bottom: 5px;
-            color: var(--text-color);
-        }
-
-        .backup-option-content p {
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-
-        .info-box {
-            background: #e8f4fc;
-            border-left: 4px solid var(--accent-color);
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 4px;
-        }
-
-        .info-box h4 {
-            margin-bottom: 5px;
-            color: var(--text-color);
-        }
-
-        .info-box p {
-            color: #5d6d7e;
-            font-size: 0.9rem;
-        }
-
-        .data-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #f8f9fa;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-
-        .data-info-item {
-            text-align: center;
-        }
-
-        .data-info-label {
-            font-size: 0.8rem;
-            color: #7f8c8d;
-            margin-bottom: 5px;
-        }
-
-        .data-info-value {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--text-color);
-        }
-
-        /* ファイル入力スタイル */
-        .file-input-wrapper {
-            position: relative;
-            overflow: hidden;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .file-input-wrapper input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-
-        .file-input-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px;
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: bold;
-            width: 100%;
-            transition: background-color 0.2s;
-        }
-
-        .file-input-button:hover {
-            background: #2980b9;
-        }
-
-        .file-info {
-            margin-top: 10px;
-            padding: 10px;
-            background: #f8f9fa;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            color: #7f8c8d;
-        }
-
-        .selected-file {
-            margin-top: 10px;
-            padding: 10px;
-            background: #e8f4fc;
-            border-radius: 5px;
-            border-left: 4px solid var(--accent-color);
-            display: none;
-        }
-
-        .selected-file.show {
-            display: block;
-        }
-
-        .selected-file-name {
-            font-weight: bold;
-            color: var(--text-color);
-            margin-bottom: 5px;
-        }
-
-        .selected-file-size {
-            font-size: 0.9rem;
-            color: #7f8c8d;
-        }
-
         /* 統計表示 */
         .stats-section {
             margin-bottom: 20px;
@@ -829,7 +895,7 @@
         }
 
         .year-stat-amount.positive, .shop-stat-amount.positive, .machine-stat-amount.positive {
-            color: var(--add-button-color); /* 追加ボタン色を使用 */
+            color: var(--add-button-color);
         }
 
         .year-stat-amount.negative, .shop-stat-amount.negative, .machine-stat-amount.negative {
@@ -851,7 +917,7 @@
         }
 
         .lifetime-amount.positive {
-            color: var(--add-button-color); /* 追加ボタン色を使用 */
+            color: var(--add-button-color);
         }
 
         .lifetime-amount.negative {
@@ -882,6 +948,7 @@
                 left: 10px;
                 right: 10px;
                 min-width: auto;
+                max-width: none;
             }
             
             .theme-toggle {
@@ -932,27 +999,12 @@
                 font-size: 1.1rem;
             }
             
-            .backup-option {
-                padding: 12px;
+            .calendar-bg-controls {
+                gap: 8px;
             }
             
-            .backup-option-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 20px;
-            }
-            
-            .data-info {
-                flex-direction: column;
-                gap: 10px;
-                text-align: center;
-            }
-            
-            /* +追加ボタンのレスポンシブ */
-            .add-btn {
-                padding: 10px 20px;
-                font-size: 1rem;
-                min-width: 100px;
+            .bg-preview {
+                height: 120px;
             }
         }
 
@@ -991,44 +1043,69 @@
             .transaction-actions {
                 top: 10px;
                 right: 10px;
+                flex-direction: column;
                 gap: 5px;
             }
             
-            .backup-options {
-                gap: 10px;
+            .calendar-bg-controls {
+                gap: 6px;
             }
             
-            .backup-option {
+            .bg-preview {
+                height: 100px;
+            }
+            
+            .bg-controls {
                 flex-direction: column;
-                text-align: center;
+                align-items: stretch;
             }
             
-            .backup-option-icon {
-                margin-bottom: 10px;
+            .day-details {
+                max-height: 25vh;
+                padding: 10px;
             }
             
-            /* +追加ボタンの小さな画面用 */
-            .add-btn {
-                padding: 8px 16px;
-                font-size: 0.9rem;
-                min-width: 90px;
+            .control-row {
+                flex-direction: column;
+                align-items: flex-start;
             }
             
-            .add-btn::before {
-                font-size: 1.2rem;
+            .control-label {
+                min-width: auto;
+            }
+            
+            .position-buttons {
+                width: 100%;
             }
         }
         
         /* コントロール部分のスタイル */
         .controls {
             padding: 15px;
-            background: #f8f9fa;
+            background: rgba(248, 249, 250, 0.9);
             border-top: 1px solid var(--border-color);
             display: flex;
             justify-content: center;
             align-items: center;
             flex-shrink: 0;
             gap: 15px;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(3px);
+        }
+        
+        /* モバイル対応の追加スタイル */
+        @media (max-width: 480px) {
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .add-btn, .nav-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -1047,8 +1124,63 @@
                 <input type="color" class="color-input" id="accent-color" value="#3498db">
             </div>
             <div class="color-picker">
-                <label>追加ボタン色:</label> <!-- 成功色から追加ボタン色に変更 -->
+                <label>追加ボタン色:</label>
                 <input type="color" class="color-input" id="add-button-color" value="#27ae60">
+            </div>
+        </div>
+        
+        <div class="theme-section">
+            <h4>カレンダー背景設定</h4>
+            <div class="calendar-bg-controls">
+                <div class="bg-preview" id="bg-preview">
+                    <div id="bg-preview-text">画像が設定されていません</div>
+                    <img id="bg-preview-image" class="bg-preview-image" alt="背景プレビュー">
+                </div>
+                <div class="file-input-wrapper">
+                    <input type="file" id="bg-image-input" accept="image/*">
+                    <button class="file-input-button" id="bg-image-select">
+                        <span>🖼️</span>
+                        <span>背景画像を選択</span>
+                    </button>
+                </div>
+                
+                <div class="control-group">
+                    <div class="control-row">
+                        <span class="control-label">透過度:</span>
+                        <div class="opacity-control">
+                            <input type="range" min="0" max="100" value="70" class="opacity-slider" id="bg-opacity-slider">
+                            <span class="opacity-value" id="bg-opacity-value">70%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-row">
+                        <span class="control-label">拡大/縮小:</span>
+                        <div class="scale-control">
+                            <input type="range" min="10" max="500" value="100" class="scale-slider" id="bg-scale-slider">
+                            <span class="scale-value" id="bg-scale-value">100%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-row">
+                        <span class="control-label">位置調整:</span>
+                        <div class="position-buttons" id="bg-position-buttons">
+                            <button class="position-btn" data-position="left top">↖</button>
+                            <button class="position-btn" data-position="center top">↑</button>
+                            <button class="position-btn" data-position="right top">↗</button>
+                            <button class="position-btn" data-position="left center">←</button>
+                            <button class="position-btn active" data-position="center center">◎</button>
+                            <button class="position-btn" data-position="right center">→</button>
+                            <button class="position-btn" data-position="left bottom">↙</button>
+                            <button class="position-btn" data-position="center bottom">↓</button>
+                            <button class="position-btn" data-position="right bottom">↘</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-buttons">
+                    <button class="reset-bg-btn" id="reset-bg-btn">設定リセット</button>
+                    <button class="remove-bg-btn" id="remove-bg-btn">背景削除</button>
+                </div>
             </div>
         </div>
         
@@ -1079,7 +1211,7 @@
         <div class="menu-items">
             <div class="menu-item" id="go-to-top">トップページへ</div>
             <div class="menu-item" id="show-yearly-stats">年次別収支</div>
-            <div class="menu-item" id="show-lifetime-stats">生涯通算収支</div>
+            <div class="menu-item" id="show-lifetime-stats">通算収支</div>
             <div class="menu-item" id="show-shop-stats">店舗別収支</div>
             <div class="menu-item" id="show-machine-stats">機種別収支</div>
             <div class="menu-item" id="export-backup">データのバックアップ</div>
@@ -1110,6 +1242,7 @@
         </div>
 
         <div class="calendar">
+            <div class="calendar-background" id="calendar-background"></div>
             <div class="calendar-main" id="calendar-main">
                 <div class="weekday">日</div>
                 <div class="weekday">月</div>
@@ -1124,8 +1257,9 @@
         <div class="day-details" id="day-details"></div>
 
         <div class="controls">
-            <button class="add-btn" id="add-transaction">追加</button> <!-- +追加に変更 -->
+            <button class="add-btn" id="add-transaction">追加</button>
             <button class="nav-btn" id="cleanup-data" style="background: #f39c12;">データ修復</button>
+            <button class="nav-btn" id="add-sample-data" style="background: #9b59b6;">サンプルデータ</button>
         </div>
     </div>
 
@@ -1203,18 +1337,125 @@
                 this.currentDate = new Date();
                 this.currentDate.setDate(1);
                 this.selectedDate = null;
-                this.transactions = JSON.parse(localStorage.getItem('financeTransactions')) || [];
+                this.transactions = [];
                 this.editingTransactionId = null;
-                this.currentTheme = JSON.parse(localStorage.getItem('appTheme')) || 'default';
+                this.currentTheme = 'default';
+                this.calendarBackground = null;
                 this.init();
             }
 
             init() {
+                console.log('FinanceCalendar 初期化開始');
+                
+                // データ読み込み
+                this.loadFromLocalStorage();
+                
+                // 初期設定
                 this.applyTheme(this.currentTheme);
+                this.setupCalendarBackground();
                 this.renderCalendar();
                 this.setupEventListeners();
                 this.populateMonthPicker();
-                console.log('FinanceCalendar initialized');
+                
+                console.log('FinanceCalendar 初期化完了');
+                
+                // 初回使用時のガイド
+                if (this.transactions.length === 0) {
+                    this.showFirstTimeGuide();
+                }
+            }
+
+            // データ保存
+            saveToLocalStorage() {
+                try {
+                    localStorage.setItem('financeTransactions', JSON.stringify(this.transactions));
+                    console.log('データ保存成功:', this.transactions.length, '件');
+                    return true;
+                } catch (error) {
+                    console.error('データ保存エラー:', error);
+                    alert('データの保存中にエラーが発生しました');
+                    return false;
+                }
+            }
+
+            // データ読み込み
+            loadFromLocalStorage() {
+                try {
+                    const data = localStorage.getItem('financeTransactions');
+                    if (data) {
+                        this.transactions = JSON.parse(data);
+                        console.log('データ読み込み成功:', this.transactions.length, '件');
+                        
+                        // テーマ設定読み込み
+                        const savedTheme = JSON.parse(localStorage.getItem('appTheme'));
+                        if (savedTheme) {
+                            this.currentTheme = savedTheme;
+                        }
+                        
+                        // 背景設定読み込み
+                        const savedBackground = JSON.parse(localStorage.getItem('calendarBackground'));
+                        if (savedBackground) {
+                            this.calendarBackground = savedBackground;
+                        }
+                        
+                        return true;
+                    }
+                    return false;
+                } catch (error) {
+                    console.error('データ読み込みエラー:', error);
+                    this.transactions = [];
+                    return false;
+                }
+            }
+
+            // 初回使用ガイド
+            showFirstTimeGuide() {
+                setTimeout(() => {
+                    const addSampleBtn = document.getElementById('add-sample-data');
+                    if (addSampleBtn && confirm('初めてのご利用ですね！\nサンプルデータを追加しますか？\n（「キャンセル」を選択すると、自分でデータを追加できます）')) {
+                        this.addSampleData();
+                    }
+                }, 1000);
+            }
+
+            // サンプルデータ追加
+            addSampleData() {
+                const today = new Date();
+                const yesterday = new Date(today);
+                yesterday.setDate(yesterday.getDate() - 1);
+                
+                const sampleData = [
+                    {
+                        date: this.formatDate(today),
+                        investmentAmount: 5000,
+                        returnAmount: 7500,
+                        machineName: '北斗の拳',
+                        shopName: 'パチンコA店',
+                        createdAt: new Date()
+                    },
+                    {
+                        date: this.formatDate(yesterday),
+                        investmentAmount: 3000,
+                        returnAmount: 4200,
+                        machineName: 'シン・エヴァンゲリオン',
+                        shopName: 'パチンコB店',
+                        createdAt: new Date()
+                    }
+                ];
+                
+                this.transactions = sampleData;
+                this.saveToLocalStorage();
+                this.renderCalendar();
+                
+                // 今日の日付を選択
+                this.selectedDate = today;
+                const dateStr = this.formatDate(today);
+                this.renderCalendar();
+                this.showDayDetails(dateStr);
+                
+                setTimeout(() => {
+                    alert('サンプルデータを追加しました！\n\n操作方法：\n1. 日付をクリックして詳細表示\n2. 「+追加」ボタンで新しい取引を追加\n3. メニューから統計情報を確認\n4. 着せ替え機能でデザインを変更できます');
+                }, 500);
             }
 
             // テーマ関連のメソッド
@@ -1224,7 +1465,7 @@
                         primary: '#2c3e50',
                         secondary: '#34495e',
                         accent: '#3498db',
-                        addButton: '#27ae60', // 追加ボタン色
+                        addButton: '#27ae60',
                         danger: '#e74c3c',
                         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
                     },
@@ -1232,7 +1473,7 @@
                         primary: '#c44569',
                         secondary: '#e66767',
                         accent: '#f19066',
-                        addButton: '#78e08f', // 追加ボタン色
+                        addButton: '#78e08f',
                         danger: '#e55039',
                         background: 'linear-gradient(135deg, #ff6b6b, #ee5a24)'
                     },
@@ -1240,7 +1481,7 @@
                         primary: '#0c2461',
                         secondary: '#1e3799',
                         accent: '#4a69bd',
-                        addButton: '#38ada9', // 追加ボタン色
+                        addButton: '#38ada9',
                         danger: '#eb2f06',
                         background: 'linear-gradient(135deg, #00d2ff, #3a7bd5)'
                     },
@@ -1248,7 +1489,7 @@
                         primary: '#1e272e',
                         secondary: '#485460',
                         accent: '#05c46b',
-                        addButton: '#0be881', // 追加ボタン色
+                        addButton: '#0be881',
                         danger: '#ff3f34',
                         background: 'linear-gradient(135deg, #a8ff78, #78ffd6)'
                     },
@@ -1256,7 +1497,7 @@
                         primary: '#6D214F',
                         secondary: '#B33771',
                         accent: '#FC427B',
-                        addButton: '#58B19F', // 追加ボタン色
+                        addButton: '#58B19F',
                         danger: '#E74292',
                         background: 'linear-gradient(135deg, #ff9a9e, #fecfef)'
                     },
@@ -1264,7 +1505,7 @@
                         primary: '#2C3A47',
                         secondary: '#3B3B98',
                         accent: '#25CCF7',
-                        addButton: '#1B9CFC', // 追加ボタン色
+                        addButton: '#1B9CFC',
                         danger: '#FD7272',
                         background: 'linear-gradient(135deg, #4facfe, #00f2fe)'
                     }
@@ -1275,14 +1516,18 @@
                 document.documentElement.style.setProperty('--primary-color', theme.primary);
                 document.documentElement.style.setProperty('--secondary-color', theme.secondary);
                 document.documentElement.style.setProperty('--accent-color', theme.accent);
-                document.documentElement.style.setProperty('--add-button-color', theme.addButton); // 追加ボタン色
+                document.documentElement.style.setProperty('--add-button-color', theme.addButton);
                 document.documentElement.style.setProperty('--danger-color', theme.danger);
                 document.documentElement.style.setProperty('--background-gradient', theme.background);
 
-                document.getElementById('primary-color').value = theme.primary;
-                document.getElementById('accent-color').value = theme.accent;
-                document.getElementById('add-button-color').value = theme.addButton; // 追加ボタン色
+                // カラーピッカーを更新
+                if (themeName !== 'custom') {
+                    document.getElementById('primary-color').value = theme.primary;
+                    document.getElementById('accent-color').value = theme.accent;
+                    document.getElementById('add-button-color').value = theme.addButton;
+                }
 
+                // プリセットの選択状態を更新
                 document.querySelectorAll('.theme-preset').forEach(preset => {
                     preset.classList.remove('active');
                     if (preset.dataset.theme === themeName) {
@@ -1297,19 +1542,213 @@
             applyCustomTheme() {
                 const primaryColor = document.getElementById('primary-color').value;
                 const accentColor = document.getElementById('accent-color').value;
-                const addButtonColor = document.getElementById('add-button-color').value; // 追加ボタン色
+                const addButtonColor = document.getElementById('add-button-color').value;
 
                 document.documentElement.style.setProperty('--primary-color', primaryColor);
                 document.documentElement.style.setProperty('--accent-color', accentColor);
-                document.documentElement.style.setProperty('--add-button-color', addButtonColor); // 追加ボタン色
+                document.documentElement.style.setProperty('--add-button-color', addButtonColor);
 
                 this.currentTheme = 'custom';
                 localStorage.setItem('appTheme', JSON.stringify('custom'));
                 localStorage.setItem('customTheme', JSON.stringify({
                     primary: primaryColor,
                     accent: accentColor,
-                    addButton: addButtonColor // 追加ボタン色
+                    addButton: addButtonColor
                 }));
+            }
+
+            // カレンダー背景画像の設定 - 大幅に拡張
+            setupCalendarBackground() {
+                const calendarBg = document.getElementById('calendar-background');
+                const opacitySlider = document.getElementById('bg-opacity-slider');
+                const opacityValue = document.getElementById('bg-opacity-value');
+                const scaleSlider = document.getElementById('bg-scale-slider');
+                const scaleValue = document.getElementById('bg-scale-value');
+                const previewImage = document.getElementById('bg-preview-image');
+                const previewText = document.getElementById('bg-preview-text');
+                
+                if (this.calendarBackground) {
+                    // 背景を設定
+                    calendarBg.style.backgroundImage = `url(${this.calendarBackground.image})`;
+                    
+                    // CSS変数を設定
+                    document.documentElement.style.setProperty('--calendar-bg-opacity', this.calendarBackground.opacity / 100);
+                    document.documentElement.style.setProperty('--calendar-bg-size', this.calendarBackground.size || 'cover');
+                    document.documentElement.style.setProperty('--calendar-bg-position', this.calendarBackground.position || 'center');
+                    
+                    // プレビューを更新
+                    previewImage.src = this.calendarBackground.image;
+                    previewImage.style.display = 'block';
+                    previewText.style.display = 'none';
+                    
+                    // スライダーを更新
+                    opacitySlider.value = this.calendarBackground.opacity || 70;
+                    opacityValue.textContent = `${this.calendarBackground.opacity || 70}%`;
+                    
+                    scaleSlider.value = this.calendarBackground.scale || 100;
+                    scaleValue.textContent = `${this.calendarBackground.scale || 100}%`;
+                    
+                    // 位置ボタンの選択状態を更新
+                    const positionButtons = document.querySelectorAll('.position-btn');
+                    positionButtons.forEach(btn => {
+                        btn.classList.remove('active');
+                        if (btn.dataset.position === (this.calendarBackground.position || 'center center')) {
+                            btn.classList.add('active');
+                        }
+                    });
+                } else {
+                    // デフォルトの透過率を設定（70%に変更）
+                    document.documentElement.style.setProperty('--calendar-bg-opacity', 0.7);
+                }
+            }
+
+            setCalendarBackground(imageDataUrl, opacity = 70, scale = 100, position = 'center center') {
+                const calendarBg = document.getElementById('calendar-background');
+                calendarBg.style.backgroundImage = `url(${imageDataUrl})`;
+                
+                // CSS変数を設定
+                const bgSize = scale === 100 ? 'cover' : `${scale}%`;
+                document.documentElement.style.setProperty('--calendar-bg-opacity', opacity / 100);
+                document.documentElement.style.setProperty('--calendar-bg-size', bgSize);
+                document.documentElement.style.setProperty('--calendar-bg-position', position);
+                
+                // 保存
+                this.calendarBackground = {
+                    image: imageDataUrl,
+                    opacity: opacity,
+                    scale: scale,
+                    position: position,
+                    size: bgSize
+                };
+                localStorage.setItem('calendarBackground', JSON.stringify(this.calendarBackground));
+                
+                // プレビューを更新
+                const previewImage = document.getElementById('bg-preview-image');
+                const previewText = document.getElementById('bg-preview-text');
+                previewImage.src = imageDataUrl;
+                previewImage.style.display = 'block';
+                previewText.style.display = 'none';
+                
+                // スライダーを更新
+                const opacitySlider = document.getElementById('bg-opacity-slider');
+                const opacityValue = document.getElementById('bg-opacity-value');
+                const scaleSlider = document.getElementById('bg-scale-slider');
+                const scaleValue = document.getElementById('bg-scale-value');
+                
+                opacitySlider.value = opacity;
+                opacityValue.textContent = `${opacity}%`;
+                
+                scaleSlider.value = scale;
+                scaleValue.textContent = `${scale}%`;
+                
+                // 位置ボタンの選択状態を更新
+                const positionButtons = document.querySelectorAll('.position-btn');
+                positionButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.position === position) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            updateBackgroundOpacity(opacity) {
+                document.documentElement.style.setProperty('--calendar-bg-opacity', opacity / 100);
+                
+                if (this.calendarBackground) {
+                    this.calendarBackground.opacity = opacity;
+                    localStorage.setItem('calendarBackground', JSON.stringify(this.calendarBackground));
+                }
+                
+                const opacityValue = document.getElementById('bg-opacity-value');
+                opacityValue.textContent = `${opacity}%`;
+            }
+
+            updateBackgroundScale(scale) {
+                const bgSize = scale === 100 ? 'cover' : `${scale}%`;
+                document.documentElement.style.setProperty('--calendar-bg-size', bgSize);
+                
+                if (this.calendarBackground) {
+                    this.calendarBackground.scale = scale;
+                    this.calendarBackground.size = bgSize;
+                    localStorage.setItem('calendarBackground', JSON.stringify(this.calendarBackground));
+                }
+                
+                const scaleValue = document.getElementById('bg-scale-value');
+                scaleValue.textContent = `${scale}%`;
+            }
+
+            updateBackgroundPosition(position) {
+                document.documentElement.style.setProperty('--calendar-bg-position', position);
+                
+                if (this.calendarBackground) {
+                    this.calendarBackground.position = position;
+                    localStorage.setItem('calendarBackground', JSON.stringify(this.calendarBackground));
+                }
+                
+                // 位置ボタンの選択状態を更新
+                const positionButtons = document.querySelectorAll('.position-btn');
+                positionButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.position === position) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+
+            resetBackgroundSettings() {
+                // デフォルト値にリセット
+                const defaultOpacity = 70;
+                const defaultScale = 100;
+                const defaultPosition = 'center center';
+                
+                this.updateBackgroundOpacity(defaultOpacity);
+                this.updateBackgroundScale(defaultScale);
+                this.updateBackgroundPosition(defaultPosition);
+                
+                // スライダーをリセット
+                document.getElementById('bg-opacity-slider').value = defaultOpacity;
+                document.getElementById('bg-scale-slider').value = defaultScale;
+                
+                alert('背景設定をデフォルトにリセットしました');
+            }
+
+            removeCalendarBackground() {
+                const calendarBg = document.getElementById('calendar-background');
+                calendarBg.style.backgroundImage = '';
+                
+                // CSS変数をリセット
+                document.documentElement.style.setProperty('--calendar-bg-image', 'none');
+                document.documentElement.style.setProperty('--calendar-bg-opacity', 0.7); // デフォルトの透過率
+                document.documentElement.style.setProperty('--calendar-bg-size', 'cover');
+                document.documentElement.style.setProperty('--calendar-bg-position', 'center');
+                
+                // プレビューをリセット
+                const previewImage = document.getElementById('bg-preview-image');
+                const previewText = document.getElementById('bg-preview-text');
+                previewImage.src = '';
+                previewImage.style.display = 'none';
+                previewText.style.display = 'block';
+                
+                // スライダーをリセット
+                document.getElementById('bg-opacity-slider').value = 70;
+                document.getElementById('bg-opacity-value').textContent = '70%';
+                document.getElementById('bg-scale-slider').value = 100;
+                document.getElementById('bg-scale-value').textContent = '100%';
+                
+                // 位置ボタンをリセット
+                const positionButtons = document.querySelectorAll('.position-btn');
+                positionButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.position === 'center center') {
+                        btn.classList.add('active');
+                    }
+                });
+                
+                // 保存データを削除
+                this.calendarBackground = null;
+                localStorage.removeItem('calendarBackground');
+                
+                alert('背景画像を削除しました');
             }
 
             // メニュー操作
@@ -1531,8 +1970,26 @@
                 const dailyTransactions = this.transactions.filter(t => t.date === dateStr);
                 const transaction = dailyTransactions[index];
                 
+                // 全体の中でのインデックスを探す
+                let globalIndex = -1;
+                let count = 0;
+                for (let i = 0; i < this.transactions.length; i++) {
+                    if (this.transactions[i].date === dateStr) {
+                        if (count === index) {
+                            globalIndex = i;
+                            break;
+                        }
+                        count++;
+                    }
+                }
+                
+                if (globalIndex === -1) {
+                    alert('取引が見つかりませんでした');
+                    return;
+                }
+                
                 document.getElementById('transaction-modal-title').textContent = '取引を編集';
-                document.getElementById('edit-transaction-id').value = this.transactions.indexOf(transaction);
+                document.getElementById('edit-transaction-id').value = globalIndex;
                 document.getElementById('transaction-date').value = transaction.date;
                 document.getElementById('investment-amount').value = transaction.investmentAmount;
                 document.getElementById('return-amount').value = transaction.returnAmount;
@@ -1590,26 +2047,24 @@
                 }
             }
 
-            // LocalStorageに保存
-            saveToLocalStorage() {
-                localStorage.setItem('financeTransactions', JSON.stringify(this.transactions));
-            }
-
             // 月選択モーダル用の年・月リストを設定
             populateMonthPicker() {
                 const yearSelect = document.getElementById('year-select');
                 const monthSelect = document.getElementById('month-select');
                 
-                for (let year = 2020; year <= 2030; year++) {
+                // 年リストを生成（現在の年から前後10年）
+                const currentYear = this.currentDate.getFullYear();
+                for (let year = currentYear - 10; year <= currentYear + 10; year++) {
                     const option = document.createElement('option');
                     option.value = year;
                     option.textContent = `${year}年`;
-                    if (year === this.currentDate.getFullYear()) {
+                    if (year === currentYear) {
                         option.selected = true;
                     }
                     yearSelect.appendChild(option);
                 }
                 
+                // 月リストを生成
                 for (let month = 0; month < 12; month++) {
                     const option = document.createElement('option');
                     option.value = month;
@@ -1621,489 +2076,45 @@
                 }
             }
 
-            // バックアップ機能関連メソッド
-            exportBackup() {
-                const backupModal = document.getElementById('backup-modal');
-                const backupContent = document.getElementById('backup-content');
-                
-                const totalTransactions = this.transactions.length;
+            // 通算収支表示
+            showLifetimeStats() {
                 const lifetimeTotal = this.getLifetimeTotal();
+                
+                let html = '<div class="stats-section">';
+                html += '<h3>通算収支</h3>';
+                html += '<div class="lifetime-stats">';
+                html += '<div>全期間の合計収支</div>';
+                html += `<div class="lifetime-amount ${lifetimeTotal >= 0 ? 'positive' : 'negative'}">
+                    ${lifetimeTotal >= 0 ? '+' : ''}¥${lifetimeTotal.toLocaleString()}
+                </div>`;
+                
+                // 追加情報を表示
+                const totalTransactions = this.transactions.length;
                 const earliestDate = this.getEarliestDate();
                 const latestDate = this.getLatestDate();
                 
-                let html = '<div class="data-info">';
-                html += `<div class="data-info-item">
-                    <div class="data-info-label">取引数</div>
-                    <div class="data-info-value">${totalTransactions}件</div>
-                </div>`;
-                html += `<div class="data-info-item">
-                    <div class="data-info-label">通算収支</div>
-                    <div class="data-info-value">¥${lifetimeTotal.toLocaleString()}</div>
-                </div>`;
-                html += `<div class="data-info-item">
-                    <div class="data-info-label">期間</div>
-                    <div class="data-info-value">${earliestDate ? earliestDate : 'なし'} 〜 ${latestDate ? latestDate : 'なし'}</div>
-                </div>`;
+                html += '<div style="margin-top: 15px; font-size: 0.9rem;">';
+                html += `<div>総取引数: ${totalTransactions}件</div>`;
+                if (earliestDate && latestDate) {
+                    html += `<div>期間: ${earliestDate} 〜 ${latestDate}</div>`;
+                }
                 html += '</div>';
-                
-                html += '<div class="info-box">';
-                html += '<h4>バックアップについて</h4>';
-                html += '<p>バックアップファイルをダウンロードして安全な場所に保管してください。ブラウザのデータを消去した場合や別のデバイスでデータを復元する場合に使用します。</p>';
-                html += '</div>';
-                
-                html += '<div class="backup-options">';
-                html += '<div class="backup-option" id="download-json">';
-                html += '<div class="backup-option-icon">📄</div>';
-                html += '<div class="backup-option-content">';
-                html += '<h4>JSONファイルでダウンロード</h4>';
-                html += '<p>標準的なJSON形式でデータを保存します。他のアプリケーションで読み込むことができます。</p>';
                 html += '</div></div>';
                 
-                html += '<div class="backup-option" id="copy-text">';
-                html += '<div class="backup-option-icon">📋</div>';
-                html += '<div class="backup-option-content">';
-                html += '<h4>テキストとしてコピー</h4>';
-                html += '<p>データをテキスト形式でクリップボードにコピーします。</p>';
-                html += '</div></div>';
-                
-                html += '<div class="backup-option" id="show-raw-data">';
-                html += '<div class="backup-option-icon">👁️</div>';
-                html += '<div class="backup-option-content">';
-                html += '<h4>生データを表示</h4>';
-                html += '<p>バックアップ用の生データを確認できます。</p>';
-                html += '</div></div>';
-                html += '</div>';
-                
-                html += '<div class="form-buttons">';
-                html += '<button class="cancel-btn" id="close-backup">閉じる</button>';
-                html += '</div>';
-                
-                backupContent.innerHTML = html;
-                document.getElementById('backup-title').textContent = 'データのバックアップ';
-                backupModal.style.display = 'flex';
-                
-                // イベントリスナーを設定
-                document.getElementById('close-backup').addEventListener('click', () => {
-                    backupModal.style.display = 'none';
-                });
-                
-                document.getElementById('download-json').addEventListener('click', () => {
-                    this.downloadBackupAsJSON();
-                });
-                
-                document.getElementById('copy-text').addEventListener('click', () => {
-                    this.copyBackupToClipboard();
-                });
-                
-                document.getElementById('show-raw-data').addEventListener('click', () => {
-                    this.showRawBackupData();
-                });
+                document.getElementById('stats-title').textContent = '通算収支';
+                document.getElementById('stats-content').innerHTML = html;
+                document.getElementById('stats-modal').style.display = 'flex';
             }
-            
-            downloadBackupAsJSON() {
-                const backupData = {
-                    version: '1.0',
-                    exportDate: new Date().toISOString(),
-                    appName: '投資収支管理カレンダー',
-                    transactions: this.transactions,
-                    metadata: {
-                        totalTransactions: this.transactions.length,
-                        lifetimeTotal: this.getLifetimeTotal(),
-                        earliestDate: this.getEarliestDate(),
-                        latestDate: this.getLatestDate()
-                    }
-                };
-                
-                const dataStr = JSON.stringify(backupData, null, 2);
-                const dataBlob = new Blob([dataStr], { type: 'application/json' });
-                
-                const date = new Date();
-                const filename = `finance_backup_${date.getFullYear()}${(date.getMonth()+1).toString().padStart(2,'0')}${date.getDate().toString().padStart(2,'0')}_${date.getHours()}${date.getMinutes()}${date.getSeconds()}.json`;
-                
-                const downloadLink = document.createElement('a');
-                downloadLink.href = URL.createObjectURL(dataBlob);
-                downloadLink.download = filename;
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
-                
-                alert('バックアップファイルをダウンロードしました。安全な場所に保管してください。');
+
+            // 生涯通算取得
+            getLifetimeTotal() {
+                let total = 0;
+                this.transactions.forEach(transaction => {
+                    total += transaction.returnAmount - transaction.investmentAmount;
+                });
+                return total;
             }
-            
-            copyBackupToClipboard() {
-                const backupData = {
-                    version: '1.0',
-                    exportDate: new Date().toISOString(),
-                    appName: '投資収支管理カレンダー',
-                    transactions: this.transactions,
-                    metadata: {
-                        totalTransactions: this.transactions.length,
-                        lifetimeTotal: this.getLifetimeTotal(),
-                        earliestDate: this.getEarliestDate(),
-                        latestDate: this.getLatestDate()
-                    }
-                };
-                
-                const dataStr = JSON.stringify(backupData, null, 2);
-                
-                navigator.clipboard.writeText(dataStr).then(() => {
-                    alert('バックアップデータをクリップボードにコピーしました。テキストエディタなどに貼り付けて保存してください。');
-                }).catch(err => {
-                    console.error('クリップボードへのコピーに失敗しました:', err);
-                    // フォールバック: 古いブラウザ用
-                    const textArea = document.createElement('textarea');
-                    textArea.value = dataStr;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    try {
-                        document.execCommand('copy');
-                        alert('バックアップデータをコピーしました。テキストエディタなどに貼り付けて保存してください。');
-                    } catch (err2) {
-                        console.error('フォールバックコピーにも失敗しました:', err2);
-                        alert('クリップボードへのコピーに失敗しました。手動でコピーしてください。');
-                    }
-                    document.body.removeChild(textArea);
-                });
-            }
-            
-            showRawBackupData() {
-                const backupModal = document.getElementById('backup-modal');
-                const backupContent = document.getElementById('backup-content');
-                
-                const backupData = {
-                    version: '1.0',
-                    exportDate: new Date().toISOString(),
-                    appName: '投資収支管理カレンダー',
-                    transactions: this.transactions,
-                    metadata: {
-                        totalTransactions: this.transactions.length,
-                        lifetimeTotal: this.getLifetimeTotal(),
-                        earliestDate: this.getEarliestDate(),
-                        latestDate: this.getLatestDate()
-                    }
-                };
-                
-                const dataStr = JSON.stringify(backupData, null, 2);
-                
-                let html = '<h4>バックアップデータ（JSON形式）</h4>';
-                html += '<div class="form-group">';
-                html += '<textarea id="backup-data-text" readonly>' + dataStr + '</textarea>';
-                html += '</div>';
-                html += '<div class="form-buttons">';
-                html += '<button class="cancel-btn" id="back-to-options">戻る</button>';
-                html += '<button class="save-btn" id="copy-from-text">コピー</button>';
-                html += '</div>';
-                
-                backupContent.innerHTML = html;
-                
-                document.getElementById('back-to-options').addEventListener('click', () => {
-                    this.exportBackup();
-                });
-                
-                document.getElementById('copy-from-text').addEventListener('click', () => {
-                    const textarea = document.getElementById('backup-data-text');
-                    textarea.select();
-                    navigator.clipboard.writeText(textarea.value).then(() => {
-                        alert('データをコピーしました');
-                    }).catch(err => {
-                        // フォールバック
-                        try {
-                            document.execCommand('copy');
-                            alert('データをコピーしました');
-                        } catch (err2) {
-                            alert('コピーに失敗しました');
-                        }
-                    });
-                });
-            }
-            
-            importBackup() {
-                const backupModal = document.getElementById('backup-modal');
-                const backupContent = document.getElementById('backup-content');
-                
-                let html = '<div class="info-box">';
-                html += '<h4>バックアップからの復元</h4>';
-                html += '<p>以前にエクスポートしたバックアップファイルを選択するか、JSONデータを貼り付けてデータを復元します。</p>';
-                html += '<p><strong>注意:</strong> 現在のデータは上書きされます。重要なデータがある場合は先にバックアップを取ってください。</p>';
-                html += '</div>';
-                
-                html += '<div class="backup-options">';
-                html += '<div class="backup-option" id="upload-json-file">';
-                html += '<div class="backup-option-icon">📤</div>';
-                html += '<div class="backup-option-content">';
-                html += '<h4>JSONファイルをアップロード</h4>';
-                html += '<p>以前ダウンロードしたJSONファイルを選択します。</p>';
-                html += '</div></div>';
-                
-                html += '<div class="backup-option" id="paste-json-text">';
-                html += '<div class="backup-option-icon">📝</div>';
-                html += '<div class="backup-option-content">';
-                html += '<h4>JSONデータを貼り付け</h4>';
-                html += '<p>コピーしたJSONデータを貼り付けます。</p>';
-                html += '</div></div>';
-                html += '</div>';
-                
-                html += '<div class="form-buttons">';
-                html += '<button class="cancel-btn" id="close-import">閉じる</button>';
-                html += '</div>';
-                
-                backupContent.innerHTML = html;
-                document.getElementById('backup-title').textContent = 'バックアップから復元';
-                backupModal.style.display = 'flex';
-                
-                // イベントリスナーを設定
-                document.getElementById('close-import').addEventListener('click', () => {
-                    backupModal.style.display = 'none';
-                });
-                
-                document.getElementById('upload-json-file').addEventListener('click', () => {
-                    this.showFileUploader();
-                });
-                
-                document.getElementById('paste-json-text').addEventListener('click', () => {
-                    this.showJsonPasteArea();
-                });
-            }
-            
-            showFileUploader() {
-                const backupModal = document.getElementById('backup-modal');
-                const backupContent = document.getElementById('backup-content');
-                
-                let html = '<h4>JSONファイルをアップロード</h4>';
-                html += '<div class="form-group">';
-                html += '<label for="backup-file">バックアップファイルを選択</label>';
-                html += '<div class="file-input-wrapper">';
-                html += '<input type="file" id="backup-file" accept=".json,application/json">';
-                html += '<button class="file-input-button" id="browse-file">';
-                html += '<span>📁</span>';
-                html += '<span>ファイルを選択</span>';
-                html += '</button>';
-                html += '</div>';
-                html += '<div id="selected-file-info" class="selected-file">';
-                html += '<div class="selected-file-name" id="selected-file-name"></div>';
-                html += '<div class="selected-file-size" id="selected-file-size"></div>';
-                html += '</div>';
-                html += '</div>';
-                html += '<div class="info-box">';
-                html += '<p>このアプリでエクスポートしたJSONファイルを選択してください。</p>';
-                html += '<p class="file-info">対応ファイル: .json 形式 (最大: 10MB)</p>';
-                html += '</div>';
-                html += '<div class="form-buttons">';
-                html += '<button class="cancel-btn" id="back-to-import">戻る</button>';
-                html += '<button class="save-btn" id="process-upload" disabled>読み込む</button>';
-                html += '</div>';
-                
-                backupContent.innerHTML = html;
-                
-                // ファイル選択ボタンをトリガー
-                document.getElementById('browse-file').addEventListener('click', () => {
-                    document.getElementById('backup-file').click();
-                });
-                
-                // ファイル選択時の処理
-                document.getElementById('backup-file').addEventListener('change', (e) => {
-                    this.handleFileSelection(e);
-                });
-                
-                document.getElementById('back-to-import').addEventListener('click', () => {
-                    this.importBackup();
-                });
-                
-                document.getElementById('process-upload').addEventListener('click', () => {
-                    this.processFileUpload();
-                });
-            }
-            
-            handleFileSelection(event) {
-                const fileInput = event.target;
-                const processButton = document.getElementById('process-upload');
-                const fileInfo = document.getElementById('selected-file-info');
-                const fileName = document.getElementById('selected-file-name');
-                const fileSize = document.getElementById('selected-file-size');
-                
-                if (fileInput.files && fileInput.files.length > 0) {
-                    const file = fileInput.files[0];
-                    
-                    // ファイルサイズチェック (10MB制限)
-                    if (file.size > 10 * 1024 * 1024) {
-                        alert('ファイルサイズが大きすぎます。10MB以下のファイルを選択してください。');
-                        fileInput.value = '';
-                        fileInfo.classList.remove('show');
-                        processButton.disabled = true;
-                        return;
-                    }
-                    
-                    // ファイル形式チェック
-                    if (file.type !== 'application/json' && !file.name.endsWith('.json')) {
-                        alert('JSONファイルを選択してください。');
-                        fileInput.value = '';
-                        fileInfo.classList.remove('show');
-                        processButton.disabled = true;
-                        return;
-                    }
-                    
-                    // ファイル情報を表示
-                    fileName.textContent = file.name;
-                    fileSize.textContent = this.formatFileSize(file.size);
-                    fileInfo.classList.add('show');
-                    processButton.disabled = false;
-                } else {
-                    fileInfo.classList.remove('show');
-                    processButton.disabled = true;
-                }
-            }
-            
-            formatFileSize(bytes) {
-                if (bytes === 0) return '0 Bytes';
-                const k = 1024;
-                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-                const i = Math.floor(Math.log(bytes) / Math.log(k));
-                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-            }
-            
-            processFileUpload() {
-                const fileInput = document.getElementById('backup-file');
-                if (!fileInput.files || fileInput.files.length === 0) {
-                    alert('ファイルを選択してください');
-                    return;
-                }
-                
-                const file = fileInput.files[0];
-                const reader = new FileReader();
-                
-                reader.onload = (e) => {
-                    try {
-                        const backupData = JSON.parse(e.target.result);
-                        this.restoreFromBackup(backupData);
-                    } catch (error) {
-                        console.error('ファイルの解析に失敗しました:', error);
-                        alert('ファイルの形式が正しくありません。正しいバックアップファイルを選択してください。\n\nエラー詳細: ' + error.message);
-                    }
-                };
-                
-                reader.onerror = () => {
-                    alert('ファイルの読み込みに失敗しました');
-                };
-                
-                reader.readAsText(file);
-            }
-            
-            showJsonPasteArea() {
-                const backupModal = document.getElementById('backup-modal');
-                const backupContent = document.getElementById('backup-content');
-                
-                let html = '<h4>JSONデータを貼り付け</h4>';
-                html += '<div class="form-group">';
-                html += '<label for="json-paste-area">JSONデータを貼り付け</label>';
-                html += '<textarea id="json-paste-area" placeholder="{&#10;  &quot;version&quot;: &quot;1.0&quot;,&#10;  &quot;transactions&quot;: [...]&#10;}"></textarea>';
-                html += '</div>';
-                html += '<div class="form-buttons">';
-                html += '<button class="cancel-btn" id="back-to-import-2">戻る</button>';
-                html += '<button class="save-btn" id="process-paste">復元</button>';
-                html += '</div>';
-                
-                backupContent.innerHTML = html;
-                
-                document.getElementById('back-to-import-2').addEventListener('click', () => {
-                    this.importBackup();
-                });
-                
-                document.getElementById('process-paste').addEventListener('click', () => {
-                    this.processJsonPaste();
-                });
-            }
-            
-            processJsonPaste() {
-                const textarea = document.getElementById('json-paste-area');
-                const jsonText = textarea.value.trim();
-                
-                if (!jsonText) {
-                    alert('JSONデータを貼り付けてください');
-                    return;
-                }
-                
-                try {
-                    const backupData = JSON.parse(jsonText);
-                    this.restoreFromBackup(backupData);
-                } catch (error) {
-                    console.error('JSONの解析に失敗しました:', error);
-                    alert('JSONの形式が正しくありません。正しいバックアップデータを貼り付けてください。\n\nエラー詳細: ' + error.message);
-                }
-            }
-            
-            restoreFromBackup(backupData) {
-                // バックアップデータの検証
-                if (!backupData.transactions || !Array.isArray(backupData.transactions)) {
-                    alert('バックアップデータの形式が正しくありません。取引データが見つかりません。');
-                    return;
-                }
-                
-                if (backupData.version && backupData.version !== '1.0') {
-                    if (!confirm(`このバックアップファイルはバージョン${backupData.version}です。現在のアプリと互換性がない可能性があります。続行しますか？`)) {
-                        return;
-                    }
-                }
-                
-                // 現在のデータをバックアップ（念のため）
-                const currentData = this.transactions.slice();
-                
-                // 復元確認
-                const totalTransactions = backupData.transactions.length;
-                const currentTransactions = this.transactions.length;
-                const shopCount = this.countUniqueShops(backupData.transactions);
-                const machineCount = this.countUniqueMachines(backupData.transactions);
-                
-                let confirmMessage = `バックアップから${totalTransactions}件の取引を復元します。`;
-                confirmMessage += `\n・店舗数: ${shopCount}件`;
-                confirmMessage += `\n・機種数: ${machineCount}件`;
-                confirmMessage += `\n\n現在の${currentTransactions}件のデータは失われます。続行しますか？`;
-                
-                if (!confirm(confirmMessage)) {
-                    return;
-                }
-                
-                // データを復元
-                this.transactions = backupData.transactions;
-                this.saveToLocalStorage();
-                
-                // カレンダーを更新
-                this.currentDate = new Date();
-                this.currentDate.setDate(1);
-                this.selectedDate = null;
-                this.renderCalendar();
-                document.getElementById('day-details').innerHTML = '';
-                
-                const backupModal = document.getElementById('backup-modal');
-                backupModal.style.display = 'none';
-                
-                let successMessage = `データの復元が完了しました。`;
-                successMessage += `\n・取引数: ${totalTransactions}件`;
-                successMessage += `\n・店舗数: ${shopCount}件`;
-                successMessage += `\n・機種数: ${machineCount}件`;
-                
-                alert(successMessage);
-            }
-            
-            countUniqueShops(transactions) {
-                const shops = new Set();
-                transactions.forEach(transaction => {
-                    if (transaction.shopName && transaction.shopName.trim()) {
-                        shops.add(transaction.shopName.trim());
-                    }
-                });
-                return shops.size;
-            }
-            
-            countUniqueMachines(transactions) {
-                const machines = new Set();
-                transactions.forEach(transaction => {
-                    if (transaction.machineName && transaction.machineName.trim()) {
-                        machines.add(transaction.machineName.trim());
-                    }
-                });
-                return machines.size;
-            }
-            
+
             getEarliestDate() {
                 if (this.transactions.length === 0) return null;
                 const dates = this.transactions.map(t => new Date(t.date));
@@ -2123,20 +2134,27 @@
                 const stats = this.getYearlyStats();
                 let html = '<div class="stats-section">';
                 html += '<h3>年次別収支</h3>';
-                html += '<div class="year-stats">';
                 
-                stats.forEach(stat => {
-                    html += `
-                        <div class="year-stat-item">
-                            <div class="year-stat-year">${stat.year}年</div>
-                            <div class="year-stat-amount ${stat.total >= 0 ? 'positive' : 'negative'}">
-                                ${stat.total >= 0 ? '+' : ''}¥${stat.total.toLocaleString()}
+                if (stats.length === 0) {
+                    html += '<div class="no-transactions">データがありません</div>';
+                } else {
+                    html += '<div class="year-stats">';
+                    
+                    stats.forEach(stat => {
+                        html += `
+                            <div class="year-stat-item">
+                                <div class="year-stat-year">${stat.year}年</div>
+                                <div class="year-stat-amount ${stat.total >= 0 ? 'positive' : 'negative'}">
+                                    ${stat.total >= 0 ? '+' : ''}¥${stat.total.toLocaleString()}
+                                </div>
                             </div>
-                        </div>
-                    `;
-                });
+                        `;
+                    });
+                    
+                    html += '</div>';
+                }
                 
-                html += '</div></div>';
+                html += '</div>';
                 
                 document.getElementById('stats-title').textContent = '年次別収支';
                 document.getElementById('stats-content').innerHTML = html;
@@ -2207,24 +2225,6 @@
                 document.getElementById('stats-modal').style.display = 'flex';
             }
 
-            // 生涯通算統計表示
-            showLifetimeStats() {
-                const lifetimeTotal = this.getLifetimeTotal();
-                
-                let html = '<div class="stats-section">';
-                html += '<h3>生涯通算収支</h3>';
-                html += '<div class="lifetime-stats">';
-                html += '<div>全期間の合計収支</div>';
-                html += `<div class="lifetime-amount ${lifetimeTotal >= 0 ? 'positive' : 'negative'}">
-                    ${lifetimeTotal >= 0 ? '+' : ''}¥${lifetimeTotal.toLocaleString()}
-                </div>`;
-                html += '</div></div>';
-                
-                document.getElementById('stats-title').textContent = '生涯通算収支';
-                document.getElementById('stats-content').innerHTML = html;
-                document.getElementById('stats-modal').style.display = 'flex';
-            }
-
             // 年次統計取得
             getYearlyStats() {
                 const yearlyStats = {};
@@ -2285,15 +2285,6 @@
                 })).sort((a, b) => b.total - a.total);
             }
 
-            // 生涯通算取得
-            getLifetimeTotal() {
-                let total = 0;
-                this.transactions.forEach(transaction => {
-                    total += transaction.returnAmount - transaction.investmentAmount;
-                });
-                return total;
-            }
-
             // データ修復
             cleanupErrorData() {
                 const initialLength = this.transactions.length;
@@ -2304,6 +2295,71 @@
                 return initialLength - this.transactions.length;
             }
 
+            // バックアップ機能
+            exportBackup() {
+                const backupData = {
+                    transactions: this.transactions,
+                    theme: this.currentTheme,
+                    calendarBackground: this.calendarBackground,
+                    exportDate: new Date().toISOString()
+                };
+                
+                const dataStr = JSON.stringify(backupData, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                
+                const exportFileDefaultName = `finance_backup_${new Date().toISOString().slice(0,10)}.json`;
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+                
+                alert(`バックアップデータをダウンロードしました\nファイル名: ${exportFileDefaultName}`);
+            }
+
+            importBackup() {
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = '.json';
+                
+                fileInput.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        try {
+                            const backupData = JSON.parse(e.target.result);
+                            
+                            // バックアップデータの検証
+                            if (!backupData.transactions || !Array.isArray(backupData.transactions)) {
+                                throw new Error('無効なバックアップファイルです');
+                            }
+                            
+                            if (confirm(`バックアップデータをインポートしますか？\n取引数: ${backupData.transactions.length}件`)) {
+                                this.transactions = backupData.transactions;
+                                if (backupData.theme) {
+                                    this.applyTheme(backupData.theme);
+                                }
+                                if (backupData.calendarBackground) {
+                                    this.calendarBackground = backupData.calendarBackground;
+                                    this.setupCalendarBackground();
+                                }
+                                this.saveToLocalStorage();
+                                this.renderCalendar();
+                                alert('バックアップデータを復元しました');
+                            }
+                        } catch (error) {
+                            console.error('バックアップ読み込みエラー:', error);
+                            alert('バックアップファイルの読み込みに失敗しました\nファイルが正しい形式か確認してください');
+                        }
+                    };
+                    reader.readAsText(file);
+                };
+                
+                fileInput.click();
+            }
+
             // トップページへ移動
             goToTopPage() {
                 window.location.href = 'index.html';
@@ -2311,6 +2367,8 @@
 
             // イベントリスナー設定
             setupEventListeners() {
+                console.log('イベントリスナー設定開始');
+                
                 // ハンバーガーメニュー
                 document.getElementById('menu-toggle').addEventListener('click', () => {
                     this.openMenu();
@@ -2400,6 +2458,47 @@
                     });
                 });
 
+                // カレンダー背景画像のイベントリスナー - 大幅に拡張
+                document.getElementById('bg-image-select').addEventListener('click', () => {
+                    document.getElementById('bg-image-input').click();
+                });
+
+                document.getElementById('bg-image-input').addEventListener('change', (e) => {
+                    this.handleBackgroundImageUpload(e);
+                });
+
+                document.getElementById('bg-opacity-slider').addEventListener('input', (e) => {
+                    const opacity = parseInt(e.target.value);
+                    this.updateBackgroundOpacity(opacity);
+                });
+
+                document.getElementById('bg-scale-slider').addEventListener('input', (e) => {
+                    const scale = parseInt(e.target.value);
+                    this.updateBackgroundScale(scale);
+                });
+
+                // 位置調整ボタン
+                document.querySelectorAll('.position-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const position = e.target.dataset.position;
+                        this.updateBackgroundPosition(position);
+                    });
+                });
+
+                // 背景設定リセット
+                document.getElementById('reset-bg-btn').addEventListener('click', () => {
+                    if (confirm('背景設定をデフォルト値にリセットしますか？')) {
+                        this.resetBackgroundSettings();
+                    }
+                });
+
+                // 背景削除
+                document.getElementById('remove-bg-btn').addEventListener('click', () => {
+                    if (confirm('背景画像を削除しますか？')) {
+                        this.removeCalendarBackground();
+                    }
+                });
+
                 // 統計モーダルを閉じる
                 document.getElementById('close-stats').addEventListener('click', () => {
                     document.getElementById('stats-modal').style.display = 'none';
@@ -2451,6 +2550,13 @@
                             this.showDayDetails(dateStr);
                         }
                         alert(`データ修復が完了しました（${cleanedCount}件のエラーデータを削除）`);
+                    }
+                });
+
+                // サンプルデータ追加
+                document.getElementById('add-sample-data').addEventListener('click', () => {
+                    if (confirm('サンプルデータを追加しますか？\n（現在のデータは上書きされます）')) {
+                        this.addSampleData();
                     }
                 });
 
@@ -2532,7 +2638,66 @@
                     }
                 });
 
-                console.log('All event listeners setup successfully');
+                // モーダル外クリックで閉じる
+                window.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('month-picker-modal')) {
+                        document.getElementById('month-picker-modal').style.display = 'none';
+                    }
+                    if (e.target.classList.contains('stats-modal')) {
+                        document.getElementById('stats-modal').style.display = 'none';
+                    }
+                    if (e.target.classList.contains('modal')) {
+                        document.getElementById('transaction-modal').style.display = 'none';
+                        form.reset();
+                    }
+                    // テーマカスタマイザー外クリックで閉じる
+                    if (!e.target.closest('.theme-customizer') && 
+                        !e.target.closest('.theme-toggle') && 
+                        e.target.id !== 'theme-toggle') {
+                        document.getElementById('theme-customizer').style.display = 'none';
+                    }
+                });
+
+                console.log('イベントリスナー設定完了');
+            }
+
+            // 背景画像アップロード処理
+            handleBackgroundImageUpload(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                // ファイルサイズ制限（10MBに拡大）
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('ファイルサイズが大きすぎます。10MB以下の画像を選択してください。');
+                    return;
+                }
+
+                // 画像形式チェック
+                if (!file.type.match('image.*')) {
+                    alert('画像ファイルを選択してください。');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const image = new Image();
+                    image.onload = () => {
+                        // 画像をDataURLとして保存（透過度70%、拡大率100%、中央配置）
+                        this.setCalendarBackground(e.target.result, 70, 100, 'center center');
+                        alert('背景画像を設定しました。\n透過度、拡大縮小、位置を調整できます。');
+                    };
+                    image.onerror = () => {
+                        alert('画像の読み込みに失敗しました。別の画像を選択してください。');
+                    };
+                    image.src = e.target.result;
+                };
+                reader.onerror = () => {
+                    alert('ファイルの読み込みに失敗しました。別のファイルを選択してください。');
+                };
+                reader.readAsDataURL(file);
+                
+                // ファイル入力をリセット
+                event.target.value = '';
             }
         }
 
