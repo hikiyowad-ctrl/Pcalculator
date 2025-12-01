@@ -61,6 +61,35 @@
             opacity: 0.9;
             color: #bdc3c7;
             font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        /* PayPay支援ボタン */
+        .support-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #ff6b6b, #ff4757);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .support-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+            background: linear-gradient(135deg, #ff4757, #ff6b6b);
+        }
+
+        .support-button::before {
+            content: '❤️';
+            font-size: 1.1rem;
         }
 
         .tool-menu {
@@ -324,6 +353,15 @@
                 font-size: 2rem;
             }
 
+            .subtitle {
+                font-size: 1.1rem;
+            }
+
+            .support-button {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+            }
+
             .tool-menu {
                 grid-template-columns: 1fr;
                 gap: 15px;
@@ -379,6 +417,11 @@
                 font-size: 1.8rem;
             }
 
+            .support-button {
+                font-size: 0.85rem;
+                padding: 9px 18px;
+            }
+
             .tool-link {
                 padding: 18px 15px;
                 font-size: 1rem;
@@ -400,6 +443,9 @@
         <div class="header">
             <h1>🎰 パチスロ計算ツール集 🎰</h1>
             <div class="subtitle">収支・仕事量計算ツール</div>
+            <a href="YOUR_PAYPAY_LINK_HERE" class="support-button" target="_blank" rel="noopener noreferrer">
+                開発者を支援する（PayPay）
+            </a>
         </div>
 
         <div class="tool-menu">
