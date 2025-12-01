@@ -157,6 +157,49 @@
             border: 1px solid #e9ecef;
         }
 
+        /* 注意書き */
+        .data-warning {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .data-warning::before {
+            content: '⚠️';
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+
+        .data-warning-content h3 {
+            color: #856404;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .data-warning-content p {
+            color: #856404;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .data-warning-content p strong {
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff4757);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .tool-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -421,6 +464,16 @@
                 padding: 25px 20px;
             }
 
+            .data-warning {
+                padding: 15px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .data-warning::before {
+                margin-bottom: 10px;
+            }
+
             .collapsible-header {
                 padding: 20px;
             }
@@ -498,6 +551,20 @@
                 <span class="section-icon">🛠️</span>
                 <h2 class="section-title">ツール一覧</h2>
             </div>
+
+            <!-- データ消滅の注意書きを追加 -->
+            <div class="data-warning">
+                <div class="data-warning-content">
+                    <h3>⚠️ データ保存に関する重要なお知らせ</h3>
+                    <p>
+                        本ツールはブラウザのローカルストレージを使用しています。<br>
+                        <strong>ブラウザのキャッシュクリア・シークレットモード終了・ブラウザアンインストール・端末初期化</strong>を行うと、<br>
+                        保存データが<strong>完全に消滅</strong>します。<br>
+                        重要なデータは定期的に「<strong>バックアップ機能</strong>」で保存してください。
+                    </p>
+                </div>
+            </div>
+
             <div class="tool-grid">
                 <a href="./counter.html" class="tool-card">
                     <div class="tool-icon">🎯</div>
@@ -520,7 +587,7 @@
                 <a href="finance.html" class="tool-card">
                     <div class="tool-icon">📊</div>
                     <div class="tool-name">収支管理ツール</div>
-                    <div class="tool-description">日々の収支を記録し、長期的な勝率向上をサポートします。</div>
+                    <div class="tool-description">日々の収支を記録し、長期的な勝率向上をサポートします。<br><strong>※バックアップ機能付き</strong></div>
                 </a>
 
                 <a href="split_bill.html" class="tool-card">
@@ -539,7 +606,7 @@
             </div>
             <p>パチスロスタッツは、パチンコ・スロットの効率的な遊技をサポートする無料の計算ツール集です。</p>
             <p>期待値計算、小役カウント、収支管理、友達との精算など、様々なシーンで役立つ機能を提供しています。</p>
-            <p>すべてのツールはブラウザ上で動作し、インストール不要で今すぐ使えます。データはお使いのデバイスに保存されるため、プライバシーも安心です。</p>
+            <p><strong>※注意：</strong>データはお使いのデバイスのブラウザ内に保存されます。キャッシュクリアやブラウザの再インストールによりデータが消える可能性がありますので、重要なデータは定期的にバックアップしてください。</p>
         </div>
 
         <!-- 使い方セクション -->
