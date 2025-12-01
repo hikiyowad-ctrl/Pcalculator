@@ -23,7 +23,7 @@
             --text-color: #2c3e50;
             --card-bg: white;
             --border-color: #bdc3c7;
-            --calendar-bg-opacity: 0.7; /* 背景透過率を大幅に上げる */
+            --calendar-bg-opacity: 0.7;
             --calendar-bg-image: none;
             --calendar-bg-size: cover;
             --calendar-bg-position: center;
@@ -234,13 +234,13 @@
             height: 100%;
             position: relative;
             z-index: 1;
-            background-color: rgba(255, 255, 255, 0.7); /* セルの透明度を下げて背景をより見やすく */
+            background-color: rgba(255, 255, 255, 0.7);
         }
 
         .weekday {
             padding: 10px 5px;
             text-align: center;
-            background: rgba(52, 73, 94, 0.85); /* 背景色を少し濃く */
+            background: rgba(52, 73, 94, 0.85);
             color: white;
             font-weight: bold;
             border-right: 1px solid var(--primary-color);
@@ -259,7 +259,7 @@
             position: relative;
             cursor: pointer;
             transition: background-color 0.2s;
-            background: rgba(255, 255, 255, 0.75); /* セルの背景透過を調整 */
+            background: rgba(255, 255, 255, 0.75);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -307,7 +307,7 @@
             font-weight: bold;
             line-height: 1;
             color: var(--text-color);
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); /* 文字を背景から浮き立たせる */
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
         }
 
         .day.sunday .day-number {
@@ -326,7 +326,7 @@
             overflow: hidden;
             max-height: 100%;
             transition: font-size 0.2s;
-            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); /* 文字を背景から浮き立たせる */
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
         }
 
         .daily-total.income {
@@ -338,7 +338,7 @@
         }
 
         .daily-total.zero {
-            color: #2c3e50; /* 濃い色に変更 */
+            color: #2c3e50;
             opacity: 0.9;
         }
 
@@ -357,7 +357,7 @@
             overflow-y: auto;
             position: relative;
             z-index: 1;
-            backdrop-filter: blur(3px); /* 背景をぼかして文字を見やすく */
+            backdrop-filter: blur(3px);
         }
 
         .day-details h3 {
@@ -538,21 +538,6 @@
             border: 1px solid rgba(0,0,0,0.1);
         }
 
-        .theme-toggle {
-            position: fixed;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            background: var(--accent-color);
-            color: white;
-            border: none;
-            border-radius: 0 10px 10px 0;
-            padding: 10px 15px;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
-        }
-
         .theme-section {
             margin-bottom: 20px;
         }
@@ -611,7 +596,7 @@
             box-shadow: 0 0 5px rgba(0,0,0,0.3);
         }
 
-        /* カレンダー背景設定 - 大幅に拡張 */
+        /* カレンダー背景設定 */
         .calendar-bg-controls {
             display: flex;
             flex-direction: column;
@@ -621,7 +606,7 @@
 
         .bg-preview {
             width: 100%;
-            height: 150px; /* プレビューを大きく */
+            height: 150px;
             border: 2px solid var(--border-color);
             border-radius: 5px;
             overflow: hidden;
@@ -637,7 +622,7 @@
         .bg-preview-image {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* 画像全体が表示されるように */
+            object-fit: contain;
             display: none;
         }
 
@@ -950,10 +935,6 @@
                 min-width: auto;
                 max-width: none;
             }
-            
-            .theme-toggle {
-                padding: 8px 12px;
-            }
 
             .header {
                 padding: 12px;
@@ -1110,11 +1091,10 @@
     </style>
 </head>
 <body>
-    <!-- 着せ替えツール -->
-    <button class="theme-toggle" id="theme-toggle">🎨</button>
+    <!-- テーマカスタマイザー -->
     <div class="theme-customizer" id="theme-customizer" style="display: none;">
         <div class="theme-section">
-            <h4>テーマカスタマイズ</h4>
+            <h4>テーマ設定</h4>
             <div class="color-picker">
                 <label>メイン色:</label>
                 <input type="color" class="color-input" id="primary-color" value="#2c3e50">
@@ -1217,7 +1197,7 @@
             <div class="menu-item" id="export-backup">データのバックアップ</div>
             <div class="menu-item" id="import-backup">バックアップから復元</div>
             <div class="menu-item" id="show-current-month">当月表示</div>
-            <div class="menu-item" id="customize-theme">テーマ変更</div>
+            <div class="menu-item" id="customize-theme">テーマ設定</div>
         </div>
     </div>
 
@@ -1258,8 +1238,6 @@
 
         <div class="controls">
             <button class="add-btn" id="add-transaction">追加</button>
-            <button class="nav-btn" id="cleanup-data" style="background: #f39c12;">データ修復</button>
-            <button class="nav-btn" id="add-sample-data" style="background: #9b59b6;">サンプルデータ</button>
         </div>
     </div>
 
@@ -1411,51 +1389,45 @@
             // 初回使用ガイド
             showFirstTimeGuide() {
                 setTimeout(() => {
-                    const addSampleBtn = document.getElementById('add-sample-data');
-                    if (addSampleBtn && confirm('初めてのご利用ですね！\nサンプルデータを追加しますか？\n（「キャンセル」を選択すると、自分でデータを追加できます）')) {
-                        this.addSampleData();
+                    if (confirm('初めてのご使用ですね！\n操作方法をご案内しますか？')) {
+                        this.showUserGuide();
                     }
                 }, 1000);
             }
 
-            // サンプルデータ追加
-            addSampleData() {
-                const today = new Date();
-                const yesterday = new Date(today);
-                yesterday.setDate(yesterday.getDate() - 1);
+            // ユーザーガイド表示
+            showUserGuide() {
+                const guideMessage = `
+操作方法：
+
+1. 取引の追加：
+   - 「追加」ボタンをクリック
+   - 日付、投資金額、回収金額を入力
+   - 機種名、店舗名も入力可能
+
+2. 取引の閲覧・編集：
+   - カレンダーの日付をクリック
+   - 詳細が下部に表示されます
+   - 編集・削除ボタンで変更可能
+
+3. 月の移動：
+   - 「前月」「次月」ボタン
+   - 月表示をクリックで直接選択
+
+4. 統計情報：
+   - メニューから各種統計を表示
+   - 年次別、店舗別、機種別の収支
+
+5. テーマ設定：
+   - メニューから「テーマ設定」を選択
+   - 色やプリセットテーマを変更可能
+   - 背景画像の設定も可能
+
+6. データ管理：
+   - バックアップのエクスポート/インポート
+   - データはブラウザに自動保存`;
                 
-                const sampleData = [
-                    {
-                        date: this.formatDate(today),
-                        investmentAmount: 5000,
-                        returnAmount: 7500,
-                        machineName: '北斗の拳',
-                        shopName: 'パチンコA店',
-                        createdAt: new Date()
-                    },
-                    {
-                        date: this.formatDate(yesterday),
-                        investmentAmount: 3000,
-                        returnAmount: 4200,
-                        machineName: 'シン・エヴァンゲリオン',
-                        shopName: 'パチンコB店',
-                        createdAt: new Date()
-                    }
-                ];
-                
-                this.transactions = sampleData;
-                this.saveToLocalStorage();
-                this.renderCalendar();
-                
-                // 今日の日付を選択
-                this.selectedDate = today;
-                const dateStr = this.formatDate(today);
-                this.renderCalendar();
-                this.showDayDetails(dateStr);
-                
-                setTimeout(() => {
-                    alert('サンプルデータを追加しました！\n\n操作方法：\n1. 日付をクリックして詳細表示\n2. 「+追加」ボタンで新しい取引を追加\n3. メニューから統計情報を確認\n4. 着せ替え機能でデザインを変更できます');
-                }, 500);
+                alert(guideMessage);
             }
 
             // テーマ関連のメソッド
@@ -1555,9 +1527,12 @@
                     accent: accentColor,
                     addButton: addButtonColor
                 }));
+                
+                // 適用後、カスタマイザーを閉じる
+                this.toggleThemeCustomizer();
             }
 
-            // カレンダー背景画像の設定 - 大幅に拡張
+            // カレンダー背景画像の設定
             setupCalendarBackground() {
                 const calendarBg = document.getElementById('calendar-background');
                 const opacitySlider = document.getElementById('bg-opacity-slider');
@@ -1718,7 +1693,7 @@
                 
                 // CSS変数をリセット
                 document.documentElement.style.setProperty('--calendar-bg-image', 'none');
-                document.documentElement.style.setProperty('--calendar-bg-opacity', 0.7); // デフォルトの透過率
+                document.documentElement.style.setProperty('--calendar-bg-opacity', 0.7);
                 document.documentElement.style.setProperty('--calendar-bg-size', 'cover');
                 document.documentElement.style.setProperty('--calendar-bg-position', 'center');
                 
@@ -2285,16 +2260,6 @@
                 })).sort((a, b) => b.total - a.total);
             }
 
-            // データ修復
-            cleanupErrorData() {
-                const initialLength = this.transactions.length;
-                this.transactions = this.transactions.filter(transaction => 
-                    !(transaction.investmentAmount === 0 && transaction.returnAmount === 0)
-                );
-                this.saveToLocalStorage();
-                return initialLength - this.transactions.length;
-            }
-
             // バックアップ機能
             exportBackup() {
                 const backupData = {
@@ -2421,6 +2386,7 @@
                     this.closeMenu();
                 });
 
+                // テーマ変更（ハンバーガーメニューから）
                 document.getElementById('customize-theme').addEventListener('click', () => {
                     this.toggleThemeCustomizer();
                     this.closeMenu();
@@ -2436,18 +2402,12 @@
                 });
 
                 // テーマ関連のイベントリスナー
-                document.getElementById('theme-toggle').addEventListener('click', () => {
-                    this.toggleThemeCustomizer();
-                });
-
                 document.getElementById('save-theme').addEventListener('click', () => {
                     this.applyCustomTheme();
-                    this.toggleThemeCustomizer();
                 });
 
                 document.getElementById('reset-theme').addEventListener('click', () => {
                     this.applyTheme('default');
-                    this.toggleThemeCustomizer();
                 });
 
                 // プリセットテーマのクリックイベント
@@ -2458,7 +2418,7 @@
                     });
                 });
 
-                // カレンダー背景画像のイベントリスナー - 大幅に拡張
+                // カレンダー背景画像のイベントリスナー
                 document.getElementById('bg-image-select').addEventListener('click', () => {
                     document.getElementById('bg-image-input').click();
                 });
@@ -2538,26 +2498,6 @@
                     this.selectedDate = null;
                     this.renderCalendar();
                     document.getElementById('day-details').innerHTML = '';
-                });
-
-                // データ修復
-                document.getElementById('cleanup-data').addEventListener('click', () => {
-                    if (confirm('全データをスキャンしてエラーデータを修復しますか？')) {
-                        const cleanedCount = this.cleanupErrorData();
-                        this.renderCalendar();
-                        if (this.selectedDate) {
-                            const dateStr = this.formatDate(this.selectedDate);
-                            this.showDayDetails(dateStr);
-                        }
-                        alert(`データ修復が完了しました（${cleanedCount}件のエラーデータを削除）`);
-                    }
-                });
-
-                // サンプルデータ追加
-                document.getElementById('add-sample-data').addEventListener('click', () => {
-                    if (confirm('サンプルデータを追加しますか？\n（現在のデータは上書きされます）')) {
-                        this.addSampleData();
-                    }
                 });
 
                 // 取引追加・編集
@@ -2651,9 +2591,7 @@
                         form.reset();
                     }
                     // テーマカスタマイザー外クリックで閉じる
-                    if (!e.target.closest('.theme-customizer') && 
-                        !e.target.closest('.theme-toggle') && 
-                        e.target.id !== 'theme-toggle') {
+                    if (!e.target.closest('.theme-customizer') && e.target.id !== 'customize-theme') {
                         document.getElementById('theme-customizer').style.display = 'none';
                     }
                 });
