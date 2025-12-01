@@ -16,7 +16,7 @@
             --primary-color: #2c3e50;
             --secondary-color: #34495e;
             --accent-color: #3498db;
-            --success-color: #27ae60;
+            --add-button-color: #27ae60; /* 成功色から追加ボタン色に変更 */
             --danger-color: #e74c3c;
             --warning-color: #f39c12;
             --background-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -93,7 +93,7 @@
         .total-amount {
             font-size: 2.2rem;
             font-weight: bold;
-            color: var(--success-color);
+            color: var(--add-button-color); /* 追加ボタン色を使用 */
         }
 
         .nav-btn {
@@ -301,7 +301,7 @@
         }
 
         .daily-total.income {
-            color: var(--success-color);
+            color: var(--add-button-color); /* 追加ボタン色を使用 */
         }
 
         .daily-total.expense {
@@ -359,7 +359,7 @@
         }
 
         .transaction-amount.positive {
-            color: var(--success-color);
+            color: var(--add-button-color); /* 追加ボタン色を使用 */
         }
 
         .transaction-amount.negative {
@@ -434,25 +434,39 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
+        /* +追加ボタン - 変更部分 */
         .add-btn {
-            padding: 12px 20px;
-            background: var(--success-color);
+            padding: 12px 24px;
+            background: var(--add-button-color);
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: bold;
-            transition: background-color 0.2s;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 120px;
         }
 
         .add-btn:hover {
             background: #219a52;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(39, 174, 96, 0.3);
+        }
+
+        .add-btn::before {
+            content: '+';
+            font-size: 1.4rem;
+            font-weight: bold;
         }
 
         .save-btn {
             padding: 12px 20px;
-            background: var(--success-color);
+            background: var(--add-button-color);
             color: white;
             border: none;
             border-radius: 5px;
@@ -521,15 +535,16 @@
 
         .color-picker label {
             font-size: 0.8rem;
-            min-width: 60px;
+            min-width: 80px;
         }
 
         .color-input {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            border: 2px solid #eee;
         }
 
         .theme-presets {
@@ -814,7 +829,7 @@
         }
 
         .year-stat-amount.positive, .shop-stat-amount.positive, .machine-stat-amount.positive {
-            color: var(--success-color);
+            color: var(--add-button-color); /* 追加ボタン色を使用 */
         }
 
         .year-stat-amount.negative, .shop-stat-amount.negative, .machine-stat-amount.negative {
@@ -836,7 +851,7 @@
         }
 
         .lifetime-amount.positive {
-            color: var(--success-color);
+            color: var(--add-button-color); /* 追加ボタン色を使用 */
         }
 
         .lifetime-amount.negative {
@@ -932,6 +947,13 @@
                 gap: 10px;
                 text-align: center;
             }
+            
+            /* +追加ボタンのレスポンシブ */
+            .add-btn {
+                padding: 10px 20px;
+                font-size: 1rem;
+                min-width: 100px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -984,6 +1006,29 @@
             .backup-option-icon {
                 margin-bottom: 10px;
             }
+            
+            /* +追加ボタンの小さな画面用 */
+            .add-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+                min-width: 90px;
+            }
+            
+            .add-btn::before {
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* コントロール部分のスタイル */
+        .controls {
+            padding: 15px;
+            background: #f8f9fa;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+            gap: 15px;
         }
     </style>
 </head>
@@ -998,16 +1043,12 @@
                 <input type="color" class="color-input" id="primary-color" value="#2c3e50">
             </div>
             <div class="color-picker">
-                <label>アクセント:</label>
+                <label>アクセント色:</label>
                 <input type="color" class="color-input" id="accent-color" value="#3498db">
             </div>
             <div class="color-picker">
-                <label>成功色:</label>
-                <input type="color" class="color-input" id="success-color" value="#27ae60">
-            </div>
-            <div class="color-picker">
-                <label>背景:</label>
-                <input type="color" class="color-input" id="bg-color" value="#667eea">
+                <label>追加ボタン色:</label> <!-- 成功色から追加ボタン色に変更 -->
+                <input type="color" class="color-input" id="add-button-color" value="#27ae60">
             </div>
         </div>
         
@@ -1083,8 +1124,8 @@
         <div class="day-details" id="day-details"></div>
 
         <div class="controls">
-            <button class="add-btn" id="add-transaction">取引を追加</button>
-            <button class="nav-btn" id="cleanup-data" style="background: #f39c12; margin-left: 10px;">データ修復</button>
+            <button class="add-btn" id="add-transaction">追加</button> <!-- +追加に変更 -->
+            <button class="nav-btn" id="cleanup-data" style="background: #f39c12;">データ修復</button>
         </div>
     </div>
 
@@ -1183,7 +1224,7 @@
                         primary: '#2c3e50',
                         secondary: '#34495e',
                         accent: '#3498db',
-                        success: '#27ae60',
+                        addButton: '#27ae60', // 追加ボタン色
                         danger: '#e74c3c',
                         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
                     },
@@ -1191,7 +1232,7 @@
                         primary: '#c44569',
                         secondary: '#e66767',
                         accent: '#f19066',
-                        success: '#78e08f',
+                        addButton: '#78e08f', // 追加ボタン色
                         danger: '#e55039',
                         background: 'linear-gradient(135deg, #ff6b6b, #ee5a24)'
                     },
@@ -1199,7 +1240,7 @@
                         primary: '#0c2461',
                         secondary: '#1e3799',
                         accent: '#4a69bd',
-                        success: '#38ada9',
+                        addButton: '#38ada9', // 追加ボタン色
                         danger: '#eb2f06',
                         background: 'linear-gradient(135deg, #00d2ff, #3a7bd5)'
                     },
@@ -1207,7 +1248,7 @@
                         primary: '#1e272e',
                         secondary: '#485460',
                         accent: '#05c46b',
-                        success: '#0be881',
+                        addButton: '#0be881', // 追加ボタン色
                         danger: '#ff3f34',
                         background: 'linear-gradient(135deg, #a8ff78, #78ffd6)'
                     },
@@ -1215,7 +1256,7 @@
                         primary: '#6D214F',
                         secondary: '#B33771',
                         accent: '#FC427B',
-                        success: '#58B19F',
+                        addButton: '#58B19F', // 追加ボタン色
                         danger: '#E74292',
                         background: 'linear-gradient(135deg, #ff9a9e, #fecfef)'
                     },
@@ -1223,7 +1264,7 @@
                         primary: '#2C3A47',
                         secondary: '#3B3B98',
                         accent: '#25CCF7',
-                        success: '#1B9CFC',
+                        addButton: '#1B9CFC', // 追加ボタン色
                         danger: '#FD7272',
                         background: 'linear-gradient(135deg, #4facfe, #00f2fe)'
                     }
@@ -1234,13 +1275,13 @@
                 document.documentElement.style.setProperty('--primary-color', theme.primary);
                 document.documentElement.style.setProperty('--secondary-color', theme.secondary);
                 document.documentElement.style.setProperty('--accent-color', theme.accent);
-                document.documentElement.style.setProperty('--success-color', theme.success);
+                document.documentElement.style.setProperty('--add-button-color', theme.addButton); // 追加ボタン色
                 document.documentElement.style.setProperty('--danger-color', theme.danger);
                 document.documentElement.style.setProperty('--background-gradient', theme.background);
 
                 document.getElementById('primary-color').value = theme.primary;
                 document.getElementById('accent-color').value = theme.accent;
-                document.getElementById('success-color').value = theme.success;
+                document.getElementById('add-button-color').value = theme.addButton; // 追加ボタン色
 
                 document.querySelectorAll('.theme-preset').forEach(preset => {
                     preset.classList.remove('active');
@@ -1256,34 +1297,19 @@
             applyCustomTheme() {
                 const primaryColor = document.getElementById('primary-color').value;
                 const accentColor = document.getElementById('accent-color').value;
-                const successColor = document.getElementById('success-color').value;
-                const bgColor = document.getElementById('bg-color').value;
+                const addButtonColor = document.getElementById('add-button-color').value; // 追加ボタン色
 
                 document.documentElement.style.setProperty('--primary-color', primaryColor);
                 document.documentElement.style.setProperty('--accent-color', accentColor);
-                document.documentElement.style.setProperty('--success-color', successColor);
-                document.documentElement.style.setProperty('--background-gradient', 
-                    `linear-gradient(135deg, ${bgColor} 0%, ${this.darkenColor(bgColor, 20)} 100%)`);
+                document.documentElement.style.setProperty('--add-button-color', addButtonColor); // 追加ボタン色
 
                 this.currentTheme = 'custom';
                 localStorage.setItem('appTheme', JSON.stringify('custom'));
                 localStorage.setItem('customTheme', JSON.stringify({
                     primary: primaryColor,
                     accent: accentColor,
-                    success: successColor,
-                    background: bgColor
+                    addButton: addButtonColor // 追加ボタン色
                 }));
-            }
-
-            darkenColor(color, percent) {
-                const num = parseInt(color.slice(1), 16);
-                const amt = Math.round(2.55 * percent);
-                const R = (num >> 16) - amt;
-                const G = (num >> 8 & 0x00FF) - amt;
-                const B = (num & 0x0000FF) - amt;
-                return "#" + (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 +
-                    (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 +
-                    (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
             }
 
             // メニュー操作
@@ -1401,7 +1427,7 @@
                 totalAmountElement.textContent = monthlyTotal >= 0 ? 
                     `¥${monthlyTotal.toLocaleString()}` : 
                     `-¥${Math.abs(monthlyTotal).toLocaleString()}`;
-                totalAmountElement.style.color = monthlyTotal >= 0 ? '#27ae60' : '#e74c3c';
+                totalAmountElement.style.color = monthlyTotal >= 0 ? 'var(--add-button-color)' : '#e74c3c';
             }
 
             // 日付をYYYY-MM-DD形式に変換
@@ -2024,8 +2050,15 @@
                 // 復元確認
                 const totalTransactions = backupData.transactions.length;
                 const currentTransactions = this.transactions.length;
+                const shopCount = this.countUniqueShops(backupData.transactions);
+                const machineCount = this.countUniqueMachines(backupData.transactions);
                 
-                if (!confirm(`バックアップから${totalTransactions}件の取引を復元します。現在の${currentTransactions}件のデータは失われます。続行しますか？`)) {
+                let confirmMessage = `バックアップから${totalTransactions}件の取引を復元します。`;
+                confirmMessage += `\n・店舗数: ${shopCount}件`;
+                confirmMessage += `\n・機種数: ${machineCount}件`;
+                confirmMessage += `\n\n現在の${currentTransactions}件のデータは失われます。続行しますか？`;
+                
+                if (!confirm(confirmMessage)) {
                     return;
                 }
                 
@@ -2043,7 +2076,32 @@
                 const backupModal = document.getElementById('backup-modal');
                 backupModal.style.display = 'none';
                 
-                alert(`データの復元が完了しました。${totalTransactions}件の取引を復元しました。`);
+                let successMessage = `データの復元が完了しました。`;
+                successMessage += `\n・取引数: ${totalTransactions}件`;
+                successMessage += `\n・店舗数: ${shopCount}件`;
+                successMessage += `\n・機種数: ${machineCount}件`;
+                
+                alert(successMessage);
+            }
+            
+            countUniqueShops(transactions) {
+                const shops = new Set();
+                transactions.forEach(transaction => {
+                    if (transaction.shopName && transaction.shopName.trim()) {
+                        shops.add(transaction.shopName.trim());
+                    }
+                });
+                return shops.size;
+            }
+            
+            countUniqueMachines(transactions) {
+                const machines = new Set();
+                transactions.forEach(transaction => {
+                    if (transaction.machineName && transaction.machineName.trim()) {
+                        machines.add(transaction.machineName.trim());
+                    }
+                });
+                return machines.size;
             }
             
             getEarliestDate() {
