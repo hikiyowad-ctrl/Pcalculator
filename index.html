@@ -1,425 +1,430 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【仕事量計算】パチスロツール集 トップページ</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【仕事量計算】パチスロツール集 トップページ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
 
-        body {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            min-height: 100vh;
-            color: #2c3e50;
-            text-align: center;
-            line-height: 1.6;
-        }
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            min-height: 100vh;
+            color: #2c3e50;
+            text-align: center;
+            line-height: 1.6;
+        }
 
-        .main-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
+        .main-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
 
-        /* ヘッダー */
-        .header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-            color: white;
-            padding: 40px 30px;
-            border-radius: 20px;
-            margin-bottom: 40px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            border: 2px solid #3498db;
-            position: relative;
-            overflow: hidden;
-        }
+        /* ヘッダー */
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid #3498db;
+            position: relative;
+            overflow: hidden;
+        }
 
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #3498db, #2ecc71, #3498db);
-        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3498db, #2ecc71, #3498db);
+        }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #ecf0f1;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #ecf0f1;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
 
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            color: #bdc3c7;
-            font-weight: 500;
-        }
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            color: #bdc3c7;
+            font-weight: 500;
+        }
 
-        /* ツールメニュー */
-        .tool-menu {
-            /* 修正: PC表示では常に2列で表示するよう明示的に指定 */
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
+        /* ツールメニュー - 修正 */
+        .tool-menu {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
 
-        .tool-link {
-            padding: 25px 20px;
-            background: white;
-            color: #2c3e50;
-            text-decoration: none;
-            border-radius: 15px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            position: relative;
-            overflow: hidden;
-        }
+        .tool-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px 20px;
+            background: white;
+            color: #2c3e50;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+            min-height: 100px;
+        }
 
-        .tool-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 255, 255, 0.4), 
-                transparent);
-            transition: left 0.5s ease;
-        }
+        .tool-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.4), 
+                transparent);
+            transition: left 0.5s ease;
+        }
 
-        .tool-link:hover::before {
-            left: 100%;
-        }
+        .tool-link:hover::before {
+            left: 100%;
+        }
 
-        .tool-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
-        }
+        .tool-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
 
-        /* 各ツールの個別カラー */
-        .tool-link:nth-child(1) {
-            border-color: #27ae60;
-            background: linear-gradient(135deg, #ffffff, #f8fff9);
-        }
+        /* 各ツールの個別カラー */
+        .tool-link:nth-child(1) {
+            border-color: #27ae60;
+            background: linear-gradient(135deg, #ffffff, #f8fff9);
+        }
 
-        .tool-link:nth-child(1):hover {
-            background: linear-gradient(135deg, #f8fff9, #f0fff4);
-        }
+        .tool-link:nth-child(1):hover {
+            background: linear-gradient(135deg, #f8fff9, #f0fff4);
+        }
 
-        .tool-link:nth-child(2) {
-            border-color: #e74c3c;
-            background: linear-gradient(135deg, #ffffff, #fff8f8);
-        }
+        .tool-link:nth-child(2) {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, #ffffff, #fff8f8);
+        }
 
-        .tool-link:nth-child(2):hover {
-            background: linear-gradient(135deg, #fff8f8, #fff0f0);
-        }
+        .tool-link:nth-child(2):hover {
+            background: linear-gradient(135deg, #fff8f8, #fff0f0);
+        }
 
-        .tool-link:nth-child(3) {
-            border-color: #3498db;
-            background: linear-gradient(135deg, #ffffff, #f8fbff);
-        }
+        .tool-link:nth-child(3) {
+            border-color: #3498db;
+            background: linear-gradient(135deg, #ffffff, #f8fbff);
+        }
 
-        .tool-link:nth-child(3):hover {
-            background: linear-gradient(135deg, #f8fbff, #f0f7ff);
-        }
-        
-        /* 収支ツール用の色 (4番目) */
-        .tool-link:nth-child(4) {
-            border-color: #9b59b6; /* 紫色系 */
-            background: linear-gradient(135deg, #ffffff, #faf8ff);
-        }
+        .tool-link:nth-child(3):hover {
+            background: linear-gradient(135deg, #f8fbff, #f0f7ff);
+        }
+        
+        /* 収支ツール用の色 (4番目) */
+        .tool-link:nth-child(4) {
+            border-color: #9b59b6; /* 紫色系 */
+            background: linear-gradient(135deg, #ffffff, #faf8ff);
+        }
 
-        .tool-link:nth-child(4):hover {
-            background: linear-gradient(135deg, #faf8ff, #f5f0ff);
-        }
+        .tool-link:nth-child(4):hover {
+            background: linear-gradient(135deg, #faf8ff, #f5f0ff);
+        }
 
-        /* ノリ打ち精算ツール用の色 (5番目) */
-        .tool-link:nth-child(5) {
-            border-color: #f39c12; 
-            background: linear-gradient(135deg, #ffffff, #fffbf0);
-        }
+        /* ノリ打ち精算ツール用の色 (5番目) */
+        .tool-link:nth-child(5) {
+            border-color: #f39c12; 
+            background: linear-gradient(135deg, #ffffff, #fffbf0);
+        }
 
-        .tool-link:nth-child(5):hover {
-            background: linear-gradient(135deg, #fffbf0, #fff7e0);
-        }
+        .tool-link:nth-child(5):hover {
+            background: linear-gradient(135deg, #fffbf0, #fff7e0);
+        }
 
-        /* 説明ページリンクの特別なデザイン */
-        .explanation-section {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 1px solid #e9ecef;
-        }
+        /* 説明ページリンクの特別なデザイン */
+        .explanation-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
 
-        .explanation-title {
-            font-size: 1.4rem;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+        .explanation-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
 
-        .explanation-links {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-        }
+        .explanation-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
 
-        .explanation-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            padding: 18px 30px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            color: #6c757d;
-            text-decoration: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px dashed #adb5bd;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 400px;
-            justify-content: center;
-        }
+        .explanation-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            color: #6c757d;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px dashed #adb5bd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 400px;
+            justify-content: center;
+        }
 
-        .explanation-link:hover {
-            background: linear-gradient(135deg, #e9ecef, #dee2e6);
-            border-color: #6c757d;
-            border-style: solid;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            color: #495057;
-        }
+        .explanation-link:hover {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+            border-color: #6c757d;
+            border-style: solid;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            color: #495057;
+        }
 
-        .explanation-icon {
-            font-size: 1.3rem;
-            opacity: 0.8;
-        }
+        .explanation-icon {
+            font-size: 1.3rem;
+            opacity: 0.8;
+        }
 
-        /* 説明文 */
-        .description {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            margin-bottom: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 1px solid #e9ecef;
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #2c3e50;
-        }
+        /* 説明文 */
+        .description {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #2c3e50;
+        }
 
-        .description p {
-            margin-bottom: 15px;
-        }
+        .description p {
+            margin-bottom: 15px;
+        }
 
-        .description p:last-child {
-            margin-bottom: 0;
-        }
+        .description p:last-child {
+            margin-bottom: 0;
+        }
 
-        /* フッターリンク */
-        .footer-links {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-top: 40px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            border: 1px solid #e9ecef;
-        }
+        /* フッターリンク */
+        .footer-links {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
 
-        .footer-links a {
-            color: #3498db;
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: 500;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 5px 10px;
-            border-radius: 6px;
-        }
+        .footer-links a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 10px;
+            border-radius: 6px;
+        }
 
-        .footer-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 50%;
-            width: 0;
-            height: 1px;
-            background: #3498db;
-            transition: all 0.3s ease;
-            transform: translateX(-50%);
-        }
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: #3498db;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
 
-        .footer-links a:hover {
-            color: #2980b9;
-            background: rgba(52, 152, 219, 0.05);
-        }
+        .footer-links a:hover {
+            color: #2980b9;
+            background: rgba(52, 152, 219, 0.05);
+        }
 
-        .footer-links a:hover::after {
-            width: 100%;
-        }
+        .footer-links a:hover::after {
+            width: 100%;
+        }
 
-        /* レスポンシブデザイン */
-        @media (max-width: 768px) {
-            .main-container {
-                padding: 30px 15px;
-            }
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 30px 15px;
+            }
 
-            h1 {
-                font-size: 2rem;
-            }
+            h1 {
+                font-size: 2rem;
+            }
 
-            .tool-menu {
-                /* モバイルでは1列に */
-                grid-template-columns: 1fr; 
-                gap: 15px;
-            }
+            .tool-menu {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
 
-            .tool-link {
-                padding: 20px 15px;
-                font-size: 1.1rem;
-            }
+            .tool-link {
+                padding: 20px 15px;
+                font-size: 1.1rem;
+                min-height: 80px;
+            }
 
-            .explanation-section {
-                padding: 25px 20px;
-            }
+            .explanation-section {
+                padding: 25px 20px;
+            }
 
-            .explanation-link {
-                padding: 16px 25px;
-                font-size: 1rem;
-            }
+            .explanation-link {
+                padding: 16px 25px;
+                font-size: 1rem;
+            }
 
-            .description {
-                padding: 25px 20px;
-                font-size: 1rem;
-            }
+            .description {
+                padding: 25px 20px;
+                font-size: 1rem;
+            }
 
-            .footer-links a {
-                display: block;
-                margin: 8px 0;
-                font-size: 0.95rem;
-            }
+            .footer-links a {
+                display: block;
+                margin: 8px 0;
+                font-size: 0.95rem;
+            }
 
-            .footer-links {
-                padding: 20px;
-            }
-        }
+            .footer-links {
+                padding: 20px;
+            }
+        }
 
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 1.8rem;
-            }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
 
-            .tool-link {
-                padding: 18px 15px;
-                font-size: 1rem;
-            }
+            .tool-link {
+                padding: 18px 15px;
+                font-size: 1rem;
+                min-height: 70px;
+            }
 
-            .header {
-                padding: 30px 20px;
-            }
+            .header {
+                padding: 30px 20px;
+            }
 
-            .explanation-title {
-                font-size: 1.2rem;
-            }
-            
-            .explanation-links {
-                gap: 12px;
-            }
-        }
-    </style>
+            .explanation-title {
+                font-size: 1.2rem;
+            }
+            
+            .explanation-links {
+                gap: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="main-container">
-                <div class="header">
-            <h1>🎰 パチスロ計算ツール集 🎰</h1>
-            <div class="subtitle">収支・仕事量計算ツール</div>
-        </div>
+    <div class="main-container">
+        <div class="header">
+            <h1>🎰 パチスロ計算ツール集 🎰</h1>
+            <div class="subtitle">収支・仕事量計算ツール</div>
+        </div>
 
-                <div class="tool-menu">
-            <a href="./counter.html" class="tool-link">
-                🎯 小役カウンター
-            </a>
-            
-            <a href="./pachinko_calc.html" class="tool-link">
-                🎰 パチンコ仕事量ツール
-            </a>
-            
-            <a href="slot_calc.html" class="tool-link">
-                💰 スロット仕事量ツール
-            </a>
+        <div class="tool-menu">
+            <a href="./counter.html" class="tool-link">
+                🎯 小役カウンター
+            </a>
+            
+            <a href="./pachinko_calc.html" class="tool-link">
+                🎰 パチンコ仕事量ツール
+            </a>
+            
+            <a href="slot_calc.html" class="tool-link">
+                💰 スロット仕事量ツール
+            </a>
 
-            <a href="finance.html" class="tool-link">
-                📊 収支管理ツール
-            </a>
-            <a href="split_bill.html" class="tool-link">
-                🎉 ノリ打ち精算ツール
-            </a>
-        </div>
+            <a href="finance.html" class="tool-link">
+                📊 収支管理ツール
+            </a>
+            <a href="split_bill.html" class="tool-link">
+                🎉 ノリ打ち精算ツール
+            </a>
+        </div>
 
-                <div class="explanation-section">
-            <h2 class="explanation-title">📚 ツールの使い方を詳しく知りたい方へ</h2>
-            <div class="explanation-links">
-                <a href="counter_explan.html" class="explanation-link">
-                    <span class="explanation-icon">📖</span>
-                    小役カウンターの詳しい説明を見る
-                </a>
-                <a href="pachinko_calc_explan.html" class="explanation-link">
-                    <span class="explanation-icon">📖</span>
-                    パチンコ仕事量ツールの詳しい説明を見る
-                </a>
-                <a href="slot_calc_explan.html" class="explanation-link">
-                    <span class="explanation-icon">📖</span>
-                    スロット仕事量ツールの詳しい説明を見る
-                </a>
+        <div class="explanation-section">
+            <h2 class="explanation-title">📚 ツールの使い方を詳しく知りたい方へ</h2>
+            <div class="explanation-links">
+                <a href="counter_explan.html" class="explanation-link">
+                    <span class="explanation-icon">📖</span>
+                    小役カウンターの詳しい説明を見る
+                </a>
+                <a href="pachinko_calc_explan.html" class="explanation-link">
+                    <span class="explanation-icon">📖</span>
+                    パチンコ仕事量ツールの詳しい説明を見る
+                </a>
+                <a href="slot_calc_explan.html" class="explanation-link">
+                    <span class="explanation-icon">📖</span>
+                    スロット仕事量ツールの詳しい説明を見る
+                </a>
 
-                <a href="finance_explan.html" class="explanation-link">
-                    <span class="explanation-icon">📖</span>
-                    収支管理ツールの詳しい説明を見る
-                </a>
-                <a href="split_bill_explan.html" class="explanation-link">
-                    <span class="explanation-icon">📖</span>
-                    ノリ打ち精算ツールの詳しい説明を見る
-                </a>
-            </div>
-        </div>
+                <a href="finance_explan.html" class="explanation-link">
+                    <span class="explanation-icon">📖</span>
+                    収支管理ツールの詳しい説明を見る
+                </a>
+                <a href="split_bill_explan.html" class="explanation-link">
+                    <span class="explanation-icon">📖</span>
+                    ノリ打ち精算ツールの詳しい説明を見る
+                </a>
+            </div>
+        </div>
 
-                <div class="description">
-            <p>パチンコ・スロットの効率的な遊技をサポートする計算ツール集です。</p>
-            <p>仕事量計算、期待値分析、小役カウント、友達との精算など、様々なシーンで役立つ機能を提供しています。</p>
-            <p>各ツールの詳細な使い方は、上の説明ページをご覧ください。</p>
-        </div>
+        <div class="description">
+            <p>パチンコ・スロットの効率的な遊技をサポートする計算ツール集です。</p>
+            <p>仕事量計算、期待値分析、小役カウント、友達との精算など、様々なシーンで役立つ機能を提供しています。</p>
+            <p>各ツールの詳細な使い方は、上の説明ページをご覧ください。</p>
+        </div>
 
-                <div class="footer-links">
-            <a href="index.html">トップページ</a>
-            <a href="privacy.html">プライバシーポリシー</a>
-            <a href="contact.html">お問い合わせ</a>
-            <a href="disclaimer.html">免責事項・利用規約</a>
-        </div>
-    </div>
+        <div class="footer-links">
+            <a href="index.html">トップページ</a>
+            <a href="privacy.html">プライバシーポリシー</a>
+            <a href="contact.html">お問い合わせ</a>
+            <a href="disclaimer.html">免責事項・利用規約</a>
+        </div>
+    </div>
 </body>
 </html>
