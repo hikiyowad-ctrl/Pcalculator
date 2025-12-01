@@ -64,7 +64,7 @@
             font-weight: 500;
         }
 
-        /* ツールメニュー - 修正 */
+        /* ツールメニュー */
         .tool-menu {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -142,9 +142,8 @@
             background: linear-gradient(135deg, #f8fbff, #f0f7ff);
         }
         
-        /* 収支ツール用の色 (4番目) */
         .tool-link:nth-child(4) {
-            border-color: #9b59b6; /* 紫色系 */
+            border-color: #9b59b6;
             background: linear-gradient(135deg, #ffffff, #faf8ff);
         }
 
@@ -152,7 +151,6 @@
             background: linear-gradient(135deg, #faf8ff, #f5f0ff);
         }
 
-        /* ノリ打ち精算ツール用の色 (5番目) */
         .tool-link:nth-child(5) {
             border-color: #f39c12; 
             background: linear-gradient(135deg, #ffffff, #fffbf0);
@@ -162,32 +160,65 @@
             background: linear-gradient(135deg, #fffbf0, #fff7e0);
         }
 
-        /* 説明ページリンクの特別なデザイン */
-        .explanation-section {
+        /* 折りたたみセクション */
+        .collapsible-section {
             background: white;
-            padding: 30px;
             border-radius: 15px;
             margin-bottom: 40px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
             border: 1px solid #e9ecef;
+            overflow: hidden;
         }
 
-        .explanation-title {
-            font-size: 1.4rem;
+        .collapsible-header {
+            padding: 20px 30px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
+
+        .collapsible-header:hover {
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
+        }
+
+        .collapsible-title {
+            font-size: 1.3rem;
             color: #2c3e50;
-            margin-bottom: 20px;
             font-weight: 600;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 10px;
+        }
+
+        .collapsible-arrow {
+            font-size: 1.5rem;
+            color: #6c757d;
+            transition: transform 0.3s ease;
+        }
+
+        .collapsible-section.active .collapsible-arrow {
+            transform: rotate(180deg);
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .collapsible-section.active .collapsible-content {
+            max-height: 1000px;
         }
 
         .explanation-links {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            align-items: center;
+            padding: 25px 30px;
         }
 
         .explanation-link {
@@ -204,9 +235,6 @@
             transition: all 0.3s ease;
             border: 2px dashed #adb5bd;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 400px;
-            justify-content: center;
         }
 
         .explanation-link:hover {
@@ -308,8 +336,17 @@
                 min-height: 80px;
             }
 
-            .explanation-section {
-                padding: 25px 20px;
+            .collapsible-header {
+                padding: 18px 20px;
+            }
+
+            .collapsible-title {
+                font-size: 1.1rem;
+            }
+
+            .explanation-links {
+                padding: 20px;
+                gap: 12px;
             }
 
             .explanation-link {
@@ -348,12 +385,8 @@
                 padding: 30px 20px;
             }
 
-            .explanation-title {
-                font-size: 1.2rem;
-            }
-            
-            .explanation-links {
-                gap: 12px;
+            .collapsible-title {
+                font-size: 1rem;
             }
         }
     </style>
@@ -381,35 +414,42 @@
             <a href="finance.html" class="tool-link">
                 📊 収支管理ツール
             </a>
+            
             <a href="split_bill.html" class="tool-link">
                 🎉 ノリ打ち精算ツール
             </a>
         </div>
 
-        <div class="explanation-section">
-            <h2 class="explanation-title">📚 ツールの使い方を詳しく知りたい方へ</h2>
-            <div class="explanation-links">
-                <a href="counter_explan.html" class="explanation-link">
-                    <span class="explanation-icon">📖</span>
-                    小役カウンターの詳しい説明を見る
-                </a>
-                <a href="pachinko_calc_explan.html" class="explanation-link">
-                    <span class="explanation-icon">📖</span>
-                    パチンコ仕事量ツールの詳しい説明を見る
-                </a>
-                <a href="slot_calc_explan.html" class="explanation-link">
-                    <span class="explanation-icon">📖</span>
-                    スロット仕事量ツールの詳しい説明を見る
-                </a>
-
-                <a href="finance_explan.html" class="explanation-link">
-                    <span class="explanation-icon">📖</span>
-                    収支管理ツールの詳しい説明を見る
-                </a>
-                <a href="split_bill_explan.html" class="explanation-link">
-                    <span class="explanation-icon">📖</span>
-                    ノリ打ち精算ツールの詳しい説明を見る
-                </a>
+        <div class="collapsible-section" id="explanationSection">
+            <div class="collapsible-header" onclick="toggleCollapse()">
+                <div class="collapsible-title">
+                    📚 ツールの使い方を詳しく知りたい方へ
+                </div>
+                <div class="collapsible-arrow">▼</div>
+            </div>
+            <div class="collapsible-content">
+                <div class="explanation-links">
+                    <a href="counter_explan.html" class="explanation-link">
+                        <span class="explanation-icon">📖</span>
+                        小役カウンターの詳しい説明を見る
+                    </a>
+                    <a href="pachinko_calc_explan.html" class="explanation-link">
+                        <span class="explanation-icon">📖</span>
+                        パチンコ仕事量ツールの詳しい説明を見る
+                    </a>
+                    <a href="slot_calc_explan.html" class="explanation-link">
+                        <span class="explanation-icon">📖</span>
+                        スロット仕事量ツールの詳しい説明を見る
+                    </a>
+                    <a href="finance_explan.html" class="explanation-link">
+                        <span class="explanation-icon">📖</span>
+                        収支管理ツールの詳しい説明を見る
+                    </a>
+                    <a href="split_bill_explan.html" class="explanation-link">
+                        <span class="explanation-icon">📖</span>
+                        ノリ打ち精算ツールの詳しい説明を見る
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -426,5 +466,12 @@
             <a href="disclaimer.html">免責事項・利用規約</a>
         </div>
     </div>
+
+    <script>
+        function toggleCollapse() {
+            const section = document.getElementById('explanationSection');
+            section.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
